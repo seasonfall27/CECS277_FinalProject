@@ -2,17 +2,17 @@ import java.util.ArrayList;
 
 public class GoldMealPlan extends SilverMealPlan{
 
-	protected String chicken;
+	protected Wings chicken;
 	
 	GoldMealPlan(){
 		super();
 		salad = "Salad";
 		breadSticks = "Bread Sticks";
-		chicken = "Generic chicken stuff";
+		chicken = new BoneInWings();
 		cost = 120.00;
 	}
 	
-	GoldMealPlan(ArrayList<Pizza> p, ArrayList<String> s, String c){
+	GoldMealPlan(ArrayList<Pizza> p, ArrayList<String> s, Wings c){
 		super(p,s);
 		salad = "Salad";
 		breadSticks = "Bread Sticks";
@@ -20,11 +20,11 @@ public class GoldMealPlan extends SilverMealPlan{
 		cost = 120.00;
 	}
 	
-	String getChicken() {
+	Wings getChicken() {
 		return chicken;
 	}
 	
-	void setChicken(String c) {
+	void setChicken(Wings c) {
 		chicken = c;
 	}
 	

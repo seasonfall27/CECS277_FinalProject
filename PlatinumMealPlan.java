@@ -19,13 +19,13 @@ public class PlatinumMealPlan extends GoldMealPlan{
 		sodaBottles = tempSodaList;
 		salad = "Salad";
 		breadSticks = "Bread Sticks";
-		chicken = "Generic chicken stuff";
+		chicken = new BoneInWings();
 		iceCream.add("Generic Ice Cream");
 		iceCream.add("Generic Ice Cream");
 		cost = 150.00;
 	}
 	
-	PlatinumMealPlan(ArrayList<Pizza> p, ArrayList<String> s, String c, ArrayList<String> I){
+	PlatinumMealPlan(ArrayList<Pizza> p, ArrayList<String> s, Wings c, ArrayList<String> I){
 		
 		gourmetPizzaList = p;
 		sodaBottles = s;
