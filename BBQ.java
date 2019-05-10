@@ -1,6 +1,5 @@
-package Wings;
 
-public class BBQ extends Toppings {
+public class BBQ extends WingsToppings {
 Wings wing;
 	
 	public BBQ (Wings wing)

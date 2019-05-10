@@ -1,7 +1,6 @@
-package Wings;
 
-public class Diablo extends Toppings{
-Wings wing;
+public class Diablo extends WingsToppings{
+	Wings wing;
 	
 	public Diablo (Wings wing)
 	{

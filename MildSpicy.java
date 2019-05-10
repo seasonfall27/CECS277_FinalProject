@@ -1,7 +1,5 @@
-package Wings;
 
-
-public class MildSpicy extends Toppings {
+public class MildSpicy extends WingsToppings {
 
 	Wings wing;
 	

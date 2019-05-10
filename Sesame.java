@@ -1,8 +1,7 @@
-package Wings;
 
-public class Sesame extends Toppings{
+public class Sesame extends WingsToppings{
 	
-Wings wing;
+    Wings wing;
 	
 	public Sesame (Wings wing)
 	{

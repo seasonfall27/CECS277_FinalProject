@@ -1,6 +1,5 @@
-package Wings;
 
-public class LemonPepper extends Toppings{
+public class LemonPepper extends WingsToppings{
 Wings wing;
 	
 	public LemonPepper (Wings wing)
