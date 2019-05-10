@@ -12,7 +12,7 @@ public class GoldMealPlan extends SilverMealPlan{
 		cost = 120.00;
 	}
 	
-	GoldMealPlan(ArrayList<String> p, ArrayList<String> s, String c){
+	GoldMealPlan(ArrayList<Pizza> p, ArrayList<String> s, String c){
 		super(p,s);
 		salad = "Salad";
 		breadSticks = "Bread Sticks";
@@ -30,6 +30,10 @@ public class GoldMealPlan extends SilverMealPlan{
 	
 	public String toString() {
 		return gourmetPizzaList.size() + "XL 3 Topping Gourmet Pizzas: " + gourmetPizzaList + ", " + sodaBottles.size() + " 2L Soda Bottles: " + sodaBottles + ", " + "" + salad + ", " + breadSticks + ", " + chicken +"\ncost: " + cost;
+	}
+	
+	public String display() {
+		return "Gold Meal Plan:\n3 XL 3 Topping Gourmet Pizzas\n5 2L Soda Bottles\nSalad\nBread-sticks\nChoice of 2 chicken wing flavors (Spicy, mild, Lemon-pepper, BBQ, Sesame, or Diablo). Pick Bone-in or boneless\nCost: $120.00";
 	}
 	
 }

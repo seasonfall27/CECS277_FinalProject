@@ -4,7 +4,7 @@ public class BasicMealPlan {
 	/**
 	 * ArrayList of strings describing pizzas. Will later be filled with pizza objects
 	 */
-	protected ArrayList<String> gourmetPizzaList;
+	protected ArrayList<Pizza> gourmetPizzaList;
 	/**
 	 * ArrayList of strings representing 2L Sodas
 	 */
@@ -19,11 +19,13 @@ public class BasicMealPlan {
 	 * BasicMealPlan constructor
 	 */
 	public BasicMealPlan() {// creates a default basic meal
-		gourmetPizzaList = new ArrayList<String>();
+		gourmetPizzaList = new ArrayList<Pizza>();
 		sodaBottles = new ArrayList<String>();
 		
+		//Pizza pizza = new PlainPizza();
+		
 		for (int i = 0; i < 3; i++) {//creates 3 pizzas
-			gourmetPizzaList.add("XL 1 Topping Gourmet Pizza"); //will accept	pizza objects later
+			gourmetPizzaList.add(new PlainPizza()); //will accept	pizza objects later
 		}
 		for (int i = 0; i < 3; i++) {//creats 3 sodas
 			sodaBottles.add("2L Soda Bottle");
@@ -37,7 +39,7 @@ public class BasicMealPlan {
 	 * @param p - array list of pizza objects
 	 * @param s - array list of soda objects
 	 */
-	public BasicMealPlan(ArrayList<String> p, ArrayList<String> s) {//takes in
+	public BasicMealPlan(ArrayList<Pizza> p, ArrayList<String> s) {//takes in
 		
 		gourmetPizzaList = p;
 		
@@ -50,7 +52,7 @@ public class BasicMealPlan {
 	 * Returns an array list of the pizza objects
 	 * @return gourmetPizzaList
 	 */
-	public ArrayList<String> getAllPizzas(){
+	public ArrayList<Pizza> getAllPizzas(){
 		return gourmetPizzaList;
 	}
 	
@@ -59,7 +61,7 @@ public class BasicMealPlan {
 	 * @param n is the pizza 1 to however many pizzas there are
 	 * @return
 	 */
-	public String getPizza(int n){
+	public Pizza getPizza(int n){
 		return gourmetPizzaList.get(n-1);
 	}
 	
@@ -68,7 +70,7 @@ public class BasicMealPlan {
 	 * @param n
 	 * @param p
 	 */
-	public void setPizza(int n, String p) {
+	public void setPizza(int n, Pizza p) {
 		gourmetPizzaList.set(n-1, p);
 	}
 	
@@ -99,4 +101,9 @@ public class BasicMealPlan {
 	public String toString() {
 		return gourmetPizzaList.size() + " 1 Topping Gourmet Pizzas: " + gourmetPizzaList + ", " + sodaBottles.size() + " 2L Soda Bottles: " + sodaBottles + "\ncost: " + cost;
 	}
+	
+	public String display() {
+		return "3 XL 1 Topping Gourmet Pizzas\n3 2L Soda Bottles\nCost: $65.00";
+	}
+	
 }

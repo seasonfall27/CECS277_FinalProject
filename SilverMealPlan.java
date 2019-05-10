@@ -8,11 +8,11 @@ public class SilverMealPlan extends BronzeMealPlan{
 	//protected String salad;
 	
 	SilverMealPlan(){//Default constructor
-		ArrayList<String> tempPizzaList = new ArrayList<String>();
+		ArrayList<Pizza> tempPizzaList = new ArrayList<Pizza>();
 		ArrayList<String> tempSodaList  = new ArrayList<String>();
 		
 		for (int i = 0; i < 3; i++) {
-			tempPizzaList.add("XL 3 Topping Gourmet Pizza"); //will accept	pizza objects later
+			tempPizzaList.add(new PlainPizza()); //will accept	pizza objects later
 		
 		}
 		
@@ -29,7 +29,7 @@ public class SilverMealPlan extends BronzeMealPlan{
 		cost = 90.00;
 	}
 	
-	SilverMealPlan(ArrayList<String> p, ArrayList<String> s){
+	SilverMealPlan(ArrayList<Pizza> p, ArrayList<String> s){
 		gourmetPizzaList = p;
 		
 		sodaBottles = s;
@@ -39,6 +39,10 @@ public class SilverMealPlan extends BronzeMealPlan{
 		salad = "Salad";
 		
 		cost = 90.00;
+	}
+	
+	public String display() {
+		return "Silver Meal Plan:\n3 XL 3 Topping Gourmet Pizzas\n5 2L Soda Bottles\nSalad\nBread-sticks\nCost: $90.00";
 	}
 	
 	//getBread

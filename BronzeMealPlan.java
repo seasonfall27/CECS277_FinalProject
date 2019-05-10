@@ -15,11 +15,11 @@ public class BronzeMealPlan extends BasicMealPlan{
 	 * Default constructor for Bronze Meal Plan
 	 */
 	public BronzeMealPlan() {// creates a default basic meal
-		ArrayList<String> tempPizzaList = new ArrayList<String>();
+		ArrayList<Pizza> tempPizzaList = new ArrayList<Pizza>();
 		ArrayList<String> tempSodaList  = new ArrayList<String>();
 		
 		for (int i = 0; i < 3; i++) {
-			tempPizzaList.add("XL 2 Topping Gourmet Pizza"); //will accept	pizza objects later
+			tempPizzaList.add(new PlainPizza()); //will accept	pizza objects later
 		
 		}
 		
@@ -39,7 +39,7 @@ public class BronzeMealPlan extends BasicMealPlan{
 	/**
 	 * Overloaded constructor for Bronze Meal Plan
 	 */
-	public BronzeMealPlan(ArrayList<String> p, ArrayList<String> s, String choice) {// creates a default basic meal
+	public BronzeMealPlan(ArrayList<Pizza> p, ArrayList<String> s, String choice) {// creates a default basic meal
 		super(p,s);
 		
 		if(choice == "Bread Sticks") {
@@ -84,9 +84,15 @@ public class BronzeMealPlan extends BasicMealPlan{
 		return choice;
 	}
 	
+	
+	
 	@Override
 	public String toString() {
 		return gourmetPizzaList.size() + "XL 2 Topping Gourmet Pizzas: " + gourmetPizzaList + ", " + sodaBottles.size() + " 2L Soda Bottles: " + sodaBottles + " " + salad + " " + breadSticks + "\ncost: " + cost;
+	}
+	
+	public String display() {
+		return "Bronze Meal Plan:\n3 XL 2 Topping Gourmet Pizzas\n5 2L Soda Bottles\nSalad or Bread-sticks\nCost: $75.00";
 	}
 	
 }
