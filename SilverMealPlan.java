@@ -42,7 +42,7 @@ public class SilverMealPlan extends BronzeMealPlan{
 	}
 	
 	public String display() {
-		return "Silver Meal Plan:\n3 XL 3 Topping Gourmet Pizzas\n5 2L Soda Bottles\nSalad\nBread-sticks\nCost: $90.00";
+		return this.toString();
 	}
 	
 	//getBread

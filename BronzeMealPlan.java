@@ -92,7 +92,7 @@ public class BronzeMealPlan extends BasicMealPlan{
 	}
 	
 	public String display() {
-		return "Bronze Meal Plan:\n3 XL 2 Topping Gourmet Pizzas\n5 2L Soda Bottles\nSalad or Bread-sticks\nCost: $75.00";
+		return this.toString();
 	}
 	
 }

@@ -103,7 +103,7 @@ public class BasicMealPlan {
 	}
 	
 	public String display() {
-		return "3 XL 1 Topping Gourmet Pizzas\n3 2L Soda Bottles\nCost: $65.00";
+		return this.toString();
 	}
 	
 }

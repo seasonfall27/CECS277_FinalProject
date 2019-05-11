@@ -51,6 +51,6 @@ public class PlatinumMealPlan extends GoldMealPlan{
 	}
 	
 	public String display() {
-		return "Platinum Meal Plan:\n4 XL 4 Topping Gourmet Pizzas\n5 2L Soda Bottles\nSalad\nBread-sticks\nChoice of 2 chicken wing flavors (Spicy, mild, Lemon-pepper, BBQ, Sesame, or Diablo). Pick Bone-in or boneless\n2 Flavors of Ice cream(Chocolate, Vanilla, Strawberry)\nCost: $150.00";
+		return this.toString();
 	}
 }
