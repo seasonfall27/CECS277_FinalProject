@@ -32,9 +32,9 @@ public class selectDTFrame extends JFrame {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		roomType = new JLabel(roomName);
 
-		JLabel date = new JLabel("Date (DD/MM/YYYY): ");
+		JLabel date = new JLabel("Date (MM/DD/YYYY): ");
 		dateSpinner = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "dd.MM.yyyy");
+		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "MM.dd.yyyy");
 		dateSpinner.setEditor(dateEditor);
 		dateSpinner.setValue(new Date());
 		
@@ -88,10 +88,13 @@ public class selectDTFrame extends JFrame {
 			 * -> waitlist screen will pop up
 			 * **/
 			String dateChosen = new SimpleDateFormat("MM/dd/yyyy").format(dateSpinner.getValue());
+			System.out.println(dateChosen);
 			
 			String startTimeChosen = new SimpleDateFormat("HH:mm a").format(startSpinner.getValue());
+			System.out.println(startTimeChosen);
 			
 			String endTimeChosen = new SimpleDateFormat("HH:mm a").format(endSpinner.getValue());
+			System.out.println(endTimeChosen);
 			
 			NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
 			selectDTFrame.this.dispose();

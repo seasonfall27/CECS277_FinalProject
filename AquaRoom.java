@@ -1,6 +1,6 @@
 public class AquaRoom implements Room{
 	
-	private final String description = "Olympic-sized pool with water slide, kiddie pool, and large jacuzzi.";
+	final static String description = "Olympic-sized pool with water slide, kiddie pool, and large jacuzzi.";
 	private final int capacity = 75;
 	private final int pricePerHour = 700;
 	private final String restrictions = "To access water facilities, bathing suits must be worn at all time";
@@ -151,7 +151,7 @@ public class AquaRoom implements Room{
 	 * gets the fixed description of the Room
 	 * @return - String of Description of the room
 	 */
-	public String getDescription() {
+	public static String getDescription() {
 		return this.description;
 	}
 	/**
