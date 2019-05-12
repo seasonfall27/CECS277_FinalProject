@@ -304,9 +304,9 @@ public class NewReservationFrame extends JFrame {
 		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
 		saveButton = new JButton("Save");
-//		ActionListener saveListener = new SaveButtonListener();
-//		saveButton.addActionListener(saveListener);
-
+		ActionListener saveListener = new SaveButtonListener();
+		saveButton.addActionListener(saveListener);
+ 
 		cancelButton = new JButton("Cancel");
 //		ActionListener cancelListener = new CancelButtonListener();
 //		cancelButton.addActionListener(cancelListener);
@@ -840,5 +840,18 @@ public class NewReservationFrame extends JFrame {
 				panel.add(cancelButton);
 			}
 		}
+	}
+	
+	/**
+	 * Inner action listener class for the save button
+	 **/
+	class SaveButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Save button creates new reservation objects ()
+			
+		}
+		
 	}
 }
