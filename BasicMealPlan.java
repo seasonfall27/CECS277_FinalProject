@@ -93,6 +93,10 @@ public class BasicMealPlan {
 		return sodaBottles;
 	}
 	
+	public double getCost() {
+		return this.cost;
+	}
+	
 	/**
 	 * Returns a String representation of the items
 	 * "Name, Sweetness, Size"

@@ -84,7 +84,9 @@ public class BronzeMealPlan extends BasicMealPlan{
 		return choice;
 	}
 	
-	
+	public double getCost() {
+		return this.cost;
+	}
 	
 	@Override
 	public String toString() {

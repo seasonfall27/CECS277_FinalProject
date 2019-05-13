@@ -41,6 +41,10 @@ public class PlatinumMealPlan extends GoldMealPlan{
 		iceCream = I;
 	}
 	
+	public double getCost() {
+		return this.cost;
+	}
+	
 	//getters
 	ArrayList<String> getIceCream () {
 		return iceCream;
