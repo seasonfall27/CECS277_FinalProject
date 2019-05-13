@@ -33,7 +33,8 @@ public class GoldMealPlan extends SilverMealPlan{
 	}
 	
 	public String display() {
-		return this.toString();
+		String mealPlan = "Gold Meal Plan:\n3 XL 3 Topping Gourmet Pizzas\n5 2L Soda Bottles\nSalad\n Bread-Sticks\nChoice of 2 chicken wing flavors\n(Mild Spicy, Lemon-Pepper, BBQ, Sesame, or Diablo)\nPick bone-in or boneless\nCost: $120.00";
+		return mealPlan;
 	}
 	
 }
