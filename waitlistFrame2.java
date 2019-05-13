@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class waitlistFrame extends JFrame {
+public class waitlistFrame2 extends JFrame {
 	JPanel panel;
 	private JButton acceptButton;
 	private JButton declineButton;
@@ -11,11 +11,7 @@ public class waitlistFrame extends JFrame {
 	String startTimeChosen;
 	String endTimeChosen;
 
-	public waitlistFrame(String roomName, String dateChosen, String startTimeChosen, String endTimeChosen) {
-		this.roomName = roomName;
-		this.dateChosen = dateChosen;
-		this.startTimeChosen = startTimeChosen;
-		this.endTimeChosen = endTimeChosen;
+	public waitlistFrame2() {
 		// call private helper method to create and add components
 		initializeUI();
 
@@ -50,8 +46,8 @@ public class waitlistFrame extends JFrame {
 	class AcceptButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
-			waitlistFrame.this.dispose();
+			ConfirmationFrame n = new ConfirmationFrame();
+			waitlistFrame2.this.dispose();
 			n.setVisible(true);
 		}
 	}
@@ -62,9 +58,12 @@ public class waitlistFrame extends JFrame {
 	class DeclineButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			selectDTFrame s = new selectDTFrame(roomName);
-			waitlistFrame.this.dispose();
-			s.setVisible(true);
+			waitlistFrame2.this.dispose();
 		}
+	}
+	
+	public static void main(String[] args) {
+		waitlistFrame2 f = new waitlistFrame2();
+		f.setVisible(true);
 	}
 }

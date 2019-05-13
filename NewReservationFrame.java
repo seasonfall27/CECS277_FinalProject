@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.text.JTextComponent;
 
 
 public class NewReservationFrame extends JFrame {
@@ -229,6 +230,8 @@ public class NewReservationFrame extends JFrame {
 		roomTypeOptions.addActionListener(roomTypeListener);
 		
 		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
 		Date defaultDate = cal.getTime();
 		
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
@@ -245,9 +248,9 @@ public class NewReservationFrame extends JFrame {
 			e.printStackTrace();
 		}
 
-		JLabel date = new JLabel("Date (DD/MM/YYYY): ");
+		JLabel date = new JLabel("Date (MM/DD/YYYY): ");
 		dateSpinner = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "dd.MM.yyyy");
+		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "MM.dd.yyyy");
 		dateSpinner.setEditor(dateEditor);
 		dateSpinner.setValue(chosenDate);
 
@@ -308,8 +311,8 @@ public class NewReservationFrame extends JFrame {
 		saveButton.addActionListener(saveListener);
  
 		cancelButton = new JButton("Cancel");
-//		ActionListener cancelListener = new CancelButtonListener();
-//		cancelButton.addActionListener(cancelListener);
+		ActionListener cancelListener = new CancelButtonListener();
+		cancelButton.addActionListener(cancelListener);
 
 		// create panel and add components
 		panel = new JPanel();
@@ -462,6 +465,8 @@ public class NewReservationFrame extends JFrame {
 		partyDeco = new JCheckBox();
 		ActionListener themeListener = new ThemeListener();
 		partyDeco.addActionListener(themeListener);
+		String[] themeString = new String[] { "Hawaiian", "Sea Life", "Jungle", "Space", "Modern" };
+		themeOptions = new JComboBox<String>(themeString);
 	}
 
 	private void createBasicMPComponents() {
@@ -774,7 +779,7 @@ public class NewReservationFrame extends JFrame {
 		public void actionPerformed(ActionEvent click) {
 	        if (upgradeMP.isSelected()) {
 	        	panel.remove(panel1);
-	        	roomTypeOptions.removeActionListener(roomTypeListener);
+	        	roomTypeOptions.setEnabled(false);
 	        	panel.remove(saveButton);
 				panel.remove(cancelButton);
 				
@@ -790,6 +795,7 @@ public class NewReservationFrame extends JFrame {
 	        	panel.remove(mealPlanChecker);
 	        	panel.remove(mealPlanType);
 	        	panel.remove(panel1);
+	        	roomTypeOptions.setEnabled(true);
 	        	
 	        	String roomChoice = (String) roomTypeOptions.getSelectedItem();
 
@@ -828,17 +834,27 @@ public class NewReservationFrame extends JFrame {
 	class ThemeListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			panel.remove(saveButton);
-			panel.remove(cancelButton);
-			String[] themeString = new String[] { "Hawaiian", "Sea Life", "Jungle", "Space", "Modern" };
-			themeOptions = new JComboBox<String>(themeString);
 
-			boolean checked = partyDeco.isSelected();
-			if (checked == true) {
-				panel.add(themeOptions);
-				panel.add(saveButton);
-				panel.add(cancelButton);
+			if (partyDeco.isSelected()) {
+				roomTypeOptions.setEnabled(false);
+				panel2.add(themeOptions);
+				panel2.updateUI();
 			}
+			else {
+				panel2.remove(themeOptions);
+				panel2.updateUI();
+	        	roomTypeOptions.setEnabled(true);
+			}
+		}
+	}
+	
+	/**
+	 * Inner action listener class for the Cancel Button
+	 * **/
+	class CancelButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent click) {
+			NewReservationFrame.this.dispose();
 		}
 	}
 	
