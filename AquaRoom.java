@@ -1,6 +1,14 @@
 public class AquaRoom implements Room{
 	
-	final static String description = "Olympic-sized pool with water slide, kiddie pool, and large jacuzzi.";
+	final static String description = "Capacity: 75 people\nCost: $700/hr\n"
+			+ "Included in cost: Access to showers/lockers\n        -life guards on duty\n        -DJ\n"
+			+ "        -table & chair set-up\n        -Basic Meal Plan\nUpgrades Available: \n"
+			+ "        -Upgrade meal plan     Cost: $5x(new meal plan cost - basic meal plan cost)\n"
+			+ "        -Towel Rentals     Cost: $2 each\n"
+			+ "        -Party favor bags     Cost: $5 per bag\n"
+			+ "        -Projector     Cost: $10/hour\n"
+			+ "        -Party decorations & set-up     Cost: $100\n"
+			+ "                  Themes: Hawaiian, Sea Life, Jungle, Space, or Modern Theme";
 	private final int capacity = 75;
 	private final int pricePerHour = 700;
 	private final String restrictions = "To access water facilities, bathing suits must be worn at all time";
@@ -152,7 +160,7 @@ public class AquaRoom implements Room{
 	 * @return - String of Description of the room
 	 */
 	public static String getDescription() {
-		return this.description;
+		return description;
 	}
 	/**
 	 * gets the restrictions of the aqua Room

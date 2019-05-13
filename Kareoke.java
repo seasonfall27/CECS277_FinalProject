@@ -1,7 +1,13 @@
 
 public class Kareoke implements Lounge {
 
-	private final String description = "Enclosed lounge with kareoke machine.";
+	private final static String description = "Enclosed lounge with karaoke machine\n"
+			+ "Capacity: 10 people\n"
+			+ "Cost: $30/hr\n"
+			+ "Included in cost:\n "
+			+ "        -Access to karaoke\n"
+			+ "Upgrades available:\n"
+			+ "        -Add a meal plan\n";
 	private final int capacity = 10;
 	private final int pricePerHour = 30;
 	
@@ -44,9 +50,8 @@ public class Kareoke implements Lounge {
 	}
 
 
-	@Override
-	public String getDescription() {
-		return this.description;
+	public static String getDescription() {
+		return description;
 	}
 	
 	@Override

@@ -3,7 +3,9 @@ public interface Lounge extends Room{
 	 * gets the fixed description of the Room
 	 * @return - String of Description of the room
 	 */
-	public String getDescription();
+	static void getDescription() {
+		return;
+	}
 	/**
 	 * gets the fixed capacity of the Room
 	 * @return - int capacity

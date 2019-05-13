@@ -1,7 +1,15 @@
 
 public class Billiards implements Lounge {
 
-	private final String description = "Enclosed lounge with pool table";
+	private final static String description = "Enclosed lounge with pool table\n"
+			+ "Capacity: 10 people\n"
+			+ "Cost: $35/hr\n"
+			+ "Included in cost:\n "
+			+ "        -Access to pool table and cues\n"
+			+ "Upgrades available:\n"
+			+ "        -Add a meal plan\n"
+			+ "Restrictions:\n"
+			+ "        -21+ only\n";
 	private final int capacity = 10;
 	private final int pricePerHour = 25;
 	private final String restrictions = "21+ and over";
@@ -45,9 +53,8 @@ public class Billiards implements Lounge {
 	}
 
 
-	@Override
-	public String getDescription() {
-		return this.description;
+	public static String getDescription() {
+		return description;
 	}
 	
 	@Override

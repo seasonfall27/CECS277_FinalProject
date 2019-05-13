@@ -102,7 +102,7 @@ public class BasicMealPlan {
 		return gourmetPizzaList.size() + " 1 Topping Gourmet Pizzas: " + gourmetPizzaList + ", " + sodaBottles.size() + " 2L Soda Bottles: " + sodaBottles + "\ncost: " + cost;
 	}
 	
-	public String display() {
+	public static String display() {
 		String mealPlan = "Basic Meal Plan:\n3 XL 1 Topping Gourmet Pizzas\n3 2L Soda Bottles\nCost: $65.00";
 		return mealPlan;
 	}

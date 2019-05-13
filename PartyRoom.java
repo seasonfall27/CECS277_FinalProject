@@ -4,7 +4,9 @@ public interface PartyRoom extends Room{
 	 * gets the fixed description of the Room
 	 * @return - String of Description of the room
 	 */
-	String getDescription();
+	static String getDescription() {
+		return null;
+	}
 	/**
 	 * gets the fixed capacity of the Room
 	 * @return - int capacity

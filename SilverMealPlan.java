@@ -41,7 +41,7 @@ public class SilverMealPlan extends BronzeMealPlan{
 		cost = 90.00;
 	}
 	
-	public String display() {
+	public static String display() {
 		String mealPlan = "Silver Meal Plan:\n3 XL 3 Topping Gourmet Pizzas\n5 2L Soda Bottles\nSalad\n Bread-Sticks\nCost: $90.00";
 		return mealPlan;
 	}
