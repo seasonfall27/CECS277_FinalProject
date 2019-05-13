@@ -51,6 +51,7 @@ public class PlatinumMealPlan extends GoldMealPlan{
 	}
 	
 	public String display() {
-		return this.toString();
+		String mealPlan = "Platinum Meal Plan:\n4 XL 4 Topping Gourmet Pizzas\n5 2L Soda Bottles\nSalad\n Bread-Sticks\nChoice of 2 chicken wing flavors\n(Mild Spicy, Lemon-Pepper, BBQ, Sesame, or Diablo)\nPick bone-in or boneless\n2 Flavors of Ice cream(Chocolate, Vanilla, Strawberry)\nCost: $150.00";
+		return mealPlan;
 	}
 }
