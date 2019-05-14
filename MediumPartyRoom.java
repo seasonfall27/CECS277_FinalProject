@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class MediumPartyRoom implements PartyRoom{
 
@@ -12,23 +13,32 @@ public class MediumPartyRoom implements PartyRoom{
 	private final int capacity = 45;
 	private final int pricePerHour = 250;
 	
-	private int totalHours;
+	private double totalHours;
 	private String mealPlan;
-	private int cost;
+	private double cost;
 	private int numOfPartyFavors;
 	private int numOfProjectorHours;
 	private boolean partyDecorations;
 	
+	private static int ID = 0;
+	private int roomNumber;
+	
+	public ArrayList<Reservation> reservations;
+	public static ArrayList<Guest> waitlist;
 	/*
 	 * Empty Constructor for the Medium Party Room
 	 */
 	public MediumPartyRoom() {
 		this.mealPlan = "Basic";
-		this.totalHours = 0;
-		this.cost = 0;
+		this.totalHours = 0.0;
+		this.cost = 0.0;
 		this.numOfPartyFavors = 0;
 		this.numOfProjectorHours = 0;
 		this.partyDecorations = false;
+		this.ID ++;
+		this.roomNumber = ID;
+		waitlist = new ArrayList<Guest>();
+		reservations = new ArrayList<Reservation>();
 	}
 	
 	/**
@@ -77,11 +87,22 @@ public class MediumPartyRoom implements PartyRoom{
 	//~~~~~~ Upgrade Functions ~~~~~~~~~	
 	
 	@Override
-	public void rentRoom(int hours) {
-		this.cost += hours*pricePerHour;
-		this.totalHours += hours;
+	public void rentRoom(DateAndTime time) {
+		double timeDiff = time.getTimeVal();
+		System.out.println(timeDiff);
+		this.cost += timeDiff*pricePerHour;
+		this.totalHours += timeDiff;
+		
 	}
 		
+	@Override
+	public void upgradeAll(Upgrades upgrade) {
+		this.upgradeMealPlan(upgrade.mealPlan);
+		this.buyPartyFavors(upgrade.partyFavors);
+		this.rentProjector(upgrade.projectorHours);
+		this.partyDecorations(upgrade.partyDecorations);
+	}
+	
 	@Override
 	public void upgradeMealPlan(String meal) {
 		int mealPlanAdditionalCost = 0;
@@ -113,7 +134,7 @@ public class MediumPartyRoom implements PartyRoom{
 		this.numOfProjectorHours += hours;
 	}
 	@Override
-	public void PartyDecorations(boolean partyDecor) {
+	public void partyDecorations(boolean partyDecor) {
 		this.partyDecorations = partyDecor;
 		if(this.partyDecorations) {
 			this.cost += 100;
@@ -127,11 +148,15 @@ public class MediumPartyRoom implements PartyRoom{
 		return description;
 	}
 	@Override
+	public ArrayList<Reservation> getReservations(){
+		return this.reservations;
+	}
+	@Override
 	public int getCapacity() {
 		return this.capacity;
 	}
 	@Override
-	public int getTotalHours() {
+	public double getTotalHours() {
 		return this.totalHours;
 	}
 	@Override
@@ -155,14 +180,27 @@ public class MediumPartyRoom implements PartyRoom{
 		return this.pricePerHour;
 	}
 	@Override
-	public int getCost() {
+	public double getCost() {
 		return this.cost;
+	}
+	@Override
+	public int getRoomNumber() {
+		return this.roomNumber;
+	}
+	@Override
+	public String getType() {
+		return "Medium";
 	}
 	
 	//~~~~~~ Setter Functions ~~~~~~~~~
 	
 	@Override
-	public void setTotalHours(int hours) {
+	public void addReservation(Reservation r) {
+		this.reservations.add(r);
+	}
+	
+	@Override
+	public void setTotalHours(double hours) {
 		this.totalHours = hours;
 	}
 	@Override
@@ -182,12 +220,50 @@ public class MediumPartyRoom implements PartyRoom{
 		this.mealPlan = mealPlan;
 	}
 	@Override
-	public void setCost(int cost) {
+	public void setCost(double cost) {
 		this.cost = cost;
 	}
 	@Override
 	public String toString() {
-		return "Medium Party Room\n"+getDescription()+"\nIn use for: "+getTotalHours()+" hours\nMeal Plan: "+getMealPlan()+"\n\tTotal: $"+getCost();
+		String s = "Medium Party Room #"+this.roomNumber+"\nMeal Plan: "+this.getMealPlan()+"\nNumber Of Party Favors: "+this.getNumOfPartyFavors()
+		+"\nNumber Of Projector Hours: "+this.getNumOfProjectorHours();
+		if(partyDecorations) {
+			s += "\n With Party Decorations\n";
+		}
+		s += "\tTotal: $"+this.getCost()+"\n";
+		return s;
 	}
+	@Override
+	public void reset() {
+		setTotalHours(0);
+		setCost(0);
+		setMealPlan("Basic");
+		setNumOfPartyFavors(0);
+		setNumOfProjectorHours(0);
+		setPartyDecorations(false);
+	}
+	@Override
+	public String displayRoomInfo() {
+		return "Medium Party Room\n\tDescription: "+description+"\n\tMax Capcity: "+capacity+"\n\tPrice Per Hour: $"+pricePerHour
+				+"\n\tUpgrades Available: \n\t\t* Upgrade Meal Plan\n\t\t\t- Bronze (+$30)\n\t\t\t- Silver (+$75)"+
+				"\n\t\t\t- Gold (+$165)\n\t\t\t- Platinum (+$255)" + "\n\t\t* Buy Party Favors: ($5 each)\n\t\t* Rent Projector: ($10 per hour)"
+				+"\n\t\t* Buy Party Decorations: ($100)";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public void rentTowels(int towels) {}
+	@Override 
+	public void addMealPlan(String meal) {}
+	@Override
+	public int getNumOfTowelRentals() {return 0;}
+	@Override
+	public void setNumOfTowelRentals(int towels) {}
 
 }

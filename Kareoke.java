@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Kareoke implements Lounge {
 
@@ -11,15 +12,24 @@ public class Kareoke implements Lounge {
 	private final int capacity = 10;
 	private final int pricePerHour = 30;
 	
-	private int totalHours;
+	private double totalHours;
 	private String mealPlan;
-	private int cost;
+	private double cost;
 	
+	private static int ID = 0;
+	private int roomNumber;
+	
+	public static ArrayList<Guest> waitlist;
+	public ArrayList<Reservation> reservations;
 	
 	public Kareoke() {
 		this.mealPlan = "";
-		this.totalHours = 0;
-		this.cost = 0;
+		this.totalHours = 0.0;
+		this.cost = 0.0;
+		this.ID ++;
+		this.roomNumber = ID;
+		waitlist = new ArrayList<Guest>();
+		reservations = new ArrayList<Reservation>();
 	}
 	
 	public Kareoke(int hours, String mealPlan) {
@@ -49,6 +59,10 @@ public class Kareoke implements Lounge {
 		this.mealPlan = mealPlan;
 	}
 
+	@Override
+	public ArrayList<Reservation> getReservations(){
+		return this.reservations;
+	}
 
 	public static String getDescription() {
 		return description;
@@ -65,7 +79,7 @@ public class Kareoke implements Lounge {
 	}
 
 	@Override
-	public int getCost() {
+	public double getCost() {
 		return this.cost;
 	}
 
@@ -75,29 +89,48 @@ public class Kareoke implements Lounge {
 	}
 
 	@Override
-	public int getTotalHours() {
+	public double getTotalHours() {
 		return this.totalHours;
 	}
-
+	
+	@Override
+	public int getRoomNumber() {
+		return this.roomNumber;
+	}
+	@Override
+	public String getType() {
+		return "Kareoke";
+	}
+	@Override
+	public void addReservation(Reservation r) {
+		this.reservations.add(r);
+	}
 	@Override
 	public void setMealPlan(String meal) {
 		this.mealPlan = meal;
 	}
 
 	@Override
-	public void setCost(int cost) {
+	public void setCost(double cost) {
 		this.cost = cost;
 	}
 
 	@Override
-	public void setTotalHours(int hours) {
+	public void setTotalHours(double hours) {
 		this.totalHours = hours;
 	}
 	
 	@Override
-	public void rentRoom(int hours) {
-		this.cost += hours*pricePerHour;
-		this.totalHours += hours;
+	public void rentRoom(DateAndTime time) {
+		double timeDiff = time.getTimeVal();
+		this.cost += timeDiff*pricePerHour;
+		this.totalHours += timeDiff;
+		
+	}
+	
+	@Override
+	public void upgradeAll(Upgrades upgrade) {
+		this.addMealPlan(upgrade.mealPlan);
 	}
 
 	@Override
@@ -125,7 +158,59 @@ public class Kareoke implements Lounge {
 	}
 	@Override
 	public String toString() {
-		return "Kareoke Lounge\n"+description+"\nIn use for: "+totalHours+" hours\nMeal Plan: "+mealPlan+"\n\tTotal: $"+cost;
+		String s = "Kareoke Room #"+this.roomNumber+"\nMeal Plan: "+this.getMealPlan();
+		s += "\n\tTotal: $"+this.getCost()+"\n";
+		return s;
 	}
+	@Override
+	public void reset() {
+		setTotalHours(0);
+		setCost(0);
+		setMealPlan("");
+	}
+	@Override
+	public String displayRoomInfo() {
+		return "Kareoke Room\n\tDescription: "+description+"\n\tMax Capcity: "+capacity+"\n\tPrice Per Hour: $"+pricePerHour
+				+"\n\tUpgrades Available: \n\t\t* Add Meal Plan\n\t\t- Basic (+$65)\n\t\t\t- Bronze (+$75)\n\t\t\t- Silver (+$90)"+
+				"\n\t\t\t- Gold (+$120)\n\t\t\t- Platinum (+$150)";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public void upgradeMealPlan(String meal) {}
+	@Override
+	public void buyPartyFavors(int num) {}
+	@Override
+	public void rentProjector(int hours) {}
+	@Override
+	public void partyDecorations(boolean partyDecor) {}
+	@Override
+	public void rentTowels(int towels) {}
+	@Override
+	public boolean getPartyDecorations() {return false;}
+	@Override
+	public int getNumOfPartyFavors() {return 0;}
+	@Override
+	public int getNumOfProjectorHours() {return 0;}
+	@Override
+	public int getNumOfTowelRentals() {return 0;}
+	@Override
+	public void setPartyDecorations(boolean p) {}
+	@Override
+	public void setNumOfPartyFavors(int num) {}
+	@Override
+	public void setNumOfProjectorHours(int hours) {}
+	@Override
+	public void setNumOfTowelRentals(int towels) {}
+
+	
 	
 }

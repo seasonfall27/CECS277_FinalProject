@@ -14,9 +14,9 @@ public interface PartyRoom extends Room{
 	int getCapacity();
 	/**
 	 * gets the total hours for the room to be rented
-	 * @return - int hours the room will be rented
+	 * @return - double hours the room will be rented
 	 */
-	int getTotalHours();
+	double getTotalHours();
 	/**
 	 * gets the boolean value of whether party decorations are to be used or not
 	 * @return - boolean value of the party decorations
@@ -39,19 +39,23 @@ public interface PartyRoom extends Room{
 	String getMealPlan();
 	/**
 	 * gets the cost applied to the room
-	 * @return - int value of the additional cost
+	 * @return - double value of the additional cost
 	 */
-	int getCost();
+	double getCost();
 	/**
 	 * gets the fixed price per hour of the room
 	 * @return - price per hour of the room
 	 */
 	int getPricePerHour();
+	
+	int getRoomNumber();
+	
+	String getType();
 	/**
 	 * Sets the number of hours the room will be used and price is adjusted accordingly
 	 * @param hours - number of hours the room will be rented
 	 */
-	void rentRoom(int hours);
+	void rentRoom(DateAndTime time);
 	/**
 	 * upgrades the meal plan. Adds to additional cost and changes meal plan
 	 * @param meal - meal plan to be upgraded to
@@ -72,12 +76,12 @@ public interface PartyRoom extends Room{
 	 * Customer can choose to add party decorations. Adds to additional cost and party decorations becomes true
 	 * @param paryDecor - Boolean value of whether party decorations will be used or not
 	 */
-	void PartyDecorations(boolean paryDecor);
+	void partyDecorations(boolean partyDecor);
 	/**
 	 * sets the total hours the room will be rented
 	 * @param hours - hours the room will be rented
 	 */
-	void setTotalHours(int hours);
+	void setTotalHours(double hours);
 	/**
 	 * Set the boolean value for party decorations
 	 * @param p - boolean value of party decorations
@@ -100,13 +104,20 @@ public interface PartyRoom extends Room{
 	void setMealPlan(String mealPlan);
 	/**
 	 * sets the cost of the room
-	 * @param cost - int value of the additional cost
+	 * @param cost - double value of the additional cost
 	 */
-	void setCost(int cost);
+	void setCost(double cost);
 	/**
 	 * to string of the party rooms
 	 * @return - string representation of the rooms descriptions
 	 */
 	String toString();
-	
+	/**
+	 * Resets the room data
+	 */
+	void reset();
+	/**
+	 * Returns a string with a basic description of the room
+	 */
+	String displayRoomInfo();
 }
