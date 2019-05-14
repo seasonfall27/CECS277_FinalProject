@@ -29,6 +29,10 @@ public class SilverMealPlan extends BronzeMealPlan{
 		cost = 90.00;
 	}
 	
+	public double getCost() {
+		return this.cost;
+	}
+	
 	SilverMealPlan(ArrayList<Pizza> p, ArrayList<String> s){
 		gourmetPizzaList = p;
 		

@@ -20,6 +20,10 @@ public class GoldMealPlan extends SilverMealPlan{
 		cost = 120.00;
 	}
 	
+	public double getCost() {
+		return this.cost;
+	}
+	
 	Wings getChicken() {
 		return chicken;
 	}
