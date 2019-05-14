@@ -2,7 +2,14 @@ import java.util.ArrayList;
 
 public class SmallPartyRoom implements PartyRoom {
 
-	private final String description = "Room with party tables and chairs, adjacent to arcade.";
+	private final String description = "Capacity: 30 people\nCost: $150/hr\n"
+			+ "Included in cost:\n        -Table & Chair set-up\n        -Basic Meal Plan\n"
+			+ "Upgrades Available: \n"
+			+ "        -Upgrade meal plan     Cost: $(new meal plan cost - basic meal plan cost)\n"
+			+ "        -Party favor bags     Cost: $5 per bag\n"
+			+ "        -Projector     Cost: $10/hour\n"
+			+ "        -Party decorations & set-up     Cost: $100\n"
+			+ "                  Themes: Hawaiian, Sea Life, Jungle, Space, or Modern Theme";
 	private final int capacity = 30;
 	private final int pricePerHour = 150;
 	
