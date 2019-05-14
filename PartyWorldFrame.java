@@ -33,8 +33,10 @@ public class PartyWorldFrame extends JFrame {
 	// border settings used in the method addARoomDescription()
 	Border raisedbevel = BorderFactory.createRaisedBevelBorder();
 	Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+	ReservationCalendar calendar;
 
-	public PartyWorldFrame() {
+	public PartyWorldFrame(ReservationCalendar calendar) {
+		this.calendar = calendar;
 		this.setTitle("Reservation System");
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); // makes window screen size
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -395,7 +397,7 @@ public class PartyWorldFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			String roomName = ("Aqua Room");
-			selectDTFrame s = new selectDTFrame(roomName);
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			s.setVisible(true);
 		}
 	}
@@ -407,7 +409,7 @@ public class PartyWorldFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			String roomName = ("Small Party Room");
-			selectDTFrame s = new selectDTFrame(roomName);
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			s.setVisible(true);
 		}
 	}
@@ -419,7 +421,7 @@ public class PartyWorldFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			String roomName = ("Medium Party Room");
-			selectDTFrame s = new selectDTFrame(roomName);
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			s.setVisible(true);
 		}
 	}
@@ -431,7 +433,7 @@ public class PartyWorldFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			String roomName = ("Karaoke Lounge");
-			selectDTFrame s = new selectDTFrame(roomName);
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			s.setVisible(true);
 		}
 	}
@@ -443,13 +445,14 @@ public class PartyWorldFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			String roomName = ("Billiards Lounge");
-			selectDTFrame s = new selectDTFrame(roomName);
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			s.setVisible(true);
 		}
 	}
 
 	public static void main(String[] args) {
-		PartyWorldFrame f = new PartyWorldFrame();
+		ReservationCalendar calendar = new ReservationCalendar();
+		PartyWorldFrame f = new PartyWorldFrame(calendar);
 		f.setVisible(true);
 	}
 }

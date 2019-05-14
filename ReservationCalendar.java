@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Calendar {
+public class ReservationCalendar {
 
 	public ArrayList<Reservation> calendar;
 	public ArrayList<CheckIn> checkedIn;
@@ -14,7 +14,7 @@ public class Calendar {
 	/**
 	 * Constructor for Calendar.  Will Create all Room objects necessary for the duration of the program
 	 */
-	public Calendar() {
+	public ReservationCalendar() {
 		calendar = new ArrayList<Reservation>();
 		
 		small = new ArrayList<Room>();
