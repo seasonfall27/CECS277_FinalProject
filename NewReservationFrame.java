@@ -223,7 +223,7 @@ public class NewReservationFrame extends JFrame {
 		// Room Details
 		roomType = new JLabel("Room Details: ");
 		roomType.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-		String[] roomTypeString = new String[] { "Aqua World", "Small Party Room", "Medium Party Room",
+		String[] roomTypeString = new String[] { "Aqua Room", "Small Party Room", "Medium Party Room",
 				"Karaoke Lounge", "Adults Billiards Lounge" };
 		roomTypeOptions = new JComboBox<String>(roomTypeString);
 		roomTypeListener = new RoomTypeListener();
@@ -366,7 +366,7 @@ public class NewReservationFrame extends JFrame {
 		panel.add(saveButton);
 		panel.add(cancelButton);
 		
-		if (roomName == "Aqua World") {
+		if (roomName == "Aqua Room") {
 			roomTypeOptions.setSelectedIndex(0);
 		}
 		if (roomName == "Small Party Room") {
@@ -708,7 +708,7 @@ public class NewReservationFrame extends JFrame {
 			String roomChoice = (String) roomTypeOptions.getSelectedItem();
 
 			// choice determines what content is added to the frame
-			if (roomChoice.equals("Aqua World")) {
+			if (roomChoice.equals("Aqua Room")) {
 				panel2.removeAll();
 				panel2.add(upgradeLabel);
 				panel2.add(upgradeMPText);
@@ -800,7 +800,7 @@ public class NewReservationFrame extends JFrame {
 	        	String roomChoice = (String) roomTypeOptions.getSelectedItem();
 
 				// choice determines what content is added to the frame
-				if (roomChoice.equals("Aqua World")) {
+				if (roomChoice.equals("Aqua Room")) {
 					panel1.removeAll();
 					createBasicMPComponents();
 					panel.add(panel1);

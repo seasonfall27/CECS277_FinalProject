@@ -33,8 +33,10 @@ public class PartyWorldFrame extends JFrame {
 	// border settings used in the method addARoomDescription()
 	Border raisedbevel = BorderFactory.createRaisedBevelBorder();
 	Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+	ReservationCalendar calendar;
 
-	public PartyWorldFrame() {
+	public PartyWorldFrame(ReservationCalendar calendar) {
+		this.calendar = calendar;
 		this.setTitle("Reservation System");
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); // makes window screen size
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -57,15 +59,15 @@ public class PartyWorldFrame extends JFrame {
 
 		centerPanel.add(panelTitle);
 		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\smallroom.jpg",
-				"Small Party Room", "hello");
+				"Small Party Room", SmallPartyRoom.getDescription());
 		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\medroom.jpg",
-				"Medium Party Room", "hello");
+				"Medium Party Room", MediumPartyRoom.getDescription());
 		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\aquaworldroom.jpg", 
-				"Aqua World", "hello");
-
-//		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\smallroom.jpg", "Small Party Room" , SmallPartyRoom.DESCRIPTION);
-//		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\medroom.jpg","Medium Party Room", MediumPartyRoom.DESCRIPTION);
-//		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\aquaroom.jpg", "Aqua Room" , AquaRoom.DESCRIPTION);
+				"Aqua Room", AquaRoom.getDescription());
+		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\karaoke.jpg",
+				"Karaoke Lounge", Kareoke.getDescription());
+		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\billiards.jpg",
+				"Billiards Lounge", Billiards.getDescription());
 
 		scrollPane = new JScrollPane(centerPanel);
 		this.add(scrollPane, BorderLayout.CENTER);
@@ -97,7 +99,7 @@ public class PartyWorldFrame extends JFrame {
 		menuItem.addActionListener(new RoomItemListener());
 		submenu.add(menuItem);
 
-		menuItem = new JMenuItem("Aqua World");
+		menuItem = new JMenuItem("Aqua Room");
 		menuItem.addActionListener(new RoomItemListener());
 		submenu.add(menuItem);
 		menu.add(submenu);
@@ -206,7 +208,7 @@ public class PartyWorldFrame extends JFrame {
 		JTextArea description = new JTextArea(5, 10);
 		description.append(roomDesc);
 		description.setEditable(false);
-		description.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+		description.setFont(new Font(Font.SERIF, Font.PLAIN, 16));
 		description.setBorder(BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
 		p.add(description);
 
@@ -216,7 +218,7 @@ public class PartyWorldFrame extends JFrame {
 		ActionListener bnMedListener = new BookNowMedButtonListener();
 		ActionListener bnKaraokeListener = new BookNowKaraokeButtonListener();
 		ActionListener bnBilliardsListener = new BookNowBilliardsButtonListener();
-		if (roomName == "Aqua World") {
+		if (roomName == "Aqua Room") {
 			bookButton.addActionListener(bnAquaListener);
 		}
 		if (roomName == "Small Party Room") {
@@ -263,31 +265,31 @@ public class PartyWorldFrame extends JFrame {
 			String item = menuItem.getText();
 			if (item.equals("All")) {
 				centerPanel.removeAll();
-				addAMealDescription(centerPanel, "Basic", "basic");
-				addAMealDescription(centerPanel, "Bronze", "bronze");
-				addAMealDescription(centerPanel, "Silver", "silver");
-				addAMealDescription(centerPanel, "Gold", "gold");
-				addAMealDescription(centerPanel, "Platinum", "platinum");
+				addAMealDescription(centerPanel, "Basic", BasicMealPlan.display());
+				addAMealDescription(centerPanel, "Bronze", BronzeMealPlan.display());
+				addAMealDescription(centerPanel, "Silver", SilverMealPlan.display());
+				addAMealDescription(centerPanel, "Gold", GoldMealPlan.display());
+				addAMealDescription(centerPanel, "Platinum", PlatinumMealPlan.display());
 				centerPanel.updateUI();
 			} else if (item.equals("Basic")) {
 				centerPanel.removeAll();
-				addAMealDescription(centerPanel, "Basic", "basic");
+				addAMealDescription(centerPanel, "Basic", BasicMealPlan.display());
 				centerPanel.updateUI();}
 			else if (item.equals("Bronze")) {
 				centerPanel.removeAll();
-				addAMealDescription(centerPanel, "Bronze", "bronze");
+				addAMealDescription(centerPanel, "Bronze", BronzeMealPlan.display());
 				centerPanel.updateUI();}
 			else if (item.equals("Silver")) {
 				centerPanel.removeAll();
-				addAMealDescription(centerPanel, "Silver", "Silver");
+				addAMealDescription(centerPanel, "Silver", SilverMealPlan.display());
 				centerPanel.updateUI();}
 			else if (item.equals("Gold")) {
 				centerPanel.removeAll();
-				addAMealDescription(centerPanel, "Gold", "Gold");
+				addAMealDescription(centerPanel, "Gold", GoldMealPlan.display());
 				centerPanel.updateUI();}
 			else if (item.equals("Platinum")) {
 				centerPanel.removeAll();
-				addAMealDescription(centerPanel, "Platinum", "Platinum");
+				addAMealDescription(centerPanel, "Platinum", PlatinumMealPlan.display());
 				centerPanel.updateUI();}
 		}
 	}
@@ -302,11 +304,11 @@ public class PartyWorldFrame extends JFrame {
 				// remove all components in panel.
 				centerPanel.removeAll();
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\smallroom.jpg",
-						"Small Party Room", "hello");
+						"Small Party Room", SmallPartyRoom.getDescription());
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\medroom.jpg",
-						"Medium Party Room", "hello");
+						"Medium Party Room", MediumPartyRoom.getDescription());
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\aquaworldroom.jpg",
-						"Aqua World", "hello");
+						"Aqua Room", AquaRoom.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
 			}
@@ -315,7 +317,7 @@ public class PartyWorldFrame extends JFrame {
 				// remove all components in panel.
 				centerPanel.removeAll();
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\smallroom.jpg",
-						"Small Party Room", "hello");
+						"Small Party Room", SmallPartyRoom.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
 			}
@@ -324,16 +326,16 @@ public class PartyWorldFrame extends JFrame {
 				// remove all components in panel.
 				centerPanel.removeAll();
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\medroom.jpg",
-						"Medium Party Room", "hello");
+						"Medium Party Room", MediumPartyRoom.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
 			}
 
-			if (item.getText().equals("Aqua World")) {
+			if (item.getText().equals("Aqua Room")) {
 				// remove all components in panel.
 				centerPanel.removeAll();
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\aquaworldroom.jpg",
-						"Aqua World", "hello");
+						"Aqua Room", AquaRoom.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
 			}
@@ -350,9 +352,9 @@ public class PartyWorldFrame extends JFrame {
 				// remove all components in panel.
 				centerPanel.removeAll();
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\karaoke.jpg",
-						"Karaoke Lounge", "hello");
+						"Karaoke Lounge", Kareoke.getDescription());
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\billiards.jpg",
-						"Billiards Lounge", "hello");
+						"Billiards Lounge", Billiards.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
 			}
@@ -361,7 +363,7 @@ public class PartyWorldFrame extends JFrame {
 				// remove all components in panel.
 				centerPanel.removeAll();
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\karaoke.jpg",
-						"Karaoke Lounge", "hello");
+						"Karaoke Lounge", Kareoke.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
 			}
@@ -370,7 +372,7 @@ public class PartyWorldFrame extends JFrame {
 				// remove all components in panel.
 				centerPanel.removeAll();
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\billiards.jpg",
-						"Billiards Lounge", "hello");
+						"Billiards Lounge", Billiards.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
 			}
@@ -394,8 +396,8 @@ public class PartyWorldFrame extends JFrame {
 	class BookNowAquaButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			String roomName = ("Aqua World");
-			selectDTFrame s = new selectDTFrame(roomName);
+			String roomName = ("Aqua Room");
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			s.setVisible(true);
 		}
 	}
@@ -407,7 +409,7 @@ public class PartyWorldFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			String roomName = ("Small Party Room");
-			selectDTFrame s = new selectDTFrame(roomName);
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			s.setVisible(true);
 		}
 	}
@@ -419,7 +421,7 @@ public class PartyWorldFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			String roomName = ("Medium Party Room");
-			selectDTFrame s = new selectDTFrame(roomName);
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			s.setVisible(true);
 		}
 	}
@@ -431,7 +433,7 @@ public class PartyWorldFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			String roomName = ("Karaoke Lounge");
-			selectDTFrame s = new selectDTFrame(roomName);
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			s.setVisible(true);
 		}
 	}
@@ -443,13 +445,14 @@ public class PartyWorldFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			String roomName = ("Billiards Lounge");
-			selectDTFrame s = new selectDTFrame(roomName);
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			s.setVisible(true);
 		}
 	}
 
 	public static void main(String[] args) {
-		PartyWorldFrame f = new PartyWorldFrame();
+		ReservationCalendar calendar = new ReservationCalendar();
+		PartyWorldFrame f = new PartyWorldFrame(calendar);
 		f.setVisible(true);
 	}
 }

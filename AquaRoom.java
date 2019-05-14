@@ -1,29 +1,49 @@
+import java.util.ArrayList;
+
 public class AquaRoom implements Room{
 	
-	final static String description = "Olympic-sized pool with water slide, kiddie pool, and large jacuzzi.";
+	final static String description = "Capacity: 75 people\nCost: $700/hr\n"
+			+ "Included in cost: Access to showers/lockers\n        -life guards on duty\n        -DJ\n"
+			+ "        -table & chair set-up\n        -Basic Meal Plan\nUpgrades Available: \n"
+			+ "        -Upgrade meal plan     Cost: $5x(new meal plan cost - basic meal plan cost)\n"
+			+ "        -Towel Rentals     Cost: $2 each\n"
+			+ "        -Party favor bags     Cost: $5 per bag\n"
+			+ "        -Projector     Cost: $10/hour\n"
+			+ "        -Party decorations & set-up     Cost: $100\n"
+			+ "                  Themes: Hawaiian, Sea Life, Jungle, Space, or Modern Theme";
 	private final int capacity = 75;
 	private final int pricePerHour = 700;
 	private final String restrictions = "To access water facilities, bathing suits must be worn at all time";
 	
-	private int totalHours;
+	private double totalHours;
 	private String mealPlan;
-	private int cost;
+	private double cost;
 	private int numOfTowelRentals;
 	private int numOfPartyFavors;
 	private int numOfProjectorHours;
 	private boolean partyDecorations;
+	
+	private static int ID = 0;
+	private int roomNumber;
+	
+	public static ArrayList<Guest> waitlist;
+	public ArrayList<Reservation> reservations;
 	
 	/*
 	 * Empty Constructor for the Aqua Room
 	 */
 	public AquaRoom() {
 		this.mealPlan = "Basic";
-		this.totalHours = 0;
-		this.cost = 0;
+		this.totalHours = 0.0;
+		this.cost = 0.0;
 		this.numOfTowelRentals = 0;
 		this.numOfPartyFavors = 0;
 		this.numOfProjectorHours = 0;
 		this.partyDecorations = false;
+		this.ID ++;
+		this.roomNumber = ID;
+		waitlist = new ArrayList<Guest>();
+		reservations = new ArrayList<Reservation>();
 	}
 	
 	/**
@@ -43,16 +63,16 @@ public class AquaRoom implements Room{
 		int mealPlanAdditionalCost = 0;
 		if(mealPlan!="Basic") {
 			if(mealPlan.equals("Bronze")) {
-				mealPlanAdditionalCost = 10;
+				mealPlanAdditionalCost = 50;
 			}
 			if(mealPlan.equals("Silver")) {
-				mealPlanAdditionalCost = 25;
+				mealPlanAdditionalCost = 125;
 			}
 			if(mealPlan.equals("Gold")) {
-				mealPlanAdditionalCost = 55;
+				mealPlanAdditionalCost = 275;
 			}
 			if(mealPlan.equals("Platinum")) {
-				mealPlanAdditionalCost = 85;
+				mealPlanAdditionalCost = 425;
 			}
 		}
 		this.cost += mealPlanAdditionalCost;
@@ -78,11 +98,24 @@ public class AquaRoom implements Room{
 	
 	/**
 	 * Sets the number of hours the room will be used and price is adjusted accordingly
-	 * @param hours - number of hours the room will be rented
+	 * @param DateAndTime - DateAndTime object for start time
+	 * @param DateAndTime - DateAndTime object for end time
 	 */
-	public void rentRoom (int hours) {
-		this.cost += hours*pricePerHour;
-		this.totalHours += hours;
+	@Override
+	public void rentRoom(DateAndTime time) {
+		double timeDiff = time.getTimeVal();
+		this.cost += timeDiff*pricePerHour;
+		this.totalHours += timeDiff;
+		
+	}
+	
+	@Override
+	public void upgradeAll(Upgrades upgrade) {
+		this.upgradeMealPlan(upgrade.mealPlan);
+		this.buyPartyFavors(upgrade.partyFavors);
+		this.rentProjector(upgrade.projectorHours);
+		this.partyDecorations(upgrade.partyDecorations);
+		this.rentTowels(upgrade.towelRentals);
 	}
 	
 	/**
@@ -129,7 +162,7 @@ public class AquaRoom implements Room{
 	 * Customer can choose to add party decorations. Adds to additional cost and party decorations becomes true
 	 * @param paryDecor - Boolean value of whether party decorations will be used or not
 	 */
-	public void PartyDecorations(boolean partyDecor) {
+	public void partyDecorations(boolean partyDecor) {
 		this.partyDecorations = partyDecor;
 		if(this.partyDecorations) {
 			this.cost += 100;
@@ -146,13 +179,18 @@ public class AquaRoom implements Room{
 	
 	
 	//~~~~~~ Getter Functions ~~~~~~~~~
-		
+	
+	@Override
+	public ArrayList<Reservation> getReservations(){
+		return this.reservations;
+	}
+	
 	/**
 	 * gets the fixed description of the Room
 	 * @return - String of Description of the room
 	 */
 	public static String getDescription() {
-		return this.description;
+		return description;
 	}
 	/**
 	 * gets the restrictions of the aqua Room
@@ -177,9 +215,9 @@ public class AquaRoom implements Room{
 	}
 	/**
 	 * gets the number of hours the room will be rented
-	 * @return - int hours the room will be rented
+	 * @return - double hours the room will be rented
 	 */
-	public int getTotalHours() {
+	public double getTotalHours() {
 		return this.totalHours;
 	}
 	/**
@@ -212,9 +250,9 @@ public class AquaRoom implements Room{
 	}
 	/**
 	 * gets the additional cost applied to the room
-	 * @return - int value of the additional cost
+	 * @return - double value of the additional cost
 	 */
-	public int getCost() {
+	public double getCost() {
 		return this.cost;
 	}
 	/**
@@ -224,15 +262,26 @@ public class AquaRoom implements Room{
 	public int getNumOfTowelRentals() {
 		return this.numOfTowelRentals;
 	}
+	@Override
+	public int getRoomNumber() {
+		return this.roomNumber;
+	}
+	@Override
+	public String getType() {
+		return "Aqua";
+	}
 	
 	
 	//~~~~~~ Setter Functions ~~~~~~~~~
-	
+	@Override
+	public void addReservation(Reservation r) {
+		this.reservations.add(r);
+	}
 	/**
 	 * sets the number of hours the room will be rented
-	 * @param hours - int hours the room will be rented
+	 * @param hours - double hours the room will be rented
 	 */
-	public void setTotalHours(int hours) {
+	public void setTotalHours(double hours) {
 		this.totalHours = hours;
 	}
 	/**
@@ -265,9 +314,9 @@ public class AquaRoom implements Room{
 	}
 	/**
 	 * sets the additional cost
-	 * @param cost - int value of the additional cost
+	 * @param cost - double value of the additional cost
 	 */
-	public void setCost(int cost) {
+	public void setCost(double cost) {
 		this.cost = cost;
 	}
 	/**
@@ -280,8 +329,42 @@ public class AquaRoom implements Room{
 	/**
 	 * To String for the Aqua Room
 	 */
+	@Override
 	public String toString() {
-		return "Aqua Room\n"+description+"\nIn use for: "+totalHours+" hours\nMeal Plan: "+mealPlan+"\n\tTotal: $"+cost;
+		String s = "Aqua Room #"+this.roomNumber+"\nMeal Plan: "+this.getMealPlan()+"\nNumber Of Party Favors: "+this.getNumOfPartyFavors()
+		+"\nNumber Of Projector Hours: "+this.getNumOfProjectorHours()+"\nNumber of Towel Rentals: "+this.getNumOfTowelRentals();
+		if(partyDecorations) {
+			s += "\n With Party Decorations\n";
+		}
+		s += "\tTotal: $"+this.getCost()+"\n";
+		return s;
 	}
+	@Override
+	public void reset() {
+		setTotalHours(0);
+		setCost(0);
+		setMealPlan("Basic");
+		setNumOfPartyFavors(0);
+		setNumOfProjectorHours(0);
+		setNumOfTowelRentals(0);
+		setPartyDecorations(false);
+	}
+	@Override
+	public String displayRoomInfo() {
+		return "Aqua Room\n\tDescription: "+description+"\n\tRestrictions: "+restrictions+"\n\tMax Capcity: "+capacity+"\n\tPrice Per Hour: $"+pricePerHour
+				+"\n\tUpgrades Available: \n\t\t* Upgrade Meal Plan\n\t\t\t- Bronze (+$30)\n\t\t\t- Silver (+$75)"+
+				"\n\t\t\t- Gold (+$165)\n\t\t\t- Platinum (+$255)" + "\n\t\t* Buy Party Favors: ($5 each)\n\t\t* Rent Projector: ($10 per hour)"
+				+"\n\t\t* Buy Party Decorations: ($100)\n\t\t* Rent Towels($2 each)";
+	}
+	
+	
+	
+	
 
+	
+	
+	
+	
+	@Override 
+	public void addMealPlan(String meal) {}
 }
