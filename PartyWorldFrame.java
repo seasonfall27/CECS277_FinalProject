@@ -61,7 +61,7 @@ public class PartyWorldFrame extends JFrame {
 		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\medroom.jpg",
 				"Medium Party Room", MediumPartyRoom.getDescription());
 		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\aquaworldroom.jpg", 
-				"Aqua World", AquaRoom.getDescription());
+				"Aqua Room", AquaRoom.getDescription());
 		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\karaoke.jpg",
 				"Karaoke Lounge", Kareoke.getDescription());
 		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\billiards.jpg",
@@ -97,7 +97,7 @@ public class PartyWorldFrame extends JFrame {
 		menuItem.addActionListener(new RoomItemListener());
 		submenu.add(menuItem);
 
-		menuItem = new JMenuItem("Aqua World");
+		menuItem = new JMenuItem("Aqua Room");
 		menuItem.addActionListener(new RoomItemListener());
 		submenu.add(menuItem);
 		menu.add(submenu);
@@ -216,7 +216,7 @@ public class PartyWorldFrame extends JFrame {
 		ActionListener bnMedListener = new BookNowMedButtonListener();
 		ActionListener bnKaraokeListener = new BookNowKaraokeButtonListener();
 		ActionListener bnBilliardsListener = new BookNowBilliardsButtonListener();
-		if (roomName == "Aqua World") {
+		if (roomName == "Aqua Room") {
 			bookButton.addActionListener(bnAquaListener);
 		}
 		if (roomName == "Small Party Room") {
@@ -306,7 +306,7 @@ public class PartyWorldFrame extends JFrame {
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\medroom.jpg",
 						"Medium Party Room", MediumPartyRoom.getDescription());
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\aquaworldroom.jpg",
-						"Aqua World", AquaRoom.getDescription());
+						"Aqua Room", AquaRoom.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
 			}
@@ -329,11 +329,11 @@ public class PartyWorldFrame extends JFrame {
 				centerPanel.updateUI();
 			}
 
-			if (item.getText().equals("Aqua World")) {
+			if (item.getText().equals("Aqua Room")) {
 				// remove all components in panel.
 				centerPanel.removeAll();
 				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\aquaworldroom.jpg",
-						"Aqua World", AquaRoom.getDescription());
+						"Aqua Room", AquaRoom.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
 			}
@@ -394,7 +394,7 @@ public class PartyWorldFrame extends JFrame {
 	class BookNowAquaButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			String roomName = ("Aqua World");
+			String roomName = ("Aqua Room");
 			selectDTFrame s = new selectDTFrame(roomName);
 			s.setVisible(true);
 		}

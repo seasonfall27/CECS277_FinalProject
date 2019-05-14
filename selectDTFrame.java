@@ -14,6 +14,11 @@ public class selectDTFrame extends JFrame {
 	private JSpinner dateSpinner;
 	private JSpinner startSpinner;
 	private JSpinner endSpinner;
+	int smallCount = 10;
+	int aquaCount = 1;
+	int medCount = 2;
+	int karaokeCount = 10;
+	int billiardsCount = 5;
 	
 
 	public selectDTFrame(String roomName) {
@@ -61,6 +66,8 @@ public class selectDTFrame extends JFrame {
 		submitButton = new JButton("Submit");
 		ActionListener saveListener = new SubmitButtonListener();
 		submitButton.addActionListener(saveListener);
+		
+		
 
 		panel.add(roomType);
 		panel.add(date);
@@ -87,18 +94,107 @@ public class selectDTFrame extends JFrame {
 			 * else date is not available
 			 * -> waitlist screen will pop up
 			 * **/
+			
 			String dateChosen = new SimpleDateFormat("MM/dd/yyyy").format(dateSpinner.getValue());
-			System.out.println(dateChosen);
 			
 			String startTimeChosen = new SimpleDateFormat("HH:mm a").format(startSpinner.getValue());
-			System.out.println(startTimeChosen);
 			
 			String endTimeChosen = new SimpleDateFormat("HH:mm a").format(endSpinner.getValue());
-			System.out.println(endTimeChosen);
 			
-			NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
-			selectDTFrame.this.dispose();
-			n.setVisible(true);
+//			if (roomName == "Small Party Room") {
+//				if (isTimeSlotAvailable() == false && smallCount == 0) {
+//					waitlistFrame w = new waitlistFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					w.setVisible(true);
+//				}
+//				else if (isTimeSlotAvailable() == false) {
+//					NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					n.setVisible(true);
+//					smallCount -= 1;
+//				}
+//				else {
+//					NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					n.setVisible(true);
+//				}
+//			}
+//			
+//			if (roomName == "Medium Party Room") {
+//				if (isTimeSlotAvailable() == false && medCount == 0) {
+//					waitlistFrame w = new waitlistFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					w.setVisible(true);
+//				}
+//				else if (isTimeSlotAvailable() == false) {
+//					NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					n.setVisible(true);
+//					medCount -= 1;
+//				}
+//				else {
+//					NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					n.setVisible(true);
+//				}
+//			}
+//			
+//			if (roomName == "Aqua Room") {
+//				if (isTimeSlotAvailable() == false && aquaCount == 0) {
+//					waitlistFrame w = new waitlistFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					w.setVisible(true);
+//				}
+//				else if (isTimeSlotAvailable() == false) {
+//					NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					n.setVisible(true);
+//					aquaCount -= 1;
+//				}
+//				else {
+//					NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					n.setVisible(true);
+//				}
+//			}
+//			
+//			if (roomName == "Karaoke Lounge") {
+//				if (isTimeSlotAvailable() == false && karaokeCount == 0) {
+//					waitlistFrame w = new waitlistFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					w.setVisible(true);
+//				}
+//				else if (isTimeSlotAvailable() == false) {
+//					NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					n.setVisible(true);
+//					karaokeCount -= 1;
+//				}
+//				else {
+//					NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					n.setVisible(true);
+//				}
+//			}
+//			
+//			if (roomName == "Billiards Lounge") {
+//				if (isTimeSlotAvailable() == false && billiardsCount == 0) {
+//					waitlistFrame w = new waitlistFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					w.setVisible(true);
+//				}
+//				else if (isTimeSlotAvailable() == false) {
+//					NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					n.setVisible(true);
+//					billiardsCount -= 1;
+//				}
+//				else {
+//					NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+//					selectDTFrame.this.dispose();
+//					n.setVisible(true);
+//				}
+//			}
 		}
 	}
 }
