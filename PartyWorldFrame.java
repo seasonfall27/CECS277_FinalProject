@@ -397,7 +397,7 @@ public class PartyWorldFrame extends JFrame {
 	class EditReservationItemListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			EditReservationFrame e = new EditReservationFrame(null);
+			EnterConfirmationFrame e = new EnterConfirmationFrame(calendar);
 			e.setVisible(true);
 		}
 	}

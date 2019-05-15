@@ -50,6 +50,7 @@ public class ConfirmationFrame extends JFrame {
 		stringBuilder.append("\n        Projector: ");
 		stringBuilder.append("\n        Party decorations & Set-Up Theme: ");
 		stringBuilder.append("\n\nMeal Plan: ");
+		stringBuilder.append(r.toString());
 		
 		textArea.setText(stringBuilder.toString());
 		
@@ -72,10 +73,5 @@ public class ConfirmationFrame extends JFrame {
 		public void actionPerformed(ActionEvent click) {
 			ConfirmationFrame.this.dispose();
 		}
-	}
-	
-	public static void main(String[] args) {
-		ConfirmationFrame f = new ConfirmationFrame(r);
-		f.setVisible(true);
 	}
 }

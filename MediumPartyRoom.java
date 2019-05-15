@@ -2,7 +2,14 @@ import java.util.ArrayList;
 
 public class MediumPartyRoom implements PartyRoom{
 
-	private final String description = "Room with party tables and chairs, quick access to arcade.";
+	private final static String description = "Capacity: 45 people\nCost: $250/hr\n"
+			+ "Included in cost:\n        -Table & chair set-up\n        -DJ\n        -Basic Meal Plan\n"
+			+ "Upgrades Available: \n"
+			+ "        -Upgrade meal plan     Cost: $3x(new meal plan cost - basic meal plan cost)\n"
+			+ "        -Party favor bags     Cost: $5 per bag\n"
+			+ "        -Projector     Cost: $10/hour\n"
+			+ "        -Party decorations & set-up     Cost: $100\n"
+			+ "                  Themes: Hawaiian, Sea Life, Jungle, Space, or Modern Theme";
 	private final int capacity = 45;
 	private final int pricePerHour = 250;
 	
@@ -151,7 +158,6 @@ public class MediumPartyRoom implements PartyRoom{
 	public ArrayList<Guest> getWaitlist(){
 		return this.waitlist;
 	}
-	@Override
 	public static String getDescription() {
 		return description;
 	}

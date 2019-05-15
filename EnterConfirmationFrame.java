@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class EnterConfirmationFrame extends JFrame {
 	JPanel panel;
@@ -16,7 +17,7 @@ public class EnterConfirmationFrame extends JFrame {
 
 		// set the frame properties
 		this.setTitle("Enter Confirmation Number");
-		this.setSize(350, 100);
+		this.setSize(400, 300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -36,6 +37,7 @@ public class EnterConfirmationFrame extends JFrame {
 		closeButton.addActionListener(closeListener);
 
 		panel.add(enter);
+		panel.add(numberField);
 		panel.add(submitButton);
 		panel.add(closeButton);
 		this.add(panel);
@@ -47,20 +49,23 @@ public class EnterConfirmationFrame extends JFrame {
 	class SubmitButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-//			String confNum = numberField.getText();
-//			if (confNum in array of reservations) {
-//				EditReservationFrame e = new EditReservationFrame(confNum, calendar);
-//				EnterConfirmationFrame.this.dispose();
-//				e.setVisible(true);
-//			}
-//			else {
-//				JLabel noExist = new JLabel("Confirmation Number of Reservation does not exist. Please close the window.");
-//				panel.remove(submitButton);
-//				panel.remove(numberField);
-//				panel.remove(closeButton);
-//				panel.add(noExist);
-//				panel.add(closeButton);
-//			}
+			String confNumString = numberField.getText();
+			int confNum = Integer.parseInt(confNumString);	
+			Reservation foundRes = calendar.getReservationByID(confNum);
+			if (foundRes == null) {
+				JLabel noExist = new JLabel("Confirmation Number of Reservation does not exist.\n Please close the window.");
+				panel.remove(submitButton);
+				panel.remove(numberField);
+				panel.remove(closeButton);
+				panel.add(noExist);
+				panel.add(closeButton);
+				panel.updateUI();
+			}
+			else {
+				EditReservationFrame e = new EditReservationFrame(foundRes, calendar);
+				EnterConfirmationFrame.this.dispose();
+				e.setVisible(true);
+			}
 		}
 	}
 	

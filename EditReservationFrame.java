@@ -31,6 +31,7 @@ public class EditReservationFrame extends JFrame {
 	JPanel panel1;
 	JPanel panel2;
 	Reservation r;
+	ReservationCalendar calendar;
 
 	// Guest Information
 	private JLabel name;
@@ -143,8 +144,9 @@ public class EditReservationFrame extends JFrame {
 	 * @param cr - CashRegister object that is used to store items and calculate
 	 *           cost for purchase
 	 **/
-	public EditReservationFrame(Reservation r) {
+	public EditReservationFrame(Reservation r, ReservationCalendar calendar) {
 		this.r = r;
+		this.calendar = calendar;
 		// call private helper method to create and add components
 		createComponents();
 
@@ -225,8 +227,6 @@ public class EditReservationFrame extends JFrame {
 		roomTypeOptions = new JComboBox<String>(roomTypeString);
 		roomTypeListener = new RoomTypeListener();
 		roomTypeOptions.addActionListener(roomTypeListener);
-		roomTypeOptions.setSelectedIndex(Arrays.asList(roomTypeString).indexOf(r.roomType));
-		
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -237,11 +237,11 @@ public class EditReservationFrame extends JFrame {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
 		Date chosenDate = null;
 		try {
-			if (r.time == null) {
+			if (r.time.getDate() == null) {
 				chosenDate = defaultDate;
 			}
 			else {
-				chosenDate = df.parse(r.time);
+				chosenDate = df.parse(r.time.getDate());
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -257,11 +257,11 @@ public class EditReservationFrame extends JFrame {
 		DateFormat df2 = new SimpleDateFormat("hh:mm a"); 
 		Date chosenStartTime = null;
 		try {
-			if (r.time == null) {
+			if (r.time.getStart() == null) {
 				chosenStartTime = defaultDate;
 			}
 			else {
-				chosenStartTime = df2.parse(r.time);
+				chosenStartTime = df2.parse(r.time.getStart());
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -279,11 +279,11 @@ public class EditReservationFrame extends JFrame {
 		DateFormat df3 = new SimpleDateFormat("hh:mm a"); 
 		Date chosenEndTime = null;
 		try {
-			if (r.time == null) {
+			if (r.time.getEnd() == null) {
 				chosenEndTime = defaultDate;
 			}
 			else {
-				chosenEndTime = df3.parse(r.time);
+				chosenEndTime = df3.parse(r.time.getEnd());
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -370,6 +370,22 @@ public class EditReservationFrame extends JFrame {
 		panel.add(saveButton);
 		panel.add(deleteButton);
 		panel.add(cancelButton);
+		
+		if (r.roomType == "Aqua Room") {
+			roomTypeOptions.setSelectedIndex(0);
+		}
+		if (r.roomType == "Small Party Room") {
+			roomTypeOptions.setSelectedIndex(1);
+		}
+		if (r.roomType == "Medium Party Room") {
+			roomTypeOptions.setSelectedIndex(2);
+		}
+		if (r.roomType == "Karaoke Lounge") {
+			roomTypeOptions.setSelectedIndex(3);
+		}
+		if (r.roomType == "Billiards Lounge") {
+			roomTypeOptions.setSelectedIndex(4);
+		}
 
 		// add the panel to this frame
 		this.add(panel);
@@ -906,9 +922,8 @@ public class EditReservationFrame extends JFrame {
 			String phoneNumber = phoneTextField.getText();
 			String address = addressTextField.getText();
 			String birthMonth = (String) monthOptions.getSelectedItem();
-			String birthDay = (String) dayOptions.getValue();
+			String birthDay = dayOptions.getValue().toString();
 			String birthYear = yearTextField.getText();
-			String DateOfBirth = birthDay + "/" + birthMonth + "/" + birthYear;
 			String emailInput = emailTextField.getText();
 			boolean contactByPhone = false;
 			if (phoneCheckbox.isSelected()) {
@@ -938,17 +953,49 @@ public class EditReservationFrame extends JFrame {
 			}
 			//room details
 			String roomType = (String) roomTypeOptions.getSelectedItem();
+
+			String dateChosen = new SimpleDateFormat("MM/dd/yyyy").format(dateSpinner.getValue());
+
+			String startTimeChosen = new SimpleDateFormat("HH:mm a").format(startSpinner.getValue());
+
+			String endTimeChosen = new SimpleDateFormat("HH:mm a").format(endSpinner.getValue());
+
+			DateAndTime timeChosen = new DateAndTime(dateChosen, startTimeChosen, endTimeChosen);
 			
 			Guest newGuest = new Guest();
 			newGuest.setName(name);
 			newGuest.setPhone(phoneNumber);
-			newGuest.setBirthday(DateOfBirth);
+			newGuest.setBirthdayMonth(birthMonth);
+			newGuest.setBirthdayDay(birthDay);
+			newGuest.setBirthdayYear(birthYear);
 			newGuest.setEmail(emailInput);
 			newGuest.setAddress(address);
+			newGuest.setNameOnCreditCard(nameOnCard);
 			newGuest.setCreditCard(numberOnCard);
 			newGuest.setSecurity(security);
 			newGuest.setCardExperation(cardExpiration);
 			newGuest.setCreditType(cardType);
+			newGuest.setContactPhone(contactByPhone);
+			newGuest.setContactEmail(contactByEmail);
+			
+			int testingYear = Integer.parseInt(birthYear);
+			if (roomType == "Karaoke Lounge" && testingYear > 1998) {
+				AdultFrame a = new AdultFrame();
+				EditReservationFrame.this.dispose();
+				a.setVisible(true);
+			}
+			else {
+				if (calendar.isRoomAvailable(roomType, timeChosen) == false) {
+					waitlistFrame w = new waitlistFrame(roomType, dateChosen, startTimeChosen, endTimeChosen, calendar);
+					EditReservationFrame.this.dispose();
+					w.setVisible(true);
+				} else {
+					// create new reservation object
+//					ConfirmationFrame c = new ConfirmationFrame(finalizedReservation);
+//					NewReservationFrame.this.dispose();
+//					c.setVisible(true);
+				}
+			}
 		}	
 	}
 }

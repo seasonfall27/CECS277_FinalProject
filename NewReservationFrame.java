@@ -226,7 +226,7 @@ public class NewReservationFrame extends JFrame {
 		// Room Details
 		roomType = new JLabel("Room Details: ");
 		roomType.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-		String[] roomTypeString = new String[] { "Aqua World", "Small Party Room", "Medium Party Room",
+		String[] roomTypeString = new String[] { "Aqua Room", "Small Party Room", "Medium Party Room",
 				"Karaoke Lounge", "Adults Billiards Lounge" };
 		roomTypeOptions = new JComboBox<String>(roomTypeString);
 		roomTypeListener = new RoomTypeListener();
@@ -941,9 +941,18 @@ public class NewReservationFrame extends JFrame {
 					w.setVisible(true);
 				} else {
 					// create new reservation object
-//					ConfirmationFrame c = new ConfirmationFrame(finalizedReservation);
-//					NewReservationFrame.this.dispose();
-//					c.setVisible(true);
+					Reservation newReservation = new Reservation();
+					newReservation.setRoomType(roomType);
+					DateAndTime selectedDT = new DateAndTime();
+					selectedDT.setDate(dateChosen);
+					selectedDT.setStart(startTimeChosen);
+					selectedDT.setEnd(endTimeChosen);
+					newReservation.setTime(selectedDT);
+//					calendar.addReservation(roomType, selectedDT,);
+					
+					ConfirmationFrame c = new ConfirmationFrame(newReservation);
+					NewReservationFrame.this.dispose();
+					c.setVisible(true);
 				}
 			}
 		}	
