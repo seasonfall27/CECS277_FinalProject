@@ -129,4 +129,8 @@ public class DateAndTime {
 		}
 	}
 
+	public String toString() {
+		return "Date: "+ date + "\nStart Time: " + start + "\nEnd Time: " + end;
+	}
+
 }

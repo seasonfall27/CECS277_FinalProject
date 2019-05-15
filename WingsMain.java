@@ -1,5 +1,3 @@
-package Wings;
-
 
 public class WingsMain {
 	

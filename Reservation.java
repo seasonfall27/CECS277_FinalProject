@@ -47,7 +47,8 @@ public class Reservation {
 	 * To String of a reservation
 	 */
 	public String toString() {
-		String s = "Reservation #"+this.getID()+"\n"; 
+		String s = "Reservation #"+this.getID()+"\n";
+		s += time.toString();
 		// Add Customer Info Here
 		return s;
 	}

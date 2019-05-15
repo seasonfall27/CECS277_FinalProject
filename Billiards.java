@@ -16,17 +16,17 @@ public class Billiards implements Lounge {
 	private final String restrictions = "21+ and over";
 	
 	private double totalHours;
-	private String mealPlan;
+	private BasicMealPlan mealPlan;
 	private double cost;
 	
 	private static int ID = 0;
 	private int roomNumber;
 	
-	public static ArrayList<Guest> waitlist;
-	public ArrayList<Reservation> reservations;
+	private static ArrayList<Guest> waitlist;
+	private ArrayList<Reservation> reservations;
 	
 	public Billiards() {
-		this.mealPlan = "";
+		this.mealPlan = new BasicMealPlan();
 		this.totalHours = 0.0;
 		this.cost = 0.0;
 		this.ID ++;
@@ -39,27 +39,31 @@ public class Billiards implements Lounge {
 		this.cost = hours*pricePerHour;
 		this.totalHours = hours;
 		
-		this.mealPlan = "";
+		this.mealPlan = null;
 		int mealPlanAdditionalCost = 0;
-		if(mealPlan!="none") {
+		if(mealPlan!="None" || mealPlan !="none" || mealPlan!="") {
 			if(mealPlan.equals("Basic")) {
 				mealPlanAdditionalCost = 65;
+				this.mealPlan = new BasicMealPlan();
 			}
 			if(mealPlan.equals("Bronze")) {
 				mealPlanAdditionalCost = 75;
+				this.mealPlan = new BronzeMealPlan();
 			}
 			if(mealPlan.equals("Silver")) {
 				mealPlanAdditionalCost = 90;
+				this.mealPlan = new SilverMealPlan();
 			}
 			if(mealPlan.equals("Gold")) {
 				mealPlanAdditionalCost = 120;
+				this.mealPlan = new GoldMealPlan();
 			}
-			if(mealPlan.equals("platinum")) {
+			if(mealPlan.equals("Platinum")) {
 				mealPlanAdditionalCost = 150;
+				this.mealPlan = new PlatinumMealPlan();
 			}
 		}
 		this.cost += mealPlanAdditionalCost;
-		this.mealPlan = mealPlan;
 	}
 
 	@Override
@@ -67,6 +71,10 @@ public class Billiards implements Lounge {
 		return this.reservations;
 	}
 
+	@Override
+	public ArrayList<Guest> getWaitlist(){
+		return this.waitlist;
+	}
 	public static String getDescription() {
 		return description;
 	}
@@ -87,7 +95,7 @@ public class Billiards implements Lounge {
 	}
 
 	@Override
-	public String getMealPlan() {
+	public BasicMealPlan getMealPlan() {
 		return this.mealPlan;
 	}
 
@@ -110,10 +118,32 @@ public class Billiards implements Lounge {
 	public void addReservation(Reservation r) {
 		this.reservations.add(r);
 	}
+	@Override
+	public void addGuestToWaitlist(Guest g) {
+		this.waitlist.add(g);
+	}
 	
 	@Override
 	public void setMealPlan(String meal) {
-		this.mealPlan = meal;
+		switch (meal) {
+		case "Basic":
+			this.mealPlan = new BasicMealPlan();
+			break;
+		case "Bronze":
+			this.mealPlan = new BronzeMealPlan();
+			break;
+		case "Silver":
+			this.mealPlan = new SilverMealPlan();
+			break;
+		case "Gold":
+			this.mealPlan = new GoldMealPlan();
+			break;
+		case "Platinum":
+			this.mealPlan = new PlatinumMealPlan();
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -142,25 +172,29 @@ public class Billiards implements Lounge {
 	@Override
 	public void addMealPlan(String meal) {
 		int mealPlanAdditionalCost = 0;
-		if(meal!="none") {
+		if(meal!="None" || meal !="none" || meal!="") {
 			if(meal.equals("Basic")) {
 				mealPlanAdditionalCost = 65;
+				this.mealPlan = new BasicMealPlan();
 			}
 			if(meal.equals("Bronze")) {
 				mealPlanAdditionalCost = 75;
+				this.mealPlan = new BronzeMealPlan();
 			}
 			if(meal.equals("Silver")) {
 				mealPlanAdditionalCost = 90;
+				this.mealPlan = new SilverMealPlan();
 			}
 			if(meal.equals("Gold")) {
 				mealPlanAdditionalCost = 120;
+				this.mealPlan = new GoldMealPlan();
 			}
-			if(meal.equals("platinum")) {
+			if(meal.equals("Platinum")) {
 				mealPlanAdditionalCost = 150;
+				this.mealPlan = new PlatinumMealPlan();
 			}
 		}
 		this.cost += mealPlanAdditionalCost;
-		this.mealPlan = meal;
 	}
 	@Override
 	public String toString() {

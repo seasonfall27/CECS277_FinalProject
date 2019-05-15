@@ -1,4 +1,4 @@
-package Food;
+
 
 public class PlainPizza extends Pizza {
 	

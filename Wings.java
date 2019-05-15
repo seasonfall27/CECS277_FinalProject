@@ -1,5 +1,3 @@
-package Wings;
-
 
 public abstract class Wings {
 

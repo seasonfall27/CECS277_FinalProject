@@ -226,7 +226,7 @@ public class NewReservationFrame extends JFrame {
 		// Room Details
 		roomType = new JLabel("Room Details: ");
 		roomType.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-		String[] roomTypeString = new String[] { "Aqua Room", "Small Party Room", "Medium Party Room",
+		String[] roomTypeString = new String[] { "Aqua World", "Small Party Room", "Medium Party Room",
 				"Karaoke Lounge", "Adults Billiards Lounge" };
 		roomTypeOptions = new JComboBox<String>(roomTypeString);
 		roomTypeListener = new RoomTypeListener();
@@ -312,7 +312,6 @@ public class NewReservationFrame extends JFrame {
 		saveButton = new JButton("Save");
 		ActionListener saveListener = new SaveButtonListener();
 		saveButton.addActionListener(saveListener);
-
 		cancelButton = new JButton("Cancel");
 		ActionListener cancelListener = new CancelButtonListener();
 		cancelButton.addActionListener(cancelListener);
@@ -904,7 +903,7 @@ public class NewReservationFrame extends JFrame {
 			}
 			//room details
 			String roomType = (String) roomTypeOptions.getSelectedItem();
-			
+
 			String dateChosen = new SimpleDateFormat("MM/dd/yyyy").format(dateSpinner.getValue());
 
 			String startTimeChosen = new SimpleDateFormat("HH:mm a").format(startSpinner.getValue());

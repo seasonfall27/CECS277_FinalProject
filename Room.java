@@ -4,7 +4,11 @@ public interface Room {
 	
 	ArrayList<Reservation> getReservations();
 	
+	ArrayList<Guest> getWaitlist();
+	
 	void addReservation(Reservation r);
+	
+	void addGuestToWaitlist(Guest g);
 	
 	String toString();
 
@@ -40,7 +44,7 @@ public interface Room {
 	
 	int getNumOfProjectorHours();
 	
-	String getMealPlan();
+	BasicMealPlan getMealPlan();
 	
 	double getCost();
 	
@@ -82,11 +86,16 @@ public interface Room {
 	// Fix Reservation permanent ID Situation (DONE)
 	// Change everything about Time (DONE)
 	// change description to static (DONE BY AUTUMN)
+	// Write CheckIn Class (DONE)
+	// Move times to the dateandtime class??? or move dateand (DONE)
 	
 	// Wait list thing (DONEISH)
-	// Add broken cost
-	// Write CheckIn Class
-	// Move times to the dateandtime class??? or move dateand
+	// Add broken cost (DONE???)
+	
+	// Fix Reservation ID
+	// Fix Remove Reservation, its removing the wrong one
+	// Fix isRoomAvailable()
+	// Limit time by hours of operation and cleaning
 	
 	
 	

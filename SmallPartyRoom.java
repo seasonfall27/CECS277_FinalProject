@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 
 public class SmallPartyRoom implements PartyRoom {
-
-
 	private final static String description = "Capacity: 30 people\nCost: $150/hr\n"
 			+ "Included in cost:\n        -Table & Chair set-up\n        -Basic Meal Plan\n"
 			+ "Upgrades Available: \n"
@@ -15,7 +13,7 @@ public class SmallPartyRoom implements PartyRoom {
 	private final int pricePerHour = 150;
 	
 	private double totalHours;
-	private String mealPlan;
+	private BasicMealPlan mealPlan;
 	private double cost;
 	private int numOfPartyFavors;
 	private int numOfProjectorHours;
@@ -25,13 +23,13 @@ public class SmallPartyRoom implements PartyRoom {
 	private int roomNumber;
 	
 	private ArrayList<Reservation> reservations;
-	public static ArrayList<Guest> waitlist;
+	private static ArrayList<Guest> waitlist;
 	
 	/*
 	 * Empty Constructor for the Small Party Room
 	 */
 	public SmallPartyRoom() {
-		this.mealPlan = "Basic";
+		this.mealPlan = new BasicMealPlan();
 		this.totalHours = 0.0;
 		this.cost = 0.0;
 		this.numOfPartyFavors = 0;
@@ -55,24 +53,28 @@ public class SmallPartyRoom implements PartyRoom {
 		this.cost = hours*pricePerHour;
 		this.totalHours = hours;
 		
-		this.mealPlan = "Basic";
+		this.mealPlan = new BasicMealPlan();
 		int mealPlanAdditionalCost = 0;
 		if(mealPlan!="Basic") {
 			if(mealPlan.equals("Bronze")) {
 				mealPlanAdditionalCost = 10;
+				this.mealPlan = new BronzeMealPlan();
 			}
 			if(mealPlan.equals("Silver")) {
 				mealPlanAdditionalCost = 25;
+				this.mealPlan = new SilverMealPlan();
 			}
 			if(mealPlan.equals("Gold")) {
 				mealPlanAdditionalCost = 55;
+				this.mealPlan = new GoldMealPlan();
 			}
 			if(mealPlan.equals("Platinum")) {
 				mealPlanAdditionalCost = 85;
+				this.mealPlan = new PlatinumMealPlan();
 			}
 		}
 		this.cost += mealPlanAdditionalCost;
-		this.mealPlan = mealPlan;
+		
 		
 		this.cost += 5*partyFavors;
 		this.numOfPartyFavors = partyFavors;
@@ -111,19 +113,22 @@ public class SmallPartyRoom implements PartyRoom {
 		if(meal!="Basic") {
 			if(meal.equals("Bronze")) {
 				mealPlanAdditionalCost = 10;
+				this.mealPlan = new BronzeMealPlan();
 			}
 			if(meal.equals("Silver")) {
 				mealPlanAdditionalCost = 25;
+				this.mealPlan = new SilverMealPlan();
 			}
 			if(meal.equals("Gold")) {
 				mealPlanAdditionalCost = 55;
+				this.mealPlan = new GoldMealPlan();
 			}
 			if(meal.equals("Platinum")) {
 				mealPlanAdditionalCost = 85;
+				this.mealPlan = new PlatinumMealPlan();
 			}
 		}
 		this.cost += mealPlanAdditionalCost;
-		this.mealPlan = meal;
 	}
 	@Override
 	public void buyPartyFavors(int num) {
@@ -154,6 +159,14 @@ public class SmallPartyRoom implements PartyRoom {
 		return this.reservations;
 	}
 	@Override
+	public ArrayList<Guest> getWaitlist(){
+		return this.waitlist;
+	}
+	@Override
+	public static String getDescription() {
+		return description;
+	}
+	@Override
 	public int getCapacity() {
 		return this.capacity;
 	}
@@ -174,7 +187,7 @@ public class SmallPartyRoom implements PartyRoom {
 		return this.numOfProjectorHours;
 	}
 	@Override
-	public String getMealPlan() {
+	public BasicMealPlan getMealPlan() {
 		return this.mealPlan;
 	}
 	@Override
@@ -202,6 +215,11 @@ public class SmallPartyRoom implements PartyRoom {
 	}
 	
 	@Override
+	public void addGuestToWaitlist(Guest g) {
+		this.waitlist.add(g);
+	}
+	
+	@Override
 	public void setTotalHours(double hours) {
 		this.totalHours = hours;
 	}
@@ -219,7 +237,25 @@ public class SmallPartyRoom implements PartyRoom {
 	}
 	@Override
 	public void setMealPlan(String mealPlan) {
-		this.mealPlan = mealPlan;
+		switch (mealPlan) {
+		case "Basic":
+			this.mealPlan = new BasicMealPlan();
+			break;
+		case "Bronze":
+			this.mealPlan = new BronzeMealPlan();
+			break;
+		case "Silver":
+			this.mealPlan = new SilverMealPlan();
+			break;
+		case "Gold":
+			this.mealPlan = new GoldMealPlan();
+			break;
+		case "Platinum":
+			this.mealPlan = new PlatinumMealPlan();
+			break;
+		default:
+			break;
+		}
 	}
 	@Override
 	public void setCost(double cost) {
@@ -232,7 +268,7 @@ public class SmallPartyRoom implements PartyRoom {
 		if(partyDecorations) {
 			s += "\n With Party Decorations\n";
 		}
-		s += "\tTotal: $"+this.getCost()+"\n";
+		s += "\n\tTotal: $"+this.getCost()+"\n";
 		return s;
 	}
 	@Override

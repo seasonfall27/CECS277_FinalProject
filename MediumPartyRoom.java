@@ -2,19 +2,12 @@ import java.util.ArrayList;
 
 public class MediumPartyRoom implements PartyRoom{
 
-	private final static String description = "Capacity: 45 people\nCost: $250/hr\n"
-			+ "Included in cost:\n        -Table & chair set-up\n        -DJ\n        -Basic Meal Plan\n"
-			+ "Upgrades Available: \n"
-			+ "        -Upgrade meal plan     Cost: $3x(new meal plan cost - basic meal plan cost)\n"
-			+ "        -Party favor bags     Cost: $5 per bag\n"
-			+ "        -Projector     Cost: $10/hour\n"
-			+ "        -Party decorations & set-up     Cost: $100\n"
-			+ "                  Themes: Hawaiian, Sea Life, Jungle, Space, or Modern Theme";
+	private final String description = "Room with party tables and chairs, quick access to arcade.";
 	private final int capacity = 45;
 	private final int pricePerHour = 250;
 	
 	private double totalHours;
-	private String mealPlan;
+	private BasicMealPlan mealPlan;
 	private double cost;
 	private int numOfPartyFavors;
 	private int numOfProjectorHours;
@@ -23,13 +16,13 @@ public class MediumPartyRoom implements PartyRoom{
 	private static int ID = 0;
 	private int roomNumber;
 	
-	public ArrayList<Reservation> reservations;
-	public static ArrayList<Guest> waitlist;
+	private ArrayList<Reservation> reservations;
+	private static ArrayList<Guest> waitlist;
 	/*
 	 * Empty Constructor for the Medium Party Room
 	 */
 	public MediumPartyRoom() {
-		this.mealPlan = "Basic";
+		this.mealPlan = new BasicMealPlan();
 		this.totalHours = 0.0;
 		this.cost = 0.0;
 		this.numOfPartyFavors = 0;
@@ -53,24 +46,27 @@ public class MediumPartyRoom implements PartyRoom{
 		this.cost += hours*pricePerHour;
 		this.totalHours = hours;
 		
-		this.mealPlan = "Basic";
+		this.mealPlan = new BasicMealPlan();
 		int mealPlanAdditionalCost = 0;
 		if(mealPlan!="Basic") {
 			if(mealPlan.equals("Bronze")) {
-				mealPlanAdditionalCost = 10;
+				mealPlanAdditionalCost = 30;
+				this.mealPlan = new BronzeMealPlan();
 			}
 			if(mealPlan.equals("Silver")) {
-				mealPlanAdditionalCost = 25;
+				mealPlanAdditionalCost = 75;
+				this.mealPlan = new SilverMealPlan();
 			}
 			if(mealPlan.equals("Gold")) {
-				mealPlanAdditionalCost = 55;
+				mealPlanAdditionalCost = 165;
+				this.mealPlan = new GoldMealPlan();
 			}
 			if(mealPlan.equals("Platinum")) {
-				mealPlanAdditionalCost = 85;
+				mealPlanAdditionalCost = 255;
+				this.mealPlan = new PlatinumMealPlan();
 			}
 		}
 		this.cost += mealPlanAdditionalCost;
-		this.mealPlan = mealPlan;
 		
 		this.cost += 5*partyFavors;
 		this.numOfPartyFavors = partyFavors;
@@ -108,20 +104,23 @@ public class MediumPartyRoom implements PartyRoom{
 		int mealPlanAdditionalCost = 0;
 		if(meal!="Basic") {
 			if(meal.equals("Bronze")) {
-				mealPlanAdditionalCost = 3*10;
+				mealPlanAdditionalCost = 30;
+				this.mealPlan = new BronzeMealPlan();
 			}
 			if(meal.equals("Silver")) {
-				mealPlanAdditionalCost = 3*25;
+				mealPlanAdditionalCost = 75;
+				this.mealPlan = new SilverMealPlan();
 			}
 			if(meal.equals("Gold")) {
-				mealPlanAdditionalCost = 3*55;
+				mealPlanAdditionalCost = 165;
+				this.mealPlan = new GoldMealPlan();
 			}
 			if(meal.equals("Platinum")) {
-				mealPlanAdditionalCost = 3*85;
+				mealPlanAdditionalCost = 255;
+				this.mealPlan = new PlatinumMealPlan();
 			}
 		}
 		this.cost += mealPlanAdditionalCost;
-		this.mealPlan = meal;
 	}
 	@Override
 	public void buyPartyFavors(int num) {
@@ -143,13 +142,18 @@ public class MediumPartyRoom implements PartyRoom{
 		
 	
 	//~~~~~~ Getter Functions ~~~~~~~~~
-	
-	public static String getDescription() {
-		return description;
-	}
+
 	@Override
 	public ArrayList<Reservation> getReservations(){
 		return this.reservations;
+	}
+
+	public ArrayList<Guest> getWaitlist(){
+		return this.waitlist;
+	}
+	@Override
+	public static String getDescription() {
+		return description;
 	}
 	@Override
 	public int getCapacity() {
@@ -172,7 +176,7 @@ public class MediumPartyRoom implements PartyRoom{
 		return this.numOfProjectorHours;
 	}
 	@Override
-	public String getMealPlan() {
+	public BasicMealPlan getMealPlan() {
 		return this.mealPlan;
 	}
 	@Override
@@ -198,6 +202,10 @@ public class MediumPartyRoom implements PartyRoom{
 	public void addReservation(Reservation r) {
 		this.reservations.add(r);
 	}
+	@Override
+	public void addGuestToWaitlist(Guest g) {
+		this.waitlist.add(g);
+	}
 	
 	@Override
 	public void setTotalHours(double hours) {
@@ -217,7 +225,25 @@ public class MediumPartyRoom implements PartyRoom{
 	}
 	@Override
 	public void setMealPlan(String mealPlan) {
-		this.mealPlan = mealPlan;
+		switch (mealPlan) {
+		case "Basic":
+			this.mealPlan = new BasicMealPlan();
+			break;
+		case "Bronze":
+			this.mealPlan = new BronzeMealPlan();
+			break;
+		case "Silver":
+			this.mealPlan = new SilverMealPlan();
+			break;
+		case "Gold":
+			this.mealPlan = new GoldMealPlan();
+			break;
+		case "Platinum":
+			this.mealPlan = new PlatinumMealPlan();
+			break;
+		default:
+			break;
+		}
 	}
 	@Override
 	public void setCost(double cost) {

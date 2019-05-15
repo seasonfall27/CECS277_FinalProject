@@ -14,6 +14,7 @@ public class Guest {
 	String cardType = null;
 	boolean contactPhone;
 	boolean contactEmail;
+
 	
 	public void setName (String name) 
 	{

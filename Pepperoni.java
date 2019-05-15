@@ -1,6 +1,6 @@
-package Food;
 
-public class Pepperoni {
+
+public class Pepperoni extends Toppings{
 
 Pizza pizza;
 	

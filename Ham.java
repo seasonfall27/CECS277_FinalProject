@@ -1,4 +1,3 @@
-package Food;
 
 public class Ham  extends Toppings{
 

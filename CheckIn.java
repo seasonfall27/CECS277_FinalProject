@@ -4,11 +4,12 @@ public class CheckIn {
 	private DateAndTime time;
 	private Room room;
 	private int ID;
-	
+
 	public CheckIn(Room room, DateAndTime time, int ID, Upgrades upgrade) {
 		this.time = time;
 		this.room = room;
 		this.ID = ID;
+		this.room.rentRoom(time);
 		this.room.upgradeAll(upgrade);
 	}
 	
@@ -31,6 +32,7 @@ public class CheckIn {
 		return this.ID;
 	}
 	
-	// Check in and out functions??
-	
+	public String toString() {
+		return "Check In #" + ID + "\n" + time.toString() + "\n" + room.toString();
+	}
 }

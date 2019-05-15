@@ -36,7 +36,7 @@ public interface PartyRoom extends Room{
 	 * gets the string value of the meal plan
 	 * @return - string meal plan
 	 */
-	String getMealPlan();
+	BasicMealPlan getMealPlan();
 	/**
 	 * gets the cost applied to the room
 	 * @return - double value of the additional cost

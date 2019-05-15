@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 public class BronzeMealPlan extends BasicMealPlan{
@@ -92,7 +93,7 @@ public class BronzeMealPlan extends BasicMealPlan{
 	public String toString() {
 		return gourmetPizzaList.size() + "XL 2 Topping Gourmet Pizzas: " + gourmetPizzaList + ", " + sodaBottles.size() + " 2L Soda Bottles: " + sodaBottles + " " + salad + " " + breadSticks + "\ncost: " + cost;
 	}
-	
+
 	public static String display() {
 		String mealPlan = "Bronze Meal Plan:\n3 XL 2 Topping Gourmet Pizzas\n5 2L Soda Bottles\nSalad or Bread-Sticks\nCost: $75.00";
 		return mealPlan;

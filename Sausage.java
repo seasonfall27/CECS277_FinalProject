@@ -1,4 +1,3 @@
-package Food;
 
 public class Sausage extends Toppings{
 Pizza pizza;

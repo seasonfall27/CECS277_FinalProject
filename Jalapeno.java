@@ -1,4 +1,3 @@
-package Food;
 
 public class Jalapeno extends Toppings {
 Pizza pizza;

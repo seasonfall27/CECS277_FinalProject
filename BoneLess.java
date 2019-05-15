@@ -1,4 +1,4 @@
-package Wings;
+
 
 public class BoneLess extends Wings{
 	
