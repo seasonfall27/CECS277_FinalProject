@@ -173,9 +173,11 @@ public class PartyWorldFrame extends JFrame {
 		submenu.setMnemonic(KeyEvent.VK_S);
 
 		menuItem = new JMenuItem("Check-in");
+		menuItem.addActionListener(new CheckInListener());
 		submenu.add(menuItem);
 
 		menuItem = new JMenuItem("Check-out");
+		menuItem.addActionListener(new CheckOutListener());
 		submenu.add(menuItem);
 
 		menu.add(submenu);
@@ -458,6 +460,22 @@ public class PartyWorldFrame extends JFrame {
 		public void actionPerformed(ActionEvent click) {
 			String roomName = ("Billiards Lounge");
 			selectDTFrame s = new selectDTFrame(roomName, calendar);
+			s.setVisible(true);
+		}
+	}
+	
+	class CheckInListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent click) {
+			CheckInFrame s = new CheckInFrame(calendar);
+			s.setVisible(true);
+		}
+	}
+	
+	class CheckOutListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent click) {
+			CheckOutFrame s = new CheckOutFrame(calendar);
 			s.setVisible(true);
 		}
 	}
