@@ -63,9 +63,4 @@ public class waitlistFrame2 extends JFrame {
 			waitlistFrame2.this.dispose();
 		}
 	}
-	
-	public static void main(String[] args) {
-		waitlistFrame2 f = new waitlistFrame2(r);
-		f.setVisible(true);
-	}
 }

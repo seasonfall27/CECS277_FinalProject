@@ -163,10 +163,6 @@ public class SmallPartyRoom implements PartyRoom {
 		return this.waitlist;
 	}
 	@Override
-	public static String getDescription() {
-		return description;
-	}
-	@Override
 	public int getCapacity() {
 		return this.capacity;
 	}
