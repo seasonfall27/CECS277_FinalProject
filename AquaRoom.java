@@ -8,7 +8,7 @@ public class AquaRoom implements Room{
 	private final String restrictions = "To access water facilities, bathing suits must be worn at all time";
 	
 	private double totalHours;
-	private String mealPlan;
+	private BasicMealPlan mealPlan;
 	private double cost;
 	private int numOfTowelRentals;
 	private int numOfPartyFavors;
@@ -18,14 +18,14 @@ public class AquaRoom implements Room{
 	private static int ID = 0;
 	private int roomNumber;
 	
-	public static ArrayList<Guest> waitlist;
-	public ArrayList<Reservation> reservations;
+	private static ArrayList<Guest> waitlist;
+	private ArrayList<Reservation> reservations;
 	
 	/*
 	 * Empty Constructor for the Aqua Room
 	 */
 	public AquaRoom() {
-		this.mealPlan = "Basic";
+		this.mealPlan = new BasicMealPlan();
 		this.totalHours = 0.0;
 		this.cost = 0.0;
 		this.numOfTowelRentals = 0;
@@ -51,24 +51,27 @@ public class AquaRoom implements Room{
 		this.cost = hours*pricePerHour;
 		this.totalHours = hours;
 		
-		this.mealPlan = "Basic";
+		this.mealPlan = new BasicMealPlan();
 		int mealPlanAdditionalCost = 0;
 		if(mealPlan!="Basic") {
 			if(mealPlan.equals("Bronze")) {
 				mealPlanAdditionalCost = 50;
+				this.mealPlan = new BronzeMealPlan();
 			}
 			if(mealPlan.equals("Silver")) {
 				mealPlanAdditionalCost = 125;
+				this.mealPlan = new SilverMealPlan();
 			}
 			if(mealPlan.equals("Gold")) {
 				mealPlanAdditionalCost = 275;
+				this.mealPlan = new GoldMealPlan();
 			}
 			if(mealPlan.equals("Platinum")) {
 				mealPlanAdditionalCost = 425;
+				this.mealPlan = new PlatinumMealPlan();
 			}
 		}
 		this.cost += mealPlanAdditionalCost;
-		this.mealPlan = mealPlan;
 		
 		this.cost += 2*towels;
 		this.numOfTowelRentals = towels;
@@ -118,20 +121,23 @@ public class AquaRoom implements Room{
 		int mealPlanAdditionalCost = 0;
 		if(meal!="Basic") {
 			if(meal.equals("Bronze")) {
-				mealPlanAdditionalCost = 5*10;
+				mealPlanAdditionalCost = 50;
+				this.mealPlan = new BronzeMealPlan();
 			}
 			if(meal.equals("Silver")) {
-				mealPlanAdditionalCost = 5*25;
+				mealPlanAdditionalCost = 125;
+				this.mealPlan = new SilverMealPlan();
 			}
 			if(meal.equals("Gold")) {
-				mealPlanAdditionalCost = 5*55;
+				mealPlanAdditionalCost = 275;
+				this.mealPlan = new GoldMealPlan();
 			}
 			if(meal.equals("Platinum")) {
-				mealPlanAdditionalCost = 5*85;
+				mealPlanAdditionalCost = 425;
+				this.mealPlan = new PlatinumMealPlan();
 			}
 		}
 		this.cost += mealPlanAdditionalCost;
-		this.mealPlan = meal;
 	}
 	/**
 	 * Allows customer to buy party favors. Adds to additional cost and increments numOfPartyFavors
@@ -175,6 +181,11 @@ public class AquaRoom implements Room{
 	@Override
 	public ArrayList<Reservation> getReservations(){
 		return this.reservations;
+	}
+	
+	@Override
+	public ArrayList<Guest> getWaitlist(){
+		return this.waitlist;
 	}
 	
 	/**
@@ -237,7 +248,7 @@ public class AquaRoom implements Room{
 	 * gets the string value of the meal plan
 	 * @return - string meal plan
 	 */
-	public String getMealPlan() {
+	public BasicMealPlan getMealPlan() {
 		return this.mealPlan;
 	}
 	/**
@@ -268,6 +279,10 @@ public class AquaRoom implements Room{
 	@Override
 	public void addReservation(Reservation r) {
 		this.reservations.add(r);
+	}
+	@Override
+	public void addGuestToWaitlist(Guest g) {
+		this.waitlist.add(g);
 	}
 	/**
 	 * sets the number of hours the room will be rented
@@ -302,7 +317,25 @@ public class AquaRoom implements Room{
 	 * @param mealPlan - String value of meal plan
 	 */
 	public void setMealPlan(String mealPlan) {
-		this.mealPlan = mealPlan;
+		switch (mealPlan) {
+		case "Basic":
+			this.mealPlan = new BasicMealPlan();
+			break;
+		case "Bronze":
+			this.mealPlan = new BronzeMealPlan();
+			break;
+		case "Silver":
+			this.mealPlan = new SilverMealPlan();
+			break;
+		case "Gold":
+			this.mealPlan = new GoldMealPlan();
+			break;
+		case "Platinum":
+			this.mealPlan = new PlatinumMealPlan();
+			break;
+		default:
+			break;
+		}
 	}
 	/**
 	 * sets the additional cost

@@ -22,7 +22,7 @@ public interface Lounge extends Room{
 	
 	public String getType();
 	
-	public String getMealPlan();
+	public BasicMealPlan getMealPlan();
 	/**
 	 * gets the total hours for the room to be rented
 	 * @return - double hours the room will be rented
