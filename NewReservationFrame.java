@@ -929,16 +929,23 @@ public class NewReservationFrame extends JFrame {
 			newGuest.setContactPhone(contactByPhone);
 			newGuest.setContactEmail(contactByEmail);
 			
-			
-			if (calendar.isRoomAvailable(roomType, timeChosen) == false) {
-				waitlistFrame w = new waitlistFrame(roomName, dateChosen, startTimeChosen, endTimeChosen, calendar);
+			int testingYear = Integer.parseInt(birthYear);
+			if (roomType == "Karaoke Lounge" && testingYear > 1998) {
+				AdultFrame a = new AdultFrame();
 				NewReservationFrame.this.dispose();
-				w.setVisible(true);
-			} else {
-				// create new reservation object
-//				ConfirmationFrame c = new ConfirmationFrame(finalizedReservation);
-//				NewReservationFrame.this.dispose();
-//				c.setVisible(true);
+				a.setVisible(true);
+			}
+			else {
+				if (calendar.isRoomAvailable(roomType, timeChosen) == false) {
+					waitlistFrame w = new waitlistFrame(roomType, dateChosen, startTimeChosen, endTimeChosen, calendar);
+					NewReservationFrame.this.dispose();
+					w.setVisible(true);
+				} else {
+					// create new reservation object
+//					ConfirmationFrame c = new ConfirmationFrame(finalizedReservation);
+//					NewReservationFrame.this.dispose();
+//					c.setVisible(true);
+				}
 			}
 		}	
 	}
