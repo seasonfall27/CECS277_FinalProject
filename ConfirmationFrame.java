@@ -6,8 +6,10 @@ public class ConfirmationFrame extends JFrame {
 	JPanel panel;
 	private JButton closeButton;
 	private JTextArea textArea;
+	Reservation r;
 
-	public ConfirmationFrame() {
+	public ConfirmationFrame(Reservation r) {
+		this.r = r;
 		// call private helper method to create and add components
 		initializeUI();
 
@@ -73,7 +75,7 @@ public class ConfirmationFrame extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		ConfirmationFrame f = new ConfirmationFrame();
+		ConfirmationFrame f = new ConfirmationFrame(r);
 		f.setVisible(true);
 	}
 }

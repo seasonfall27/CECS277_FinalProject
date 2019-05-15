@@ -2,13 +2,18 @@ public class Guest {
 
 	String name = null;
 	String phoneNumber = null;
-	String birthday = null;
+	String birthdayMonth = null;
+	String birthdayDay = null;
+	String birthdayYear = null;
 	String email = null;
 	String address = null;
+	String nameOnCreditCard = null;
 	String creditCard = null;
 	String security = null;
 	String cardExperation = null;
 	String cardType = null;
+	boolean contactPhone;
+	boolean contactEmail;
 	
 	public void setName (String name) 
 	{
@@ -30,13 +35,31 @@ public class Guest {
 		return phoneNumber;
 	}
 	
-	public void setBirthday (String date)
+	public void setBirthdayMonth (String date)
 	{
-		this.birthday = date;
+		this.birthdayMonth = date;
 	}
 		
-	public String getBirthay () {
-		return birthday;
+	public String getBirthdayMonth () {
+		return birthdayMonth;
+	}
+	
+	public void setBirthdayDay (String date)
+	{
+		this.birthdayDay = date;
+	}
+		
+	public String getBirthdayDay () {
+		return birthdayDay;
+	}
+	
+	public void setBirthdayYear (String date)
+	{
+		this.birthdayYear = date;
+	}
+		
+	public String getBirthdayYear () {
+		return birthdayYear;
 	}
 	
 	public void setEmail (String email) {
@@ -51,6 +74,15 @@ public class Guest {
 	public String getAddress () {
 		return address;
 	}
+	
+	public void setNameOnCreditCard (String card) {
+		this.nameOnCreditCard = card;
+	}
+	
+	public String getNameOnCreditCard () {
+		return nameOnCreditCard;
+	}
+	
 	public void setCreditCard (String card) {
 		this.creditCard = card;
 	}
@@ -79,9 +111,17 @@ public class Guest {
 		return cardType;
 	}
 	
+	public void setContactPhone(boolean phone) {
+		this.contactPhone = phone;
+	}
+	
+	public void setContactEmail(boolean email) {
+		this.contactEmail = email;
+	}
+	
 	public String toStringGuestInfo () {
 		return "Guest Name: " + name + "\nGuest Address: " + address + "\nGuest Phone Number: " + phoneNumber 
-				+ "\nGuest Birthday: " + birthday + "\nGuest Email: " + email;
+				+ "\nGuest Birthday: " + birthdayMonth + birthdayDay + birthdayYear + "\nGuest Email: " + email;
 	}
 	
 	public String toStringCardInfo () {

@@ -96,11 +96,11 @@ public class selectDTFrame extends JFrame {
 			DateAndTime timeChosen = new DateAndTime(dateChosen, startTimeChosen, endTimeChosen);
 
 			if (calendar.isRoomAvailable(roomName, timeChosen) == false) {
-				waitlistFrame w = new waitlistFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+				waitlistFrame w = new waitlistFrame(roomName, dateChosen, startTimeChosen, endTimeChosen, calendar);
 				selectDTFrame.this.dispose();
 				w.setVisible(true);
 			} else {
-				NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+				NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen, calendar);
 				selectDTFrame.this.dispose();
 				n.setVisible(true);
 			}

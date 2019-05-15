@@ -45,7 +45,7 @@ public class ReservationCalendar {
 	 */
 	public boolean isRoomAvailable(String room, DateAndTime time) {
 		switch (room) {
-		case "Small":
+		case "Small Party Room":
 			for(int i=0; i<small.size(); i++) {
 				for(int j=0; j<small.get(i).getReservations().size(); i++) {
 					if(time.compareTo(small.get(i).getReservations().get(j).getTime()) > 0) {
@@ -54,7 +54,7 @@ public class ReservationCalendar {
 				}
 			}
 			break;
-		case "Medium":
+		case "Medium Party Room":
 			for(int i=0; i<medium.size(); i++) {
 				for(int j=0; j<medium.get(i).getReservations().size(); i++) {
 					if(time.compareTo(medium.get(i).getReservations().get(j).getTime()) > 0) {
@@ -63,7 +63,7 @@ public class ReservationCalendar {
 				}
 			}
 			break;
-		case "Aqua":
+		case "Aqua Room":
 			for(int i=0; i<aqua.size(); i++) {
 				for(int j=0; j<aqua.get(i).getReservations().size(); i++) {
 					if(time.compareTo(aqua.get(i).getReservations().get(j).getTime()) > 0) {
@@ -72,7 +72,7 @@ public class ReservationCalendar {
 				}
 			}
 			break;
-		case "Kareoke":
+		case "Karaoke Lounge":
 			for(int i=0; i<kareoke.size(); i++) {
 				for(int j=0; j<kareoke.get(i).getReservations().size(); i++) {
 					if(time.compareTo(kareoke.get(i).getReservations().get(j).getTime()) > 0) {
@@ -81,7 +81,7 @@ public class ReservationCalendar {
 				}
 			}
 			break;
-		case "Billiards":
+		case "Billiards Lounge":
 			for(int i=0; i<billiards.size(); i++) {
 				for(int j=0; j<billiards.get(i).getReservations().size(); i++) {
 					if(time.compareTo(billiards.get(i).getReservations().get(j).getTime()) < 0) {
@@ -109,7 +109,7 @@ public class ReservationCalendar {
 		calendar.add(r);
 		
 		switch (roomType) {
-		case "small":
+		case "Small Party Room":
 			for(int i=0; i<small.size(); i++) {
 				for(int j=0; j<small.get(i).getReservations().size(); i++) {
 					if(time.compareTo(small.get(i).getReservations().get(j).getTime()) < 0) {
@@ -118,7 +118,7 @@ public class ReservationCalendar {
 				}
 			}
 			break;
-		case "Medium":
+		case "Medium Party Room":
 			for(int i=0; i<medium.size(); i++) {
 				for(int j=0; j<medium.get(i).getReservations().size(); i++) {
 					if(time.compareTo(medium.get(i).getReservations().get(j).getTime()) < 0) {
@@ -127,7 +127,7 @@ public class ReservationCalendar {
 				}
 			}
 			break;
-		case"Aqua":
+		case"Aqua Room":
 			for(int i=0; i<aqua.size(); i++) {
 				for(int j=0; j<aqua.get(i).getReservations().size(); i++) {
 					if(time.compareTo(aqua.get(i).getReservations().get(j).getTime()) < 0) {
@@ -136,7 +136,7 @@ public class ReservationCalendar {
 				}
 			}
 			break;
-		case "kareoke":
+		case "Karaoke Lounge":
 			for(int i=0; i<kareoke.size(); i++) {
 				for(int j=0; j<kareoke.get(i).getReservations().size(); i++) {
 					if(time.compareTo(kareoke.get(i).getReservations().get(j).getTime()) < 0) {
@@ -145,7 +145,7 @@ public class ReservationCalendar {
 				}
 			}
 			break;
-		case "Billiards":
+		case "Billiards Lounge":
 			for(int i=0; i<billiards.size(); i++) {
 				for(int j=0; j<billiards.get(i).getReservations().size(); i++) {
 					if(time.compareTo(billiards.get(i).getReservations().get(j).getTime()) < 0) {
