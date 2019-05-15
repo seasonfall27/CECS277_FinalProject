@@ -165,6 +165,7 @@ public class PartyWorldFrame extends JFrame {
 		// Edit reservation item
 		menuItem = new JMenuItem("Edit Existing Reservation...");
 		menu.add(menuItem);
+		menuItem.addActionListener(new EditReservationItemListener());
 		menu.addSeparator();
 
 		// Manage reservation sub menu
@@ -385,8 +386,19 @@ public class PartyWorldFrame extends JFrame {
 	class NewReservationItemListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			NewReservationFrame n = new NewReservationFrame(null, null, null, null);
+			NewReservationFrame n = new NewReservationFrame(null, null, null, null, calendar);
 			n.setVisible(true);
+		}
+	}
+	
+	/**
+	 * Inner action listener class for the Cancel Button
+	 * **/
+	class EditReservationItemListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent click) {
+			EditReservationFrame e = new EditReservationFrame(null);
+			e.setVisible(true);
 		}
 	}
 	

@@ -25,16 +25,12 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.text.JTextComponent;
 
 
-public class NewReservationFrame extends JFrame {
+public class EditReservationFrame extends JFrame {
 	JScrollPane scrollPane;
 	JPanel panel;
 	JPanel panel1;
 	JPanel panel2;
-	String roomName;
-	String dateChosen;
-	String startTimeChosen;
-	String endTimeChosen;
-	ReservationCalendar calendar;
+	Reservation r;
 
 	// Guest Information
 	private JLabel name;
@@ -138,6 +134,7 @@ public class NewReservationFrame extends JFrame {
 	private JComboBox<String> icecreamFlavor2;
 
 	private JButton saveButton;
+	private JButton deleteButton;
 	private JButton cancelButton;
 
 	/**
@@ -146,17 +143,13 @@ public class NewReservationFrame extends JFrame {
 	 * @param cr - CashRegister object that is used to store items and calculate
 	 *           cost for purchase
 	 **/
-	public NewReservationFrame(String roomName, String dateChosen, String startTimeChosen, String endTimeChosen, ReservationCalendar calendar) {
-		this.roomName = roomName;
-		this.dateChosen = dateChosen;
-		this.startTimeChosen = startTimeChosen;
-		this.endTimeChosen = endTimeChosen;
-		this.calendar = calendar;
+	public EditReservationFrame(Reservation r) {
+		this.r = r;
 		// call private helper method to create and add components
 		createComponents();
 
 		// set the frame properties
-		this.setTitle("New Reservation");
+		this.setTitle("Edit Reservation");
 		this.setSize(400, 500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -168,29 +161,30 @@ public class NewReservationFrame extends JFrame {
 		guestTitle.setFont(new Font(Font.SERIF, Font.BOLD, 20));
 
 		name = new JLabel("Guest's Full Name: ");
-		nameTextField = new JTextField(30);
+		nameTextField = new JTextField(30); //r.guestName
 
 		phone = new JLabel("Phone Number: ");
-		phoneTextField = new JTextField(35);
+		phoneTextField = new JTextField(35); //r.phoneNumber
 
 		address = new JLabel("Full Address: ");
-		addressTextField = new JTextField(35);
+		addressTextField = new JTextField(35); //r.address
 
+		//need function to get guest date of birth and split it
 		bod = new JLabel("Date of Birth (Month, Date, Year): ");
 		String[] bodMonths = new String[] { "January", "February", "March", "April", "May", "June", "July", "August",
 				"September", "October", "November", "December" };
 		monthOptions = new JComboBox<String>(bodMonths);
+//		monthOptions.setSelectedIndex(Arrays.asList(bodMonths).indexOf(r.guestMonthBirthday));
 
-		SpinnerModel spinnerModel = new SpinnerNumberModel(0, // initial value
+		SpinnerModel spinnerModel = new SpinnerNumberModel(0, // change initial value of guest bday day
 				0, // min
 				31, // max
 				1); // step
 		dayOptions = new JSpinner(spinnerModel);
-//		spinner.addChangeListener(new ChangeListener());
-		yearTextField = new JTextField(10);
+		yearTextField = new JTextField(10); // r.guest
 
 		email = new JLabel("Email: ");
-		emailTextField = new JTextField(35);
+		emailTextField = new JTextField(35); // r.guestEmail
 
 		JLabel contactPhone = new JLabel("Guest contact method: Phone: ");
 		phoneCheckbox = new JCheckBox();
@@ -202,16 +196,16 @@ public class NewReservationFrame extends JFrame {
 		ccTitle.setFont(new Font(Font.SERIF, Font.BOLD, 20));
 
 		ccName = new JLabel("Full Name on Card: ");
-		payNameTextField = new JTextField(30);
+		payNameTextField = new JTextField(30); //r.guestPaymentName
 
 		ccNumber = new JLabel("Card Number: ");
-		payNumberTextField = new JTextField(35);
+		payNumberTextField = new JTextField(35); //r.guestCardNumber
 
 		ccSC = new JLabel("Security Number: ");
-		paySCTextField = new JTextField(10);
+		paySCTextField = new JTextField(10); //r.guestSecurityNumber
 
 		ccExpDate = new JLabel("Card Expiration Date 00/99 Format: ");
-		expDateTextField = new JTextField(10);
+		expDateTextField = new JTextField(10); //r.guestCardExpiration
 
 		ccLabel = new JLabel("Type of Card: ");
 		JLabel visa = new JLabel("Visa: ");
@@ -231,20 +225,23 @@ public class NewReservationFrame extends JFrame {
 		roomTypeOptions = new JComboBox<String>(roomTypeString);
 		roomTypeListener = new RoomTypeListener();
 		roomTypeOptions.addActionListener(roomTypeListener);
+		roomTypeOptions.setSelectedIndex(Arrays.asList(roomTypeString).indexOf(r.roomType));
+		
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		Date defaultDate = cal.getTime();
 		
+		//need function to split time
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
 		Date chosenDate = null;
 		try {
-			if (dateChosen == null) {
+			if (r.time == null) {
 				chosenDate = defaultDate;
 			}
 			else {
-				chosenDate = df.parse(dateChosen);
+				chosenDate = df.parse(r.time);
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -260,11 +257,11 @@ public class NewReservationFrame extends JFrame {
 		DateFormat df2 = new SimpleDateFormat("hh:mm a"); 
 		Date chosenStartTime = null;
 		try {
-			if (startTimeChosen == null) {
+			if (r.time == null) {
 				chosenStartTime = defaultDate;
 			}
 			else {
-				chosenStartTime = df2.parse(startTimeChosen);
+				chosenStartTime = df2.parse(r.time);
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -282,11 +279,11 @@ public class NewReservationFrame extends JFrame {
 		DateFormat df3 = new SimpleDateFormat("hh:mm a"); 
 		Date chosenEndTime = null;
 		try {
-			if (endTimeChosen == null) {
+			if (r.time == null) {
 				chosenEndTime = defaultDate;
 			}
 			else {
-				chosenEndTime = df3.parse(endTimeChosen);
+				chosenEndTime = df3.parse(r.time);
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -312,6 +309,10 @@ public class NewReservationFrame extends JFrame {
 		saveButton = new JButton("Save");
 		ActionListener saveListener = new SaveButtonListener();
 		saveButton.addActionListener(saveListener);
+		
+		deleteButton = new JButton("Delete");
+		ActionListener deleteListener = new DeleteButtonListener();
+		deleteButton.addActionListener(deleteListener);
 
 		cancelButton = new JButton("Cancel");
 		ActionListener cancelListener = new CancelButtonListener();
@@ -367,23 +368,8 @@ public class NewReservationFrame extends JFrame {
 		panel.add(endSpinner);
 
 		panel.add(saveButton);
+		panel.add(deleteButton);
 		panel.add(cancelButton);
-		
-		if (roomName == "Aqua Room") {
-			roomTypeOptions.setSelectedIndex(0);
-		}
-		if (roomName == "Small Party Room") {
-			roomTypeOptions.setSelectedIndex(1);
-		}
-		if (roomName == "Medium Party Room") {
-			roomTypeOptions.setSelectedIndex(2);
-		}
-		if (roomName == "Karaoke Lounge") {
-			roomTypeOptions.setSelectedIndex(3);
-		}
-		if (roomName == "Billiards Lounge") {
-			roomTypeOptions.setSelectedIndex(4);
-		}
 
 		// add the panel to this frame
 		this.add(panel);
@@ -400,21 +386,37 @@ public class NewReservationFrame extends JFrame {
 		String[] pizzaToppings = new String[] { "Cheese", "Pepperoni", "Ham", "Jalapeno", "Sausage", "Mushroom",
 				"Pineapple", "Bell Pepper", "Onion", "Garlic Chicken" };
 		pizzaTopping1a = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping1a.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping1a));
 		pizzaTopping1b = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping1b.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping1b));
 		pizzaTopping1c = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping1c.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping1c));
 		pizzaTopping1d = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping1d.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping1d));
 		pizzaTopping2a = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping2a.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping2a));
 		pizzaTopping2b = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping2b.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping2b));
 		pizzaTopping2c = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping2c.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping2c));
 		pizzaTopping2d = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping2d.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping2d));
 		pizzaTopping3a = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping3a.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping3a));
 		pizzaTopping3b = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping3b.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping3b));
 		pizzaTopping3c = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping3c.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping3c));
 		pizzaTopping3d = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping3d.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping3d));
 		pizzaTopping4a = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping4a.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping4a));
 		pizzaTopping4b = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping4b.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping4b));
 		pizzaTopping4c = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping4c.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping4c));
 		pizzaTopping4d = new JComboBox<String>(pizzaToppings);
+//		pizzaTopping4d.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping4d));
 
 		soda1 = new JLabel("Soda 1: ");
 		soda2 = new JLabel("Soda 2: ");
@@ -424,29 +426,39 @@ public class NewReservationFrame extends JFrame {
 		String[] sodaFlavors = new String[] { "Coca-Cola", "Diet Coke", "Canada Dry", "Orange Crush", "Orange Crush",
 				"Squirt", "Root Beer" };
 		sodaFlavor1 = new JComboBox<String>(sodaFlavors);
+//		sodaFlavor1.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.sodaFlavor1));
 		sodaFlavor2 = new JComboBox<String>(sodaFlavors);
+//		sodaFlavor2.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.sodaFlavor2));
 		sodaFlavor3 = new JComboBox<String>(sodaFlavors);
+//		sodaFlavor3.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.sodaFlavor3));
 		sodaFlavor4 = new JComboBox<String>(sodaFlavors);
+//		sodaFlavor4.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.sodaFlavor4));
 		sodaFlavor5 = new JComboBox<String>(sodaFlavors);
+//		sodaFlavor5.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.sodaFlavor5));
 
 		saladOrBreadsticks = new JLabel("Salad or Breadsticks");
 		String[] sOrBOptions = new String[] { "Salad", "Breadsticks" };
 		sOrB = new JComboBox<String>(sOrBOptions);
+//		sOrB.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.sOrB));
 		salad = new JLabel("Salad included");
 		breadsticks = new JLabel("Breadsticks included");
 
 		wing1 = new JLabel("Chicken Wings 1:");
 		String[] wingFlavors = new String[] { "Mild Spicy", "Diablo", "Lemon Pepper", "BBQ", "Sesame" };
 		wingFlavor1 = new JComboBox<String>(wingFlavors);
+//		wingFlavor1.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.wingFlavor1));
 		wing2 = new JLabel("Chicken Wings 2:");
 		wingFlavor2 = new JComboBox<String>(wingFlavors);
+//		wingFlavor2.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.wingFlavor2));
 
 		String[] icFlavors = new String[] { "Chocolate Fudge", "Vanilla Bean", "Strawberry Shortcake", "Choco-mint",
 				"Butter Pecan" };
 		icecream1 = new JLabel("Ice Cream 1:");
 		icecreamFlavor1 = new JComboBox<String>(icFlavors);
+//		icecreamFlavor1.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.icecreamFlavor1));
 		icecream2 = new JLabel("Ice Cream 1:");
 		icecreamFlavor2 = new JComboBox<String>(icFlavors);
+//		icecreamFlavor2.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.icecreamFlavor1));
 	}
 	
 	private void createUpgradeComponents() {
@@ -473,6 +485,8 @@ public class NewReservationFrame extends JFrame {
 	}
 
 	private void createBasicMPComponents() {
+		String[] pizzaToppings = new String[] { "Cheese", "Pepperoni", "Ham", "Jalapeno", "Sausage", "Mushroom",
+				"Pineapple", "Bell Pepper", "Onion", "Garlic Chicken" };
 		JLabel mealPlanLabel = new JLabel("Basic Meal Plan:");
 		mealPlanLabel.setFont(new Font(Font.SERIF, Font.BOLD, 20));
 		panel1.add(mealPlanLabel);
@@ -480,8 +494,10 @@ public class NewReservationFrame extends JFrame {
 		panel1.add(costBasic);
 
 		panel1.add(pizza1);
+//		pizzaTopping1a.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping1a));
 		panel1.add(pizzaTopping1a);
 		panel1.add(pizza2);
+//		pizzaTopping2a.setSelectedIndex(Arrays.asList(pizzaToppings).indexOf(r.pizzaTopping2a));
 		panel1.add(pizzaTopping2a);
 		panel1.add(pizza3);
 		panel1.add(pizzaTopping3a);
@@ -662,6 +678,8 @@ public class NewReservationFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			panel.remove(saveButton);
+			panel.remove(deleteButton);
+			panel.remove(deleteButton);
 			panel.remove(cancelButton);
 			panel1.removeAll();
 			panel.updateUI();
@@ -687,6 +705,7 @@ public class NewReservationFrame extends JFrame {
 
 			panel.add(panel1);
 			panel.add(saveButton);
+			panel.add(deleteButton);
 			panel.add(cancelButton);
 
 			panel.revalidate();
@@ -702,6 +721,7 @@ public class NewReservationFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			panel.remove(saveButton);
+			panel.remove(deleteButton);
 			panel.remove(cancelButton);
 			panel.remove(panel2);
 			panel1.removeAll();
@@ -768,6 +788,7 @@ public class NewReservationFrame extends JFrame {
 			panel.add(panel2);
 			panel.add(panel1);
 			panel.add(saveButton);
+			panel.add(deleteButton);
 			panel.add(cancelButton);
 			panel.revalidate();
 			panel.repaint();
@@ -784,6 +805,7 @@ public class NewReservationFrame extends JFrame {
 	        	panel.remove(panel1);
 	        	roomTypeOptions.setEnabled(false);
 	        	panel.remove(saveButton);
+	        	panel.remove(deleteButton);
 				panel.remove(cancelButton);
 				
 				String[] mealPlanOptions = new String[] {"Bronze", "Silver", "Gold", "Platinum" };
@@ -825,6 +847,7 @@ public class NewReservationFrame extends JFrame {
 	        }
 
 			panel.add(saveButton);
+			panel.add(deleteButton);
 			panel.add(cancelButton);
 			panel.revalidate();
 			panel.repaint();
@@ -857,7 +880,17 @@ public class NewReservationFrame extends JFrame {
 	class CancelButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			NewReservationFrame.this.dispose();
+			EditReservationFrame.this.dispose();
+		}
+	}
+	
+	/**
+	 * Inner action listener class for the Cancel Button
+	 * **/
+	class DeleteButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent click) {
+			EditReservationFrame.this.dispose();
 		}
 	}
 	
@@ -873,8 +906,9 @@ public class NewReservationFrame extends JFrame {
 			String phoneNumber = phoneTextField.getText();
 			String address = addressTextField.getText();
 			String birthMonth = (String) monthOptions.getSelectedItem();
-			String birthDay = dayOptions.getValue().toString();
+			String birthDay = (String) dayOptions.getValue();
 			String birthYear = yearTextField.getText();
+			String DateOfBirth = birthDay + "/" + birthMonth + "/" + birthYear;
 			String emailInput = emailTextField.getText();
 			boolean contactByPhone = false;
 			if (phoneCheckbox.isSelected()) {
@@ -905,41 +939,16 @@ public class NewReservationFrame extends JFrame {
 			//room details
 			String roomType = (String) roomTypeOptions.getSelectedItem();
 			
-			String dateChosen = new SimpleDateFormat("MM/dd/yyyy").format(dateSpinner.getValue());
-
-			String startTimeChosen = new SimpleDateFormat("HH:mm a").format(startSpinner.getValue());
-
-			String endTimeChosen = new SimpleDateFormat("HH:mm a").format(endSpinner.getValue());
-
-			DateAndTime timeChosen = new DateAndTime(dateChosen, startTimeChosen, endTimeChosen);
-			
 			Guest newGuest = new Guest();
 			newGuest.setName(name);
 			newGuest.setPhone(phoneNumber);
-			newGuest.setBirthdayMonth(birthMonth);
-			newGuest.setBirthdayDay(birthDay);
-			newGuest.setBirthdayYear(birthYear);
+			newGuest.setBirthday(DateOfBirth);
 			newGuest.setEmail(emailInput);
 			newGuest.setAddress(address);
-			newGuest.setNameOnCreditCard(nameOnCard);
 			newGuest.setCreditCard(numberOnCard);
 			newGuest.setSecurity(security);
 			newGuest.setCardExperation(cardExpiration);
 			newGuest.setCreditType(cardType);
-			newGuest.setContactPhone(contactByPhone);
-			newGuest.setContactEmail(contactByEmail);
-			
-			
-			if (calendar.isRoomAvailable(roomType, timeChosen) == false) {
-				waitlistFrame w = new waitlistFrame(roomName, dateChosen, startTimeChosen, endTimeChosen, calendar);
-				NewReservationFrame.this.dispose();
-				w.setVisible(true);
-			} else {
-				// create new reservation object
-//				ConfirmationFrame c = new ConfirmationFrame(finalizedReservation);
-//				NewReservationFrame.this.dispose();
-//				c.setVisible(true);
-			}
 		}	
 	}
 }

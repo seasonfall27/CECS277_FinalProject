@@ -10,8 +10,10 @@ public class waitlistFrame extends JFrame {
 	String dateChosen;
 	String startTimeChosen;
 	String endTimeChosen;
+	ReservationCalendar calendar;
 
-	public waitlistFrame(String roomName, String dateChosen, String startTimeChosen, String endTimeChosen) {
+	public waitlistFrame(String roomName, String dateChosen, String startTimeChosen, String endTimeChosen, ReservationCalendar calendar) {
+		this.calendar = calendar;
 		this.roomName = roomName;
 		this.dateChosen = dateChosen;
 		this.startTimeChosen = startTimeChosen;
@@ -50,7 +52,7 @@ public class waitlistFrame extends JFrame {
 	class AcceptButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen);
+			NewReservationFrame n = new NewReservationFrame(roomName, dateChosen, startTimeChosen, endTimeChosen, calendar);
 			waitlistFrame.this.dispose();
 			n.setVisible(true);
 		}
@@ -62,7 +64,7 @@ public class waitlistFrame extends JFrame {
 	class DeclineButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			selectDTFrame s = new selectDTFrame(roomName);
+			selectDTFrame s = new selectDTFrame(roomName, calendar);
 			waitlistFrame.this.dispose();
 			s.setVisible(true);
 		}

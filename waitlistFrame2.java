@@ -10,8 +10,10 @@ public class waitlistFrame2 extends JFrame {
 	String dateChosen;
 	String startTimeChosen;
 	String endTimeChosen;
+	Reservation r;
 
-	public waitlistFrame2() {
+	public waitlistFrame2(Reservation r) {
+		this.r = r;
 		// call private helper method to create and add components
 		initializeUI();
 
@@ -46,7 +48,7 @@ public class waitlistFrame2 extends JFrame {
 	class AcceptButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			ConfirmationFrame n = new ConfirmationFrame();
+			ConfirmationFrame n = new ConfirmationFrame(r);
 			waitlistFrame2.this.dispose();
 			n.setVisible(true);
 		}
@@ -63,7 +65,7 @@ public class waitlistFrame2 extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		waitlistFrame2 f = new waitlistFrame2();
+		waitlistFrame2 f = new waitlistFrame2(r);
 		f.setVisible(true);
 	}
 }
