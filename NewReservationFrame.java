@@ -857,4 +857,62 @@ public class NewReservationFrame extends JFrame {
 			NewReservationFrame.this.dispose();
 		}
 	}
+	
+	/**
+	 * Inner action listener class for the save button
+	 **/
+	class SaveButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+// TODO Save button creates new reservation objects (Guest name, phone number, address, DOB, Email,)
+			String name = nameTextField.getText();
+			String phoneNumber = phoneTextField.getText();
+			String address = addressTextField.getText();
+			String birthMonth = (String) monthOptions.getSelectedItem();
+			String birthDay = (String) dayOptions.getValue();
+			String birthYear = yearTextField.getText();
+			String DateOfBirth = birthDay + "/" + birthMonth + "/" + birthYear;
+			String emailInput = emailTextField.getText();
+			boolean contactByPhone = false;
+			if (phoneCheckbox.isSelected()) {
+				contactByPhone = true;
+			}
+			boolean contactByEmail = false;
+			if (emailCheckbox.isSelected()) {
+				contactByEmail = true;
+			}
+			//card info
+			String nameOnCard = payNameTextField.getText();
+			String numberOnCard = payNumberTextField.getText();
+			String security = paySCTextField.getText();
+			String cardExpiration = expDateTextField.getText();
+			String cardType = "Card Type";
+			if (ccVisaCheckbox.isSelected()) {
+				cardType = ccVisaCheckbox.getText();
+			}
+			else if (ccMastercardCheckbox.isSelected()) {
+				cardType = ccMastercardCheckbox.getText();
+			}
+			else if (ccDiscoverCheckbox.isSelected()) {
+				cardType = ccDiscoverCheckbox.getText();
+			}
+			else if (ccAmexCheckbox.isSelected()) {
+				cardType = ccAmexCheckbox.getText();
+			}
+			//room details
+			String roomType = (String) roomTypeOptions.getSelectedItem();
+			
+			Guest newGuest = new Guest();
+			newGuest.setName(name);
+			newGuest.setPhone(phoneNumber);
+			newGuest.setBirthday(DateOfBirth);
+			newGuest.setEmail(emailInput);
+			newGuest.setAddress(address);
+			newGuest.setCreditCard(numberOnCard);
+			newGuest.setSecurity(security);
+			newGuest.setCardExperation(cardExpiration);
+			newGuest.setCreditType(cardType);
+		}	
+	}
 }
