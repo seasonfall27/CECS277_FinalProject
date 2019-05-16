@@ -868,9 +868,8 @@ public class NewReservationFrame extends JFrame {
 			String phoneNumber = phoneTextField.getText();
 			String address = addressTextField.getText();
 			String birthMonth = (String) monthOptions.getSelectedItem();
-			String birthDay = (String) dayOptions.getValue();
+			String birthDay =  dayOptions.getValue().toString();
 			String birthYear = yearTextField.getText();
-			String DateOfBirth = birthDay + "/" + birthMonth + "/" + birthYear;
 			String emailInput = emailTextField.getText();
 			boolean contactByPhone = false;
 			if (phoneCheckbox.isSelected()) {
@@ -1000,7 +999,7 @@ public class NewReservationFrame extends JFrame {
 				meal = new BasicMealPlan(pizzas, sodas);
 			}
 
-			if ((String) mealPlanType.getSelectedItem() == "Bronze") {// sees what the customer has choosen
+			if (mealPlanType.getSelectedItem().equals("Bronze")) {// sees what the customer has choosen
 				// BronzeMealPlan(ArrayList<Pizza> p, ArrayList<String> s, String choice)
 				ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
 				Pizza pizza1 = new PlainPizza();
