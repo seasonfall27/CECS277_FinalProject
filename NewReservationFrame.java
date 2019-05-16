@@ -944,7 +944,7 @@ public class NewReservationFrame extends JFrame {
 					selectedDT.setEnd(endTimeChosen);
 					newReservation.setTime(selectedDT);
 					
-					waitlistFrame2 w = new waitlistFrame2(newReservation);
+					waitlistFrame2 w = new waitlistFrame2(newReservation, calendar);
 					NewReservationFrame.this.dispose();
 					w.setVisible(true);
 				} else {

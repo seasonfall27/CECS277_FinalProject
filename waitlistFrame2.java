@@ -11,9 +11,11 @@ public class waitlistFrame2 extends JFrame {
 	String startTimeChosen;
 	String endTimeChosen;
 	Reservation r;
+	ReservationCalendar calendar;
 
-	public waitlistFrame2(Reservation r) {
+	public waitlistFrame2(Reservation r, ReservationCalendar calendar) {
 		this.r = r;
+		this.calendar = calendar;
 		// call private helper method to create and add components
 		initializeUI();
 
@@ -48,6 +50,7 @@ public class waitlistFrame2 extends JFrame {
 	class AcceptButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
+//			calendar.addReservation(roomType, selectedDT);
 			ConfirmationFrame n = new ConfirmationFrame(r);
 			waitlistFrame2.this.dispose();
 			n.setVisible(true);

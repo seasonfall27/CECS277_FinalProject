@@ -41,6 +41,7 @@ public class CheckInFrame extends JFrame{
 	 */
 	listModel = new DefaultListModel ();
 	ArrayList<String> names = new ArrayList <String> ();
+	
 	names.add("Lisa");
 	names.add("Patrick");
 	names.add("Henry");
@@ -92,6 +93,7 @@ public class CheckInFrame extends JFrame{
 		public void actionPerformed (ActionEvent click)
 		{
 	        JOptionPane.showMessageDialog(null, "You Are Checked In!","Message", JOptionPane.PLAIN_MESSAGE);
+	        String name = (String) list.getSelectedValue();
 		}
 	}
 	class CancelButtonListener implements ActionListener 

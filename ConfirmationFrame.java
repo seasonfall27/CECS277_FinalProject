@@ -30,26 +30,26 @@ public class ConfirmationFrame extends JFrame {
 		textArea.setEditable(false);
 		
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Guest's Full Name: ");
-		stringBuilder.append("\nPhone Number: ");
-		stringBuilder.append("\nFull Address: ");
-		stringBuilder.append("\nDate of Birth: ");
-		stringBuilder.append("\nEmail: ");
-		stringBuilder.append("\nPreferred Contact Method: ");
-		stringBuilder.append("\n\nPayment Information: ");
-		stringBuilder.append("\nFull Name on Card: ");
-		stringBuilder.append("\nCard Charged: "); // charged VISA XXXXXXXXXX0982
-		stringBuilder.append("\n\nRoom Details: ");
-		stringBuilder.append("\nRoom Type: ");
-		stringBuilder.append("\nDate: ");
-		stringBuilder.append("\nStart Time: ");
-		stringBuilder.append(" End Time: ");
-		stringBuilder.append("\nUpgrades: ");
-		stringBuilder.append("\n        Number of Towels Rented: ");
-		stringBuilder.append("\n        Number of Party Bags: ");
-		stringBuilder.append("\n        Projector: ");
-		stringBuilder.append("\n        Party decorations & Set-Up Theme: ");
-		stringBuilder.append("\n\nMeal Plan: ");
+//		stringBuilder.append("Guest's Full Name: ");
+//		stringBuilder.append("\nPhone Number: ");
+//		stringBuilder.append("\nFull Address: ");
+//		stringBuilder.append("\nDate of Birth: ");
+//		stringBuilder.append("\nEmail: ");
+//		stringBuilder.append("\nPreferred Contact Method: ");
+//		stringBuilder.append("\n\nPayment Information: ");
+//		stringBuilder.append("\nFull Name on Card: ");
+//		stringBuilder.append("\nCard Charged: "); // charged VISA XXXXXXXXXX0982
+//		stringBuilder.append("\n\nRoom Details: ");
+//		stringBuilder.append("\nRoom Type: ");
+//		stringBuilder.append("\nDate: ");
+//		stringBuilder.append("\nStart Time: ");
+//		stringBuilder.append(" End Time: ");
+//		stringBuilder.append("\nUpgrades: ");
+//		stringBuilder.append("\n        Number of Towels Rented: ");
+//		stringBuilder.append("\n        Number of Party Bags: ");
+//		stringBuilder.append("\n        Projector: ");
+//		stringBuilder.append("\n        Party decorations & Set-Up Theme: ");
+//		stringBuilder.append("\n\nMeal Plan: ");
 		stringBuilder.append(r.toString());
 		
 		textArea.setText(stringBuilder.toString());
