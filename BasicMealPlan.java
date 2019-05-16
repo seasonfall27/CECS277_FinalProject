@@ -103,7 +103,11 @@ public class BasicMealPlan {
 	 */
 	@Override
 	public String toString() {
-		return gourmetPizzaList.size() + " 1 Topping Gourmet Pizzas: " + gourmetPizzaList + ", " + sodaBottles.size() + " 2L Soda Bottles: " + sodaBottles + "\ncost: " + cost;
+		String pizzaDiscriptionList = "";
+		for (int i = 0; i < gourmetPizzaList.size(); i++) {
+			pizzaDiscriptionList = pizzaDiscriptionList + gourmetPizzaList.get(i).getDescription() + " ";
+		}
+		return gourmetPizzaList.size() + " 1 Topping Gourmet Pizzas: " + pizzaDiscriptionList + ", " + sodaBottles.size() + " 2L Soda Bottles: " + sodaBottles + "\ncost: " + cost;
 	}
 	
 	public static String display() {
