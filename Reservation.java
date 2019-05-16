@@ -61,11 +61,10 @@ public class Reservation {
 	public String toString() {
 		String s = "Reservation #" + this.getID()+"\n";
 		s+= "Room: "+room.getType()+" Room\n";
-		s+= "Guest Info: " + guest.toStringGuestInfo() +"\nCard Info: ";
+		s+= "Guest Info: \n" + guest.toStringGuestInfo() +"\nCard Info: \n";
 		s += guest.toStringCardInfo() + "\nTime: ";
 		s += time.toString();
 		s += "\n\n" + room.getMealPlan();
-		// Add Customer Info Here
 		return s;
 	}
 	

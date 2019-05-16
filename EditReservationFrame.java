@@ -371,19 +371,19 @@ public class EditReservationFrame extends JFrame {
 		panel.add(deleteButton);
 		panel.add(cancelButton);
 		
-		if (r.roomType == "Aqua Room") {
+		if (r.getRoom().equals("Aqua Room")) {
 			roomTypeOptions.setSelectedIndex(0);
 		}
-		if (r.roomType == "Small Party Room") {
+		if (r.getRoom().equals("Small Party Room")) {
 			roomTypeOptions.setSelectedIndex(1);
 		}
-		if (r.roomType == "Medium Party Room") {
+		if (r.getRoom().equals("Medium Party Room")) {
 			roomTypeOptions.setSelectedIndex(2);
 		}
-		if (r.roomType == "Karaoke Lounge") {
+		if (r.getRoom().equals("Karaoke Lounge")) {
 			roomTypeOptions.setSelectedIndex(3);
 		}
-		if (r.roomType == "Billiards Lounge") {
+		if (r.getRoom().equals("Billiards Lounge")) {
 			roomTypeOptions.setSelectedIndex(4);
 		}
 

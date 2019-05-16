@@ -6,15 +6,26 @@ public class waitlistFrame2 extends JFrame {
 	JPanel panel;
 	private JButton acceptButton;
 	private JButton declineButton;
-	String roomName;
-	String dateChosen;
-	String startTimeChosen;
-	String endTimeChosen;
 	Reservation r;
 	ReservationCalendar calendar;
+	String roomType;
+	Guest guest;
+	DateAndTime time;
+	String meal;
+	int partyFavors;
+	int projectorHours;
+	boolean partyDecorations;
+	int towelRentals;
 
-	public waitlistFrame2(Reservation r, ReservationCalendar calendar) {
-		this.r = r;
+	public waitlistFrame2(String roomType, Guest guest, DateAndTime time, String meal, int partyFavors, int projectorHours, boolean partyDecorations, int towelRentals, ReservationCalendar calendar) {
+		this.roomType = roomType;
+		this.guest = guest;
+		this.time = time;
+		this.meal = meal;
+		this.partyFavors = partyFavors;
+		this.projectorHours = projectorHours;
+		this.partyDecorations = partyDecorations;
+		this.towelRentals = towelRentals;
 		this.calendar = calendar;
 		// call private helper method to create and add components
 		initializeUI();
@@ -50,10 +61,10 @@ public class waitlistFrame2 extends JFrame {
 	class AcceptButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-//			calendar.addReservation(roomType, selectedDT);
-			ConfirmationFrame n = new ConfirmationFrame(r);
+			calendar.addReservation(roomType, guest, time, meal, partyFavors, projectorHours, partyDecorations, towelRentals);
+			ConfirmationFrame c = new ConfirmationFrame(calendar.calendar.get(calendar.calendar.size()-1));
 			waitlistFrame2.this.dispose();
-			n.setVisible(true);
+			c.setVisible(true);
 		}
 	}
 	

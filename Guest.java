@@ -122,12 +122,12 @@ public class Guest {
 	
 	public String toStringGuestInfo () {
 		return "Guest Name: " + name + "\nGuest Address: " + address + "\nGuest Phone Number: " + phoneNumber 
-				+ "\nGuest Birthday: " + birthdayMonth + birthdayDay + birthdayYear + "\nGuest Email: " + email;
+				+ "\nGuest Birthday: " + birthdayMonth + " " + birthdayDay+ " "  + birthdayYear+ " "  + "\nGuest Email: " + email;
 	}
 	
 	public String toStringCardInfo () {
 		return "Guest Name: " + name + "\nGuest Credit Card: " + creditCard + "\nCredit Security Code: " + security 
-				+ "\nGuest Credit Experation Date: " + cardExperation + "\nCard Type: " + cardType ; 
+				+ "\nGuest Credit Expiration Date: " + cardExperation + "\nCard Type: " + cardType ; 
 	}
 	
 

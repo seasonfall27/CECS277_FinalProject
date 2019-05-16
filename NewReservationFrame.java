@@ -937,28 +937,24 @@ public class NewReservationFrame extends JFrame {
 			else {
 				if (calendar.isRoomAvailable(roomType, timeChosen) == false) {
 					Reservation newReservation = new Reservation();
-					newReservation.setRoomType(roomType);
 					DateAndTime selectedDT = new DateAndTime();
 					selectedDT.setDate(dateChosen);
 					selectedDT.setStart(startTimeChosen);
 					selectedDT.setEnd(endTimeChosen);
 					newReservation.setTime(selectedDT);
 					
-					waitlistFrame2 w = new waitlistFrame2(newReservation, calendar);
+					waitlistFrame2 w = new waitlistFrame2(roomType, newGuest, selectedDT, "", 0,0, false, 0, calendar);
 					NewReservationFrame.this.dispose();
 					w.setVisible(true);
 				} else {
 					// create new reservation object
-					Reservation newReservation = new Reservation();
-					newReservation.setRoomType(roomType);
 					DateAndTime selectedDT = new DateAndTime();
 					selectedDT.setDate(dateChosen);
 					selectedDT.setStart(startTimeChosen);
 					selectedDT.setEnd(endTimeChosen);
-					newReservation.setTime(selectedDT);
-//					calendar.addReservation(roomType, selectedDT,);
+					calendar.addReservation(roomType, newGuest, selectedDT, "Basic", 0, 0, false, 0);
 					
-					ConfirmationFrame c = new ConfirmationFrame(newReservation);
+					ConfirmationFrame c = new ConfirmationFrame(calendar.calendar.get(calendar.calendar.size()-1));
 					NewReservationFrame.this.dispose();
 					c.setVisible(true);
 				}
