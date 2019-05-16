@@ -1746,7 +1746,7 @@ public class NewReservationFrame extends JFrame {
 				//GoldMealPlan(ArrayList<Pizza> p, ArrayList<String> s, Wings c)
 				meal = new GoldMealPlan(pizzas, sodas, wings1);
 			}
-			//TODO FINISH PLATINUM MEAL PLAN
+			
 			else if ((String)mealPlanType.getSelectedItem() == "Platinum") {
 				ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
 				Pizza pizza1 = new PlainPizza();
