@@ -34,7 +34,11 @@ public class GoldMealPlan extends SilverMealPlan{
 	}
 	
 	public String toString() {
-		return gourmetPizzaList.size() + "XL 3 Topping Gourmet Pizzas: " + gourmetPizzaList + ", " + sodaBottles.size() + " 2L Soda Bottles: " + sodaBottles + ", " + "" + salad + ", " + breadSticks + ", " + chicken +"\ncost: " + cost;
+		String pizzaDiscriptionList = "";
+		for (int i = 0; i < gourmetPizzaList.size(); i++) {
+			pizzaDiscriptionList = pizzaDiscriptionList + gourmetPizzaList.get(i).getDescription() + " ";
+		}
+		return gourmetPizzaList.size() + "XL 3 Topping Gourmet Pizzas: " + pizzaDiscriptionList + ", " + sodaBottles.size() + " 2L Soda Bottles: " + sodaBottles + ", " + "" + salad + ", " + breadSticks + ", " + chicken +"\ncost: " + cost;
 	}
 	
 
