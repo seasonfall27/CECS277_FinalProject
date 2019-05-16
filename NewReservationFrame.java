@@ -226,7 +226,7 @@ public class NewReservationFrame extends JFrame {
 		// Room Details
 		roomType = new JLabel("Room Details: ");
 		roomType.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-		String[] roomTypeString = new String[] { "Aqua World", "Small Party Room", "Medium Party Room",
+		String[] roomTypeString = new String[] { "Aqua Room", "Small Party Room", "Medium Party Room",
 				"Karaoke Lounge", "Adults Billiards Lounge" };
 		roomTypeOptions = new JComboBox<String>(roomTypeString);
 		roomTypeListener = new RoomTypeListener();
@@ -365,7 +365,7 @@ public class NewReservationFrame extends JFrame {
 		panel.add(saveButton);
 		panel.add(cancelButton);
 
-		if (roomName == "Aqua World") {
+		if (roomName == "Aqua Room") {
 			roomTypeOptions.setSelectedIndex(0);
 		}
 		if (roomName == "Small Party Room") {
@@ -707,7 +707,7 @@ public class NewReservationFrame extends JFrame {
 			String roomChoice = (String) roomTypeOptions.getSelectedItem();
 
 			// choice determines what content is added to the frame
-			if (roomChoice.equals("Aqua World")) {
+			if (roomChoice.equals("Aqua Room")) {
 				panel2.removeAll();
 				panel2.add(upgradeLabel);
 				panel2.add(upgradeMPText);
@@ -799,7 +799,7 @@ public class NewReservationFrame extends JFrame {
 				String roomChoice = (String) roomTypeOptions.getSelectedItem();
 
 				// choice determines what content is added to the frame
-				if (roomChoice.equals("Aqua World")) {
+				if (roomChoice.equals("Aqua Room")) {
 					panel1.removeAll();
 					createBasicMPComponents();
 					panel.add(panel1);
@@ -1842,25 +1842,14 @@ public class NewReservationFrame extends JFrame {
 			partyDeco.addActionListener(themeListener);
 			String[] themeString = new String[] { "Hawaiian", "Sea Life", "Jungle", "Space", "Modern" };
 			themeOptions = new JComboBox<String>(themeString);
-			
+
 			int testingYear = Integer.parseInt(birthYear);
 			if (roomType == "Karaoke Lounge" && testingYear > 1998) {
 				AdultFrame a = new AdultFrame();
 				NewReservationFrame.this.dispose();
 				a.setVisible(true);
 			} else {
-				if (calendar.isRoomAvailable(roomType, timeChosen) == false) {
-					Reservation newReservation = new Reservation();
-					DateAndTime selectedDT = new DateAndTime();
-					selectedDT.setDate(dateChosen);
-					selectedDT.setStart(startTimeChosen);
-					selectedDT.setEnd(endTimeChosen);
-					newReservation.setTime(selectedDT);
-
-					waitlistFrame2 w = new waitlistFrame2(roomType, newGuest, selectedDT, "", partyFavorsNum, 0, partyDecoValue, towelRentalNum, calendar);
-					NewReservationFrame.this.dispose();
-					w.setVisible(true);
-				} else {
+				if (calendar.isRoomAvailable(roomType, timeChosen)) {
 					// create new reservation object
 					DateAndTime selectedDT = new DateAndTime();
 					selectedDT.setDate(dateChosen);
@@ -1878,6 +1867,17 @@ public class NewReservationFrame extends JFrame {
 					ConfirmationFrame c = new ConfirmationFrame(calendar.calendar.get(calendar.calendar.size() - 1));
 					NewReservationFrame.this.dispose();
 					c.setVisible(true);
+				} else {
+					Reservation newReservation = new Reservation();
+					DateAndTime selectedDT = new DateAndTime();
+					selectedDT.setDate(dateChosen);
+					selectedDT.setStart(startTimeChosen);
+					selectedDT.setEnd(endTimeChosen);
+					newReservation.setTime(selectedDT);
+
+					waitlistFrame2 w = new waitlistFrame2(roomType, newGuest, selectedDT, "", partyFavorsNum, 0, partyDecoValue, towelRentalNum, calendar);
+					NewReservationFrame.this.dispose();
+					w.setVisible(true);
 				}
 			}
 		}

@@ -22,6 +22,7 @@ public class CheckInFrame extends JFrame{
 	protected JButton cancel;
 	protected JButton checkIn;
 	ReservationCalendar calendar;
+	public static ArrayList<String> names;
 	
 	public CheckInFrame (ReservationCalendar calendar) {
 		this.calendar = calendar;
@@ -40,11 +41,7 @@ public class CheckInFrame extends JFrame{
 	 * it can take in Guest objects if needed
 	 */
 	listModel = new DefaultListModel ();
-	ArrayList<String> names = new ArrayList <String> ();
-	
-	names.add("Lisa");
-	names.add("Patrick");
-	names.add("Henry");
+	names = new ArrayList <String> ();
 	
 	for(String name: names)
 	{

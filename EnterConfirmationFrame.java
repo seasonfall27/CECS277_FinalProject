@@ -24,7 +24,7 @@ public class EnterConfirmationFrame extends JFrame {
 	private void initializeUI() {
 		panel = new JPanel();
 
-		JLabel enter = new JLabel("Enter confirmation number of reservation: ");
+		JLabel enter = new JLabel("Enter confirmation name of reservation: ");
 		
 		numberField = new JTextField(30);
 		
@@ -50,7 +50,7 @@ public class EnterConfirmationFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			String confString = numberField.getText();
-			Reservation foundRes = calendar.getReservationByName(confString);
+			Reservation foundRes = calendar.getReservationByGuestFirstName(confString);
 			if (foundRes == null) {
 				JLabel noExist = new JLabel("Confirmation Number of Reservation does not exist.\n Please close the window.");
 				panel.remove(submitButton);

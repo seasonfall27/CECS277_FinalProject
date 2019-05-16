@@ -29,6 +29,7 @@ public class CheckOutFrame extends JFrame{
 	protected JLabel damageDescriptionLable;
 	protected JLabel damageCostLable;
 	ReservationCalendar calendar;
+	public static ArrayList<String> names;
 	
 	
 	public CheckOutFrame (ReservationCalendar calendar) {
@@ -48,11 +49,8 @@ public class CheckOutFrame extends JFrame{
 	 * it can take in Guest objects if needed
 	 */
 	listModel = new DefaultListModel ();
-	ArrayList<String> names = new ArrayList <String> ();
-	names.add("Lisa");
-	names.add("Patrick");
-	names.add("Henry");
-	
+	names = new ArrayList <String> ();
+
 	for(String name: names)
 	{
 		((DefaultListModel) listModel).addElement(name);

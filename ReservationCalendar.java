@@ -11,6 +11,12 @@ public class ReservationCalendar {
 	public static ArrayList<Room> billiards;
 	public static ArrayList<Room> kareoke;
 	
+	public static ArrayList<WaitlistedGuest> smallWaitlist;
+	public static ArrayList<WaitlistedGuest> mediumWaitlist;
+	public static ArrayList<WaitlistedGuest> aquaWaitlist;
+	public static ArrayList<WaitlistedGuest> kareokeWaitlist;
+	public static ArrayList<WaitlistedGuest> billiardsWaitlist;
+	
 	/**
 	 * Constructor for Calendar.  Will Create all Room objects necessary for the duration of the program
 	 */
@@ -23,6 +29,12 @@ public class ReservationCalendar {
 		aqua = new ArrayList<Room>();
 		billiards = new ArrayList<Room>();
 		kareoke = new ArrayList<Room>();
+		
+		smallWaitlist = new ArrayList<WaitlistedGuest>();
+		mediumWaitlist = new ArrayList<WaitlistedGuest>();
+		aquaWaitlist = new ArrayList<WaitlistedGuest>();
+		kareokeWaitlist = new ArrayList<WaitlistedGuest>();
+		billiardsWaitlist = new ArrayList<WaitlistedGuest>();
 		
 		for(int i=0; i<10; i++) {
 			small.add(RoomFactory.createRoom(RoomType.SMALL));
@@ -48,7 +60,7 @@ public class ReservationCalendar {
 		switch (room) {
 		case "Small Party Room":
 			for(int i=0; i<small.size(); i++) {
-				for(int j=0; j<small.get(i).getReservations().size(); i++) {
+				for(int j=0; j<small.get(i).getReservations().size(); j++) {
 					if(time.compareTo(small.get(i).getReservations().get(j).getTime()) > 0) {
 						return false;
 					}
@@ -57,7 +69,7 @@ public class ReservationCalendar {
 			break;
 		case "Medium Party Room":
 			for(int i=0; i<medium.size(); i++) {
-				for(int j=0; j<medium.get(i).getReservations().size(); i++) {
+				for(int j=0; j<medium.get(i).getReservations().size(); j++) {
 					if(time.compareTo(medium.get(i).getReservations().get(j).getTime()) > 0) {
 						return false;
 					}
@@ -66,7 +78,7 @@ public class ReservationCalendar {
 			break;
 		case "Aqua Room":
 			for(int i=0; i<aqua.size(); i++) {
-				for(int j=0; j<aqua.get(i).getReservations().size(); i++) {
+				for(int j=0; j<aqua.get(i).getReservations().size(); j++) {
 					if(time.compareTo(aqua.get(i).getReservations().get(j).getTime()) > 0) {
 						return false;
 					}
@@ -75,7 +87,7 @@ public class ReservationCalendar {
 			break;
 		case "Karaoke Lounge":
 			for(int i=0; i<kareoke.size(); i++) {
-				for(int j=0; j<kareoke.get(i).getReservations().size(); i++) {
+				for(int j=0; j<kareoke.get(i).getReservations().size(); j++) {
 					if(time.compareTo(kareoke.get(i).getReservations().get(j).getTime()) > 0) {
 						return false;
 					}
@@ -84,7 +96,7 @@ public class ReservationCalendar {
 			break;
 		case "Billiards Lounge":
 			for(int i=0; i<billiards.size(); i++) {
-				for(int j=0; j<billiards.get(i).getReservations().size(); i++) {
+				for(int j=0; j<billiards.get(i).getReservations().size(); j++) {
 					if(time.compareTo(billiards.get(i).getReservations().get(j).getTime()) < 0) {
 						return true;
 					}
@@ -124,6 +136,11 @@ public class ReservationCalendar {
 					small.get(i).addReservation(r);         // Adds the reservation to the specific small room's reservation list
 				}
 			}
+			if(r==null) {
+				System.out.println("Added To Small Party Room Waitlist!\n");
+				WaitlistedGuest w = new WaitlistedGuest(guest, time, u);
+				smallWaitlist.add(w);
+			}
 			break;
 		case "Medium Party Room":
 			for(int i=0; i<medium.size(); i++) {
@@ -139,6 +156,11 @@ public class ReservationCalendar {
 					r = new Reservation(medium.get(i), guest, time, u);
 					medium.get(i).addReservation(r);
 				}
+			}
+			if(r==null) {
+				System.out.println("Added To Medium Party Room Waitlist!\n");
+				WaitlistedGuest w = new WaitlistedGuest(guest, time, u);
+				mediumWaitlist.add(w);
 			}
 			break;
 		case"Aqua Room":
@@ -156,6 +178,11 @@ public class ReservationCalendar {
 					aqua.get(i).addReservation(r);
 				}
 			}
+			if(r==null) {
+				System.out.println("Added To Aqua Room Waitlist!\n");
+				WaitlistedGuest w = new WaitlistedGuest(guest, time, u);
+				aquaWaitlist.add(w);
+			}
 			break;
 		case "Karaoke Lounge":
 			for(int i=0; i<kareoke.size(); i++) {
@@ -171,6 +198,11 @@ public class ReservationCalendar {
 					r = new Reservation(kareoke.get(i), guest, time, u);
 					kareoke.get(i).addReservation(r);
 				}
+			}
+			if(r==null) {
+				System.out.println("Added To Karoeke Lounge Waitlist!\n");
+				WaitlistedGuest w = new WaitlistedGuest(guest, time, u);
+				kareokeWaitlist.add(w);
 			}
 			break;
 		case "Billiards Lounge":
@@ -188,11 +220,19 @@ public class ReservationCalendar {
 					billiards.get(i).addReservation(r);
 				}
 			}
+			if(r==null) {
+				System.out.println("Added To Billiards Lounge Waitlist!\n");
+				WaitlistedGuest w = new WaitlistedGuest(guest, time, u);
+				billiardsWaitlist.add(w);
+			}
 			break;
 		default:
 			break;
 		}
-		calendar.add(r);  // adds the reservation to the calendar
+		if(r != null) {
+			calendar.add(r);  // adds the reservation to the calendar
+		}
+//		CheckInFrame.names.add(guest.getName());
 	}
 	/**
 	 * Calls a room by the enum type and the room number.  Will remove reservation and add room back to available rooms
@@ -201,40 +241,39 @@ public class ReservationCalendar {
 	 */
 	public void removeReservation(Reservation R) {
 		for(int i=0; i<calendar.size(); i++) {
-			if(calendar.get(i).getID() == R.getID()) {
+			if(calendar.get(i).getGuest().getName().equals(R.getGuest().getName())) {
 				calendar.remove(i);
-				String type = R.getRoom().getType();
-				if(type.equals("Small Party Room")) {
+				if(R.getRoom() instanceof SmallPartyRoom) {
 					for(int w=0; w<small.get(i).getReservations().size(); w++) {
-						if(small.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
+						if(small.get(i).getReservations().get(w).getGuest().getName().equals(R.getGuest().getName())) {
 							small.get(i).getReservations().remove(w);
 						}
 					}
 				}
-				if(type.equals("Medium Party Room")) {
+				if(R.getRoom() instanceof MediumPartyRoom) {
 					for(int w=0; w<medium.get(i).getReservations().size(); w++) {
-						if(medium.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
+						if(medium.get(i).getReservations().get(w).getGuest().getName().equals(R.getGuest().getName())) {
 							medium.get(i).getReservations().remove(w);
 						}
 					}
 				}
-				if(type.equals("Aqua Room")) {
+				if(R.getRoom() instanceof AquaRoom) {
 					for(int w=0; w<aqua.get(i).getReservations().size(); w++) {
-						if(aqua.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
+						if(aqua.get(i).getReservations().get(w).getGuest().getName().equals(R.getGuest().getName())) {
 							aqua.get(i).getReservations().remove(w);
 						}
 					}
 				}
-				if(type.equals("Karaoke Lounge")) {
+				if(R.getRoom() instanceof Kareoke) {
 					for(int w=0; w<kareoke.get(i).getReservations().size(); w++) {
-						if(kareoke.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
+						if(kareoke.get(i).getReservations().get(w).getGuest().getName().equals(R.getGuest().getName())) {
 							kareoke.get(i).getReservations().remove(w);
 						}
 					}
 				}
-				if(type.equals("Billiards Lounge")) {
+				if(R.getRoom() instanceof Billiards) {
 					for(int w=0; w<billiards.get(i).getReservations().size(); w++) {
-						if(billiards.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
+						if(billiards.get(i).getReservations().get(w).getGuest().getName().equals(R.getGuest().getName())) {
 							billiards.get(i).getReservations().remove(w);
 						}
 					}
@@ -277,6 +316,16 @@ public class ReservationCalendar {
 		return null;
 	}
 	
+	public Reservation getReservationByGuestFirstName(String name) {
+		Reservation r = null;
+		for(int i=0; i<calendar.size(); i++) {
+			if(calendar.get(i).getGuest().getName().equals(name)) {
+				r = calendar.get(i);
+			}
+		}
+		return r;
+	}
+	
 	public void checkIn(Reservation r) {
 		String type = r.getRoom().getType();
 		CheckIn c = null;
@@ -301,6 +350,7 @@ public class ReservationCalendar {
 		}
 		checkedIn.add(c);
 		removeReservation(r);
+//		CheckOutFrame.names.add(r.getGuest().getName());
 	}
 	
 	public void checkOut(CheckIn chin) {

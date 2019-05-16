@@ -15,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -227,7 +228,7 @@ public class EditReservationFrame extends JFrame {
 		roomTypeOptions = new JComboBox<String>(roomTypeString);
 		roomTypeListener = new RoomTypeListener();
 		roomTypeOptions.addActionListener(roomTypeListener);
-		roomTypeOptions.setSelectedIndex(Arrays.asList(roomTypeString).indexOf(r.room.getType()));
+//		roomTypeOptions.setSelectedIndex(Arrays.asList(roomTypeString).indexOf(r.room.getType()));
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -907,6 +908,8 @@ public class EditReservationFrame extends JFrame {
 	class DeleteButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
+			calendar.removeReservation(r);
+			JOptionPane.showMessageDialog(null, "Reservation has been deleted. Person next on waitlist (if there is one) has been notified.","Message", JOptionPane.PLAIN_MESSAGE);
 			EditReservationFrame.this.dispose();
 		}
 	}
@@ -992,9 +995,9 @@ public class EditReservationFrame extends JFrame {
 					w.setVisible(true);
 				} else {
 					// create new reservation object
-//					ConfirmationFrame c = new ConfirmationFrame(finalizedReservation);
-//					NewReservationFrame.this.dispose();
-//					c.setVisible(true);
+					ConfirmationFrame c = new ConfirmationFrame(r);
+					EditReservationFrame.this.dispose();
+					c.setVisible(true);
 				}
 			}
 		}	
