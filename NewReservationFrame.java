@@ -24,7 +24,6 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.JTextComponent;
 
-
 public class NewReservationFrame extends JFrame {
 	JScrollPane scrollPane;
 	JPanel panel;
@@ -34,6 +33,7 @@ public class NewReservationFrame extends JFrame {
 	String dateChosen;
 	String startTimeChosen;
 	String endTimeChosen;
+	ReservationCalendar calendar;
 
 	// Guest Information
 	private JLabel name;
@@ -85,7 +85,7 @@ public class NewReservationFrame extends JFrame {
 	private JTextField partyFavors;
 	private JLabel projectorText;
 	private JCheckBox projector;
-	private JLabel partyDecoText; 
+	private JLabel partyDecoText;
 	private JCheckBox partyDeco;
 	private JComboBox<String> themeOptions;
 
@@ -145,11 +145,12 @@ public class NewReservationFrame extends JFrame {
 	 * @param cr - CashRegister object that is used to store items and calculate
 	 *           cost for purchase
 	 **/
-	public NewReservationFrame(String roomName, String dateChosen, String startTimeChosen, String endTimeChosen) {
+	public NewReservationFrame(String roomName, String dateChosen, String startTimeChosen, String endTimeChosen, ReservationCalendar calendar) {
 		this.roomName = roomName;
 		this.dateChosen = dateChosen;
 		this.startTimeChosen = startTimeChosen;
 		this.endTimeChosen = endTimeChosen;
+		this.calendar = calendar;
 		// call private helper method to create and add components
 		createComponents();
 
@@ -229,19 +230,18 @@ public class NewReservationFrame extends JFrame {
 		roomTypeOptions = new JComboBox<String>(roomTypeString);
 		roomTypeListener = new RoomTypeListener();
 		roomTypeOptions.addActionListener(roomTypeListener);
-		
+
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		Date defaultDate = cal.getTime();
-		
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
+
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		Date chosenDate = null;
 		try {
 			if (dateChosen == null) {
 				chosenDate = defaultDate;
-			}
-			else {
+			} else {
 				chosenDate = df.parse(dateChosen);
 			}
 		} catch (ParseException e) {
@@ -255,13 +255,12 @@ public class NewReservationFrame extends JFrame {
 		dateSpinner.setEditor(dateEditor);
 		dateSpinner.setValue(chosenDate);
 
-		DateFormat df2 = new SimpleDateFormat("hh:mm a"); 
+		DateFormat df2 = new SimpleDateFormat("hh:mm a");
 		Date chosenStartTime = null;
 		try {
 			if (startTimeChosen == null) {
 				chosenStartTime = defaultDate;
-			}
-			else {
+			} else {
 				chosenStartTime = df2.parse(startTimeChosen);
 			}
 		} catch (ParseException e) {
@@ -276,14 +275,13 @@ public class NewReservationFrame extends JFrame {
 		de.getTextField().setEditable(false);
 		startSpinner.setEditor(de);
 		startSpinner.setValue(chosenStartTime);
-		
-		DateFormat df3 = new SimpleDateFormat("hh:mm a"); 
+
+		DateFormat df3 = new SimpleDateFormat("hh:mm a");
 		Date chosenEndTime = null;
 		try {
 			if (endTimeChosen == null) {
 				chosenEndTime = defaultDate;
-			}
-			else {
+			} else {
 				chosenEndTime = df3.parse(endTimeChosen);
 			}
 		} catch (ParseException e) {
@@ -298,8 +296,8 @@ public class NewReservationFrame extends JFrame {
 		de2.getTextField().setEditable(false);
 		endSpinner.setEditor(de2);
 		endSpinner.setValue(chosenEndTime);
-		
-		//Upgrade Information
+
+		// Upgrade Information
 		panel2 = new JPanel();
 		panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
@@ -365,7 +363,7 @@ public class NewReservationFrame extends JFrame {
 
 		panel.add(saveButton);
 		panel.add(cancelButton);
-		
+
 		if (roomName == "Aqua World") {
 			roomTypeOptions.setSelectedIndex(0);
 		}
@@ -445,7 +443,7 @@ public class NewReservationFrame extends JFrame {
 		icecream2 = new JLabel("Ice Cream 1:");
 		icecreamFlavor2 = new JComboBox<String>(icFlavors);
 	}
-	
+
 	private void createUpgradeComponents() {
 		upgradeLabel = new JLabel("Upgrades: ");
 		upgradeLabel.setFont(new Font(Font.SERIF, Font.BOLD, 20));
@@ -761,7 +759,7 @@ public class NewReservationFrame extends JFrame {
 				panel2.add(upgradeMPText);
 				panel2.add(upgradeMP);
 			}
-			
+
 			panel.add(panel2);
 			panel.add(panel1);
 			panel.add(saveButton);
@@ -770,34 +768,34 @@ public class NewReservationFrame extends JFrame {
 			panel.repaint();
 		}
 	}
-	
+
 	/**
 	 * Inner action listener class for the first Pastry Options dropdown menu
 	 **/
 	class UpgradeMPListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-	        if (upgradeMP.isSelected()) {
-	        	panel.remove(panel1);
-	        	roomTypeOptions.setEnabled(false);
-	        	panel.remove(saveButton);
+			if (upgradeMP.isSelected()) {
+				panel.remove(panel1);
+				roomTypeOptions.setEnabled(false);
+				panel.remove(saveButton);
 				panel.remove(cancelButton);
-				
-				String[] mealPlanOptions = new String[] {"Bronze", "Silver", "Gold", "Platinum" };
+
+				String[] mealPlanOptions = new String[] { "Bronze", "Silver", "Gold", "Platinum" };
 				mealPlanType = new JComboBox<String>(mealPlanOptions);
 				ActionListener mealPlanListener = new MealPlanTypeListener();
 				mealPlanType.addActionListener(mealPlanListener);
-			
+
 				createAllMPComponents();
 				panel.add(mealPlanChecker);
-	        	panel.add(mealPlanType);
-	        } else {
-	        	panel.remove(mealPlanChecker);
-	        	panel.remove(mealPlanType);
-	        	panel.remove(panel1);
-	        	roomTypeOptions.setEnabled(true);
-	        	
-	        	String roomChoice = (String) roomTypeOptions.getSelectedItem();
+				panel.add(mealPlanType);
+			} else {
+				panel.remove(mealPlanChecker);
+				panel.remove(mealPlanType);
+				panel.remove(panel1);
+				roomTypeOptions.setEnabled(true);
+
+				String roomChoice = (String) roomTypeOptions.getSelectedItem();
 
 				// choice determines what content is added to the frame
 				if (roomChoice.equals("Aqua World")) {
@@ -819,7 +817,7 @@ public class NewReservationFrame extends JFrame {
 				}
 				if (roomChoice.equals("Adults Billiards Lounge")) {
 				}
-	        }
+			}
 
 			panel.add(saveButton);
 			panel.add(cancelButton);
@@ -839,25 +837,24 @@ public class NewReservationFrame extends JFrame {
 				roomTypeOptions.setEnabled(false);
 				panel2.add(themeOptions);
 				panel2.updateUI();
-			}
-			else {
+			} else {
 				panel2.remove(themeOptions);
 				panel2.updateUI();
-	        	roomTypeOptions.setEnabled(true);
+				roomTypeOptions.setEnabled(true);
 			}
 		}
 	}
-	
+
 	/**
 	 * Inner action listener class for the Cancel Button
-	 * **/
+	 **/
 	class CancelButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
 			NewReservationFrame.this.dispose();
 		}
 	}
-	
+
 	/**
 	 * Inner action listener class for the save button
 	 **/
@@ -883,7 +880,7 @@ public class NewReservationFrame extends JFrame {
 			if (emailCheckbox.isSelected()) {
 				contactByEmail = true;
 			}
-			//card info
+			// card info
 			String nameOnCard = payNameTextField.getText();
 			String numberOnCard = payNumberTextField.getText();
 			String security = paySCTextField.getText();
@@ -891,17 +888,14 @@ public class NewReservationFrame extends JFrame {
 			String cardType = "Card Type";
 			if (ccVisaCheckbox.isSelected()) {
 				cardType = ccVisaCheckbox.getText();
-			}
-			else if (ccMastercardCheckbox.isSelected()) {
+			} else if (ccMastercardCheckbox.isSelected()) {
 				cardType = ccMastercardCheckbox.getText();
-			}
-			else if (ccDiscoverCheckbox.isSelected()) {
+			} else if (ccDiscoverCheckbox.isSelected()) {
 				cardType = ccDiscoverCheckbox.getText();
-			}
-			else if (ccAmexCheckbox.isSelected()) {
+			} else if (ccAmexCheckbox.isSelected()) {
 				cardType = ccAmexCheckbox.getText();
 			}
-			//room details
+			// room details
 			String roomType = (String) roomTypeOptions.getSelectedItem();
 
 			String dateChosen = new SimpleDateFormat("MM/dd/yyyy").format(dateSpinner.getValue());
@@ -912,1203 +906,956 @@ public class NewReservationFrame extends JFrame {
 
 			DateAndTime timeChosen = new DateAndTime(dateChosen, startTimeChosen, endTimeChosen);
 			
-			//Basic Meal Plan
-			if( !(upgradeMP.isSelected()) ) {
-				//Constructor: BasicMealPlan(ArrayList<Pizza> p, ArrayList<String> s)
+			Guest newGuest = new Guest();
+			newGuest.setName(name);
+			newGuest.setPhone(phoneNumber);
+			newGuest.setBirthdayMonth(birthMonth);
+			newGuest.setBirthdayDay(birthDay);
+			newGuest.setBirthdayYear(birthYear);
+			newGuest.setEmail(emailInput);
+			newGuest.setAddress(address);
+			newGuest.setNameOnCreditCard(nameOnCard);
+			newGuest.setCreditCard(numberOnCard);
+			newGuest.setSecurity(security);
+			newGuest.setCardExperation(cardExpiration);
+			newGuest.setCreditType(cardType);
+			newGuest.setContactPhone(contactByPhone);
+			newGuest.setContactEmail(contactByEmail);
+
+			// Basic Meal Plan
+			if (!(upgradeMP.isSelected())) {
+				// Constructor: BasicMealPlan(ArrayList<Pizza> p, ArrayList<String> s)
 				ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
 				Pizza pizza1 = new PlainPizza();
 				Pizza pizza2 = new PlainPizza();
 				Pizza pizza3 = new PlainPizza();
-				
-				if((String)pizzaTopping1a.getSelectedItem() == "Cheese") {
+
+				if ((String) pizzaTopping1a.getSelectedItem() == "Cheese") {
 					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Pepperoni") {
 					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Ham") {
 					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Jalapeno") {
 					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Sausage") {
 					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Mushroom") {
 					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Pineapple") {
 					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Bell Pepper") {
 					pizza1 = new BellPepper(pizza1);
 				}
-				
-				//for second pizza
-				if((String)pizzaTopping2a.getSelectedItem() == "Cheese") {
+
+				// for second pizza
+				if ((String) pizzaTopping2a.getSelectedItem() == "Cheese") {
 					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Pepperoni") {
 					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Ham") {
 					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Jalapeno") {
 					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Sausage") {
 					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Mushroom") {
 					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Pineapple") {
 					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Bell Pepper") {
 					pizza2 = new BellPepper(pizza2);
-				}	
-				pizzas.add(pizza2);//adds the second pizza
-				
-				//for third pizza
-				if((String)pizzaTopping3a.getSelectedItem() == "Cheese") {
+				}
+				pizzas.add(pizza2);// adds the second pizza
+
+				// for third pizza
+				if ((String) pizzaTopping3a.getSelectedItem() == "Cheese") {
 					pizza3 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Pepperoni") {
 					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Ham") {
 					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Jalapeno") {
 					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Sausage") {
 					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Mushroom") {
 					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Pineapple") {
 					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Bell Pepper") {
 					pizza3 = new BellPepper(pizza3);
 				}
-				pizzas.add(pizza3);//adds the third pizza
-				
-				//Get the sodas
+				pizzas.add(pizza3);// adds the third pizza
+
+				// Get the sodas
 				ArrayList<String> sodas = new ArrayList<String>();
-				String soda1 = (String)sodaFlavor1.getSelectedItem();
-				String soda2 = (String)sodaFlavor2.getSelectedItem();
-				String soda3 = (String)sodaFlavor3.getSelectedItem();
+				String soda1 = (String) sodaFlavor1.getSelectedItem();
+				String soda2 = (String) sodaFlavor2.getSelectedItem();
+				String soda3 = (String) sodaFlavor3.getSelectedItem();
 				sodas.add(soda1);
 				sodas.add(soda2);
 				sodas.add(soda3);
-				//Constructor: BasicMealPlan(ArrayList<Pizza> p, ArrayList<String> s)
+				// Constructor: BasicMealPlan(ArrayList<Pizza> p, ArrayList<String> s)
 				meal = new BasicMealPlan(pizzas, sodas);
 			}
-				
-			if ((String)mealPlanType.getSelectedItem() == "Bronze") {//sees what the customer has choosen
-				//BronzeMealPlan(ArrayList<Pizza> p, ArrayList<String> s, String choice)
-				ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
-				Pizza pizza1 = new PlainPizza();
-				Pizza pizza2 = new PlainPizza();
-				Pizza pizza3 = new PlainPizza();
-				
-				if((String)pizzaTopping1a.getSelectedItem() == "Cheese") {
-					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Pepperoni") {
-					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Ham") {
-					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Jalapeno") {
-					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Sausage") {
-					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Mushroom") {
-					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Pineapple") {
-					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Bell Pepper") {
-					pizza1 = new BellPepper(pizza1);
-				}
-				//topping 2
-				if((String)pizzaTopping1b.getSelectedItem() == "Cheese") {
-					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Pepperoni") {
-					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Ham") {
-					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Jalapeno") {
-					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Sausage") {
-					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Mushroom") {
-					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Pineapple") {
-					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Bell Pepper") {
-					pizza1 = new BellPepper(pizza1);
-				}
-				
-				//for second pizza
-				if((String)pizzaTopping2a.getSelectedItem() == "Cheese") {
-					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Pepperoni") {
-					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Ham") {
-					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Jalapeno") {
-					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Sausage") {
-					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Mushroom") {
-					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Pineapple") {
-					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Bell Pepper") {
-					pizza2 = new BellPepper(pizza2);
-				}
-				//topping 2
-				if((String)pizzaTopping2b.getSelectedItem() == "Cheese") {
-					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Pepperoni") {
-					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Ham") {
-					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Jalapeno") {
-					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Sausage") {
-					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Mushroom") {
-					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Pineapple") {
-					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Bell Pepper") {
-					pizza2 = new BellPepper(pizza2);
-				}
-				
-				pizzas.add(pizza2);//adds the second pizza
-				
-				//for third pizza
-				if((String)pizzaTopping3a.getSelectedItem() == "Cheese") {
-					pizza3 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Pepperoni") {
-					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Ham") {
-					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Jalapeno") {
-					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Sausage") {
-					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Mushroom") {
-					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Pineapple") {
-					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Bell Pepper") {
-					pizza3 = new BellPepper(pizza3);
-				}
-				//topping 2
-				if((String)pizzaTopping3b.getSelectedItem() == "Cheese") {
-					pizza3 = new Cheese(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Pepperoni") {
-					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Ham") {
-					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Jalapeno") {
-					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Sausage") {
-					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Mushroom") {
-					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Pineapple") {
-					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Bell Pepper") {
-					pizza3 = new BellPepper(pizza3);
-				}
-				pizzas.add(pizza3);//adds the third pizza
-				 
-				//Get the sodas
-				ArrayList<String> sodas = new ArrayList<String>();
-				String soda1 = (String)sodaFlavor1.getSelectedItem();
-				String soda2 = (String)sodaFlavor2.getSelectedItem();
-				String soda3 = (String)sodaFlavor3.getSelectedItem();
-				String soda4 = (String)sodaFlavor4.getSelectedItem();
-				String soda5 = (String)sodaFlavor5.getSelectedItem();
-				sodas.add(soda1);
-				sodas.add(soda2);
-				sodas.add(soda3);
-				sodas.add(soda4);
-				sodas.add(soda5);
-				//get the choice for salad or bread sticks
-				String choice = (String)sOrB.getSelectedItem();
-				
-				//BronzeMealPlan(ArrayList<Pizza> p, ArrayList<String> s, String choice)
-				meal = new BronzeMealPlan(pizzas, sodas, choice);
-			}
-			else if ((String)mealPlanType.getSelectedItem() == "Silver") {
-				ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
-				Pizza pizza1 = new PlainPizza();
-				Pizza pizza2 = new PlainPizza();
-				Pizza pizza3 = new PlainPizza();
-				
-				if((String)pizzaTopping1a.getSelectedItem() == "Cheese") {
-					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Pepperoni") {
-					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Ham") {
-					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Jalapeno") {
-					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Sausage") {
-					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Mushroom") {
-					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Pineapple") {
-					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Bell Pepper") {
-					pizza1 = new BellPepper(pizza1);
-				}
-				//topping 2
-				if((String)pizzaTopping1b.getSelectedItem() == "Cheese") {
-					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Pepperoni") {
-					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Ham") {
-					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Jalapeno") {
-					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Sausage") {
-					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Mushroom") {
-					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Pineapple") {
-					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Bell Pepper") {
-					pizza1 = new BellPepper(pizza1);
-				}
-				//topping 3
-				if((String)pizzaTopping1c.getSelectedItem() == "Cheese") {
-					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Pepperoni") {
-					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Ham") {
-					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Jalapeno") {
-					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Sausage") {
-					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Mushroom") {
-					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Pineapple") {
-					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Bell Pepper") {
-					pizza1 = new BellPepper(pizza1);
-				}
-				pizzas.add(pizza1);//adds the first pizza
-				
-				//for second pizza
-				if((String)pizzaTopping2a.getSelectedItem() == "Cheese") {
-					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Pepperoni") {
-					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Ham") {
-					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Jalapeno") {
-					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Sausage") {
-					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Mushroom") {
-					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Pineapple") {
-					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Bell Pepper") {
-					pizza2 = new BellPepper(pizza2);
-				}
-				//topping 2
-				if((String)pizzaTopping2b.getSelectedItem() == "Cheese") {
-					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Pepperoni") {
-					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Ham") {
-					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Jalapeno") {
-					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Sausage") {
-					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Mushroom") {
-					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Pineapple") {
-					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Bell Pepper") {
-					pizza2 = new BellPepper(pizza2);
-				}
-				//topping 3
-				if((String)pizzaTopping2c.getSelectedItem() == "Cheese") {
-					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Pepperoni") {
-					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Ham") {
-					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Jalapeno") {
-					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Sausage") {
-					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Mushroom") {
-					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Pineapple") {
-					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Bell Pepper") {
-					pizza2 = new BellPepper(pizza2);
-				}
-				pizzas.add(pizza2);//adds the second pizza
-				
-				//for third pizza
-				if((String)pizzaTopping3a.getSelectedItem() == "Cheese") {
-					pizza3 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Pepperoni") {
-					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Ham") {
-					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Jalapeno") {
-					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Sausage") {
-					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Mushroom") {
-					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Pineapple") {
-					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Bell Pepper") {
-					pizza3 = new BellPepper(pizza3);
-				}
-				//topping 2
-				if((String)pizzaTopping3b.getSelectedItem() == "Cheese") {
-					pizza3 = new Cheese(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Pepperoni") {
-					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Ham") {
-					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Jalapeno") {
-					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Sausage") {
-					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Mushroom") {
-					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Pineapple") {
-					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Bell Pepper") {
-					pizza3 = new BellPepper(pizza3);
-				}
-				//topping 3
-				if((String)pizzaTopping3c.getSelectedItem() == "Cheese") {
-					pizza3 = new Cheese(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Pepperoni") {
-					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Ham") {
-					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Jalapeno") {
-					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Sausage") {
-					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Mushroom") {
-					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Pineapple") {
-					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Bell Pepper") {
-					pizza3 = new BellPepper(pizza3);
-				}
-				pizzas.add(pizza3);//adds the third pizza
 
-				//Get the sodas
+			if ((String) mealPlanType.getSelectedItem() == "Bronze") {// sees what the customer has choosen
+				// BronzeMealPlan(ArrayList<Pizza> p, ArrayList<String> s, String choice)
+				ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+				Pizza pizza1 = new PlainPizza();
+				Pizza pizza2 = new PlainPizza();
+				Pizza pizza3 = new PlainPizza();
+
+				if ((String) pizzaTopping1a.getSelectedItem() == "Cheese") {
+					pizza1 = new Cheese(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Pepperoni") {
+					pizza1 = new Pepperoni(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Ham") {
+					pizza1 = new Ham(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Jalapeno") {
+					pizza1 = new Jalapeno(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Sausage") {
+					pizza1 = new Sausage(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Mushroom") {
+					pizza1 = new Mushroom(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Pineapple") {
+					pizza1 = new Pineapple(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Bell Pepper") {
+					pizza1 = new BellPepper(pizza1);
+				}
+				// topping 2
+				if ((String) pizzaTopping1b.getSelectedItem() == "Cheese") {
+					pizza1 = new Cheese(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Pepperoni") {
+					pizza1 = new Pepperoni(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Ham") {
+					pizza1 = new Ham(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Jalapeno") {
+					pizza1 = new Jalapeno(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Sausage") {
+					pizza1 = new Sausage(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Mushroom") {
+					pizza1 = new Mushroom(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Pineapple") {
+					pizza1 = new Pineapple(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Bell Pepper") {
+					pizza1 = new BellPepper(pizza1);
+				}
+
+				// for second pizza
+				if ((String) pizzaTopping2a.getSelectedItem() == "Cheese") {
+					pizza2 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Pepperoni") {
+					pizza2 = new Pepperoni(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Ham") {
+					pizza2 = new Ham(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Jalapeno") {
+					pizza2 = new Jalapeno(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Sausage") {
+					pizza2 = new Sausage(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Mushroom") {
+					pizza2 = new Mushroom(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Pineapple") {
+					pizza2 = new Pineapple(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Bell Pepper") {
+					pizza2 = new BellPepper(pizza2);
+				}
+				// topping 2
+				if ((String) pizzaTopping2b.getSelectedItem() == "Cheese") {
+					pizza2 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Pepperoni") {
+					pizza2 = new Pepperoni(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Ham") {
+					pizza2 = new Ham(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Jalapeno") {
+					pizza2 = new Jalapeno(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Sausage") {
+					pizza2 = new Sausage(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Mushroom") {
+					pizza2 = new Mushroom(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Pineapple") {
+					pizza2 = new Pineapple(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Bell Pepper") {
+					pizza2 = new BellPepper(pizza2);
+				}
+
+				pizzas.add(pizza2);// adds the second pizza
+
+				// for third pizza
+				if ((String) pizzaTopping3a.getSelectedItem() == "Cheese") {
+					pizza3 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Pepperoni") {
+					pizza3 = new Pepperoni(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Ham") {
+					pizza3 = new Ham(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Jalapeno") {
+					pizza3 = new Jalapeno(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Sausage") {
+					pizza3 = new Sausage(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Mushroom") {
+					pizza3 = new Mushroom(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Pineapple") {
+					pizza3 = new Pineapple(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Bell Pepper") {
+					pizza3 = new BellPepper(pizza3);
+				}
+				// topping 2
+				if ((String) pizzaTopping3b.getSelectedItem() == "Cheese") {
+					pizza3 = new Cheese(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Pepperoni") {
+					pizza3 = new Pepperoni(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Ham") {
+					pizza3 = new Ham(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Jalapeno") {
+					pizza3 = new Jalapeno(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Sausage") {
+					pizza3 = new Sausage(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Mushroom") {
+					pizza3 = new Mushroom(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Pineapple") {
+					pizza3 = new Pineapple(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Bell Pepper") {
+					pizza3 = new BellPepper(pizza3);
+				}
+				pizzas.add(pizza3);// adds the third pizza
+
+				// Get the sodas
 				ArrayList<String> sodas = new ArrayList<String>();
-				String soda1 = (String)sodaFlavor1.getSelectedItem();
-				String soda2 = (String)sodaFlavor2.getSelectedItem();
-				String soda3 = (String)sodaFlavor3.getSelectedItem();
-				String soda4 = (String)sodaFlavor4.getSelectedItem();
-				String soda5 = (String)sodaFlavor5.getSelectedItem();
+				String soda1 = (String) sodaFlavor1.getSelectedItem();
+				String soda2 = (String) sodaFlavor2.getSelectedItem();
+				String soda3 = (String) sodaFlavor3.getSelectedItem();
+				String soda4 = (String) sodaFlavor4.getSelectedItem();
+				String soda5 = (String) sodaFlavor5.getSelectedItem();
 				sodas.add(soda1);
 				sodas.add(soda2);
 				sodas.add(soda3);
 				sodas.add(soda4);
 				sodas.add(soda5);
-				//get the choice for salad or bread sticks
-				
-				//SilverMealPlan(ArrayList<Pizza> p, ArrayList<String> s)
+				// get the choice for salad or bread sticks
+				String choice = (String) sOrB.getSelectedItem();
+
+				// BronzeMealPlan(ArrayList<Pizza> p, ArrayList<String> s, String choice)
+				meal = new BronzeMealPlan(pizzas, sodas, choice);
+			} else if ((String) mealPlanType.getSelectedItem() == "Silver") {
+				ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+				Pizza pizza1 = new PlainPizza();
+				Pizza pizza2 = new PlainPizza();
+				Pizza pizza3 = new PlainPizza();
+
+				if ((String) pizzaTopping1a.getSelectedItem() == "Cheese") {
+					pizza1 = new Cheese(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Pepperoni") {
+					pizza1 = new Pepperoni(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Ham") {
+					pizza1 = new Ham(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Jalapeno") {
+					pizza1 = new Jalapeno(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Sausage") {
+					pizza1 = new Sausage(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Mushroom") {
+					pizza1 = new Mushroom(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Pineapple") {
+					pizza1 = new Pineapple(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Bell Pepper") {
+					pizza1 = new BellPepper(pizza1);
+				}
+				// topping 2
+				if ((String) pizzaTopping1b.getSelectedItem() == "Cheese") {
+					pizza1 = new Cheese(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Pepperoni") {
+					pizza1 = new Pepperoni(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Ham") {
+					pizza1 = new Ham(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Jalapeno") {
+					pizza1 = new Jalapeno(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Sausage") {
+					pizza1 = new Sausage(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Mushroom") {
+					pizza1 = new Mushroom(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Pineapple") {
+					pizza1 = new Pineapple(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Bell Pepper") {
+					pizza1 = new BellPepper(pizza1);
+				}
+				// topping 3
+				if ((String) pizzaTopping1c.getSelectedItem() == "Cheese") {
+					pizza1 = new Cheese(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Pepperoni") {
+					pizza1 = new Pepperoni(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Ham") {
+					pizza1 = new Ham(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Jalapeno") {
+					pizza1 = new Jalapeno(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Sausage") {
+					pizza1 = new Sausage(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Mushroom") {
+					pizza1 = new Mushroom(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Pineapple") {
+					pizza1 = new Pineapple(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Bell Pepper") {
+					pizza1 = new BellPepper(pizza1);
+				}
+				pizzas.add(pizza1);// adds the first pizza
+
+				// for second pizza
+				if ((String) pizzaTopping2a.getSelectedItem() == "Cheese") {
+					pizza2 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Pepperoni") {
+					pizza2 = new Pepperoni(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Ham") {
+					pizza2 = new Ham(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Jalapeno") {
+					pizza2 = new Jalapeno(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Sausage") {
+					pizza2 = new Sausage(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Mushroom") {
+					pizza2 = new Mushroom(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Pineapple") {
+					pizza2 = new Pineapple(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Bell Pepper") {
+					pizza2 = new BellPepper(pizza2);
+				}
+				// topping 2
+				if ((String) pizzaTopping2b.getSelectedItem() == "Cheese") {
+					pizza2 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Pepperoni") {
+					pizza2 = new Pepperoni(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Ham") {
+					pizza2 = new Ham(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Jalapeno") {
+					pizza2 = new Jalapeno(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Sausage") {
+					pizza2 = new Sausage(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Mushroom") {
+					pizza2 = new Mushroom(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Pineapple") {
+					pizza2 = new Pineapple(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Bell Pepper") {
+					pizza2 = new BellPepper(pizza2);
+				}
+				// topping 3
+				if ((String) pizzaTopping2c.getSelectedItem() == "Cheese") {
+					pizza2 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Pepperoni") {
+					pizza2 = new Pepperoni(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Ham") {
+					pizza2 = new Ham(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Jalapeno") {
+					pizza2 = new Jalapeno(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Sausage") {
+					pizza2 = new Sausage(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Mushroom") {
+					pizza2 = new Mushroom(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Pineapple") {
+					pizza2 = new Pineapple(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Bell Pepper") {
+					pizza2 = new BellPepper(pizza2);
+				}
+				pizzas.add(pizza2);// adds the second pizza
+
+				// for third pizza
+				if ((String) pizzaTopping3a.getSelectedItem() == "Cheese") {
+					pizza3 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Pepperoni") {
+					pizza3 = new Pepperoni(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Ham") {
+					pizza3 = new Ham(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Jalapeno") {
+					pizza3 = new Jalapeno(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Sausage") {
+					pizza3 = new Sausage(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Mushroom") {
+					pizza3 = new Mushroom(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Pineapple") {
+					pizza3 = new Pineapple(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Bell Pepper") {
+					pizza3 = new BellPepper(pizza3);
+				}
+				// topping 2
+				if ((String) pizzaTopping3b.getSelectedItem() == "Cheese") {
+					pizza3 = new Cheese(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Pepperoni") {
+					pizza3 = new Pepperoni(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Ham") {
+					pizza3 = new Ham(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Jalapeno") {
+					pizza3 = new Jalapeno(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Sausage") {
+					pizza3 = new Sausage(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Mushroom") {
+					pizza3 = new Mushroom(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Pineapple") {
+					pizza3 = new Pineapple(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Bell Pepper") {
+					pizza3 = new BellPepper(pizza3);
+				}
+				// topping 3
+				if ((String) pizzaTopping3c.getSelectedItem() == "Cheese") {
+					pizza3 = new Cheese(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Pepperoni") {
+					pizza3 = new Pepperoni(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Ham") {
+					pizza3 = new Ham(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Jalapeno") {
+					pizza3 = new Jalapeno(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Sausage") {
+					pizza3 = new Sausage(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Mushroom") {
+					pizza3 = new Mushroom(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Pineapple") {
+					pizza3 = new Pineapple(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Bell Pepper") {
+					pizza3 = new BellPepper(pizza3);
+				}
+				pizzas.add(pizza3);// adds the third pizza
+
+				// Get the sodas
+				ArrayList<String> sodas = new ArrayList<String>();
+				String soda1 = (String) sodaFlavor1.getSelectedItem();
+				String soda2 = (String) sodaFlavor2.getSelectedItem();
+				String soda3 = (String) sodaFlavor3.getSelectedItem();
+				String soda4 = (String) sodaFlavor4.getSelectedItem();
+				String soda5 = (String) sodaFlavor5.getSelectedItem();
+				sodas.add(soda1);
+				sodas.add(soda2);
+				sodas.add(soda3);
+				sodas.add(soda4);
+				sodas.add(soda5);
+				// get the choice for salad or bread sticks
+
+				// SilverMealPlan(ArrayList<Pizza> p, ArrayList<String> s)
 				meal = new SilverMealPlan(pizzas, sodas);
 			}
-			
-			else if ((String)mealPlanType.getSelectedItem() == "Gold") {
+
+			else if ((String) mealPlanType.getSelectedItem() == "Gold") {
 				ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
 				Pizza pizza1 = new PlainPizza();
 				Pizza pizza2 = new PlainPizza();
 				Pizza pizza3 = new PlainPizza();
-				
-				if((String)pizzaTopping1a.getSelectedItem() == "Cheese") {
-					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Pepperoni") {
-					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Ham") {
-					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Jalapeno") {
-					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Sausage") {
-					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Mushroom") {
-					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Pineapple") {
-					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Bell Pepper") {
-					pizza1 = new BellPepper(pizza1);
-				}
-				//topping 2
-				if((String)pizzaTopping1b.getSelectedItem() == "Cheese") {
-					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Pepperoni") {
-					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Ham") {
-					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Jalapeno") {
-					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Sausage") {
-					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Mushroom") {
-					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Pineapple") {
-					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Bell Pepper") {
-					pizza1 = new BellPepper(pizza1);
-				}
-				//topping 3
-				if((String)pizzaTopping1c.getSelectedItem() == "Cheese") {
-					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Pepperoni") {
-					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Ham") {
-					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Jalapeno") {
-					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Sausage") {
-					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Mushroom") {
-					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Pineapple") {
-					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Bell Pepper") {
-					pizza1 = new BellPepper(pizza1);
-				}
-				pizzas.add(pizza1);//adds the first pizza
-				
-				//for second pizza
-				if((String)pizzaTopping2a.getSelectedItem() == "Cheese") {
-					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Pepperoni") {
-					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Ham") {
-					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Jalapeno") {
-					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Sausage") {
-					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Mushroom") {
-					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Pineapple") {
-					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Bell Pepper") {
-					pizza2 = new BellPepper(pizza2);
-				}
-				//topping 2
-				if((String)pizzaTopping2b.getSelectedItem() == "Cheese") {
-					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Pepperoni") {
-					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Ham") {
-					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Jalapeno") {
-					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Sausage") {
-					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Mushroom") {
-					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Pineapple") {
-					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Bell Pepper") {
-					pizza2 = new BellPepper(pizza2);
-				}
-				//topping 3
-				if((String)pizzaTopping2c.getSelectedItem() == "Cheese") {
-					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Pepperoni") {
-					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Ham") {
-					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Jalapeno") {
-					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Sausage") {
-					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Mushroom") {
-					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Pineapple") {
-					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Bell Pepper") {
-					pizza2 = new BellPepper(pizza2);
-				}
-				pizzas.add(pizza2);//adds the second pizza
-				
-				//for third pizza
-				if((String)pizzaTopping3a.getSelectedItem() == "Cheese") {
-					pizza3 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Pepperoni") {
-					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Ham") {
-					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Jalapeno") {
-					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Sausage") {
-					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Mushroom") {
-					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Pineapple") {
-					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Bell Pepper") {
-					pizza3 = new BellPepper(pizza3);
-				}
-				//topping 2
-				if((String)pizzaTopping3b.getSelectedItem() == "Cheese") {
-					pizza3 = new Cheese(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Pepperoni") {
-					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Ham") {
-					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Jalapeno") {
-					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Sausage") {
-					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Mushroom") {
-					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Pineapple") {
-					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Bell Pepper") {
-					pizza3 = new BellPepper(pizza3);
-				}
-				//topping 3
-				if((String)pizzaTopping3c.getSelectedItem() == "Cheese") {
-					pizza3 = new Cheese(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Pepperoni") {
-					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Ham") {
-					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Jalapeno") {
-					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Sausage") {
-					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Mushroom") {
-					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Pineapple") {
-					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Bell Pepper") {
-					pizza3 = new BellPepper(pizza3);
-				}
-				pizzas.add(pizza3);//adds the third pizza
 
-				//Get the sodas
+				if ((String) pizzaTopping1a.getSelectedItem() == "Cheese") {
+					pizza1 = new Cheese(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Pepperoni") {
+					pizza1 = new Pepperoni(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Ham") {
+					pizza1 = new Ham(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Jalapeno") {
+					pizza1 = new Jalapeno(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Sausage") {
+					pizza1 = new Sausage(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Mushroom") {
+					pizza1 = new Mushroom(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Pineapple") {
+					pizza1 = new Pineapple(pizza1);
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Bell Pepper") {
+					pizza1 = new BellPepper(pizza1);
+				}
+				// topping 2
+				if ((String) pizzaTopping1b.getSelectedItem() == "Cheese") {
+					pizza1 = new Cheese(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Pepperoni") {
+					pizza1 = new Pepperoni(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Ham") {
+					pizza1 = new Ham(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Jalapeno") {
+					pizza1 = new Jalapeno(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Sausage") {
+					pizza1 = new Sausage(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Mushroom") {
+					pizza1 = new Mushroom(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Pineapple") {
+					pizza1 = new Pineapple(pizza1);
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Bell Pepper") {
+					pizza1 = new BellPepper(pizza1);
+				}
+				// topping 3
+				if ((String) pizzaTopping1c.getSelectedItem() == "Cheese") {
+					pizza1 = new Cheese(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Pepperoni") {
+					pizza1 = new Pepperoni(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Ham") {
+					pizza1 = new Ham(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Jalapeno") {
+					pizza1 = new Jalapeno(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Sausage") {
+					pizza1 = new Sausage(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Mushroom") {
+					pizza1 = new Mushroom(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Pineapple") {
+					pizza1 = new Pineapple(pizza1);
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Bell Pepper") {
+					pizza1 = new BellPepper(pizza1);
+				}
+				pizzas.add(pizza1);// adds the first pizza
+
+				// for second pizza
+				if ((String) pizzaTopping2a.getSelectedItem() == "Cheese") {
+					pizza2 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Pepperoni") {
+					pizza2 = new Pepperoni(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Ham") {
+					pizza2 = new Ham(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Jalapeno") {
+					pizza2 = new Jalapeno(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Sausage") {
+					pizza2 = new Sausage(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Mushroom") {
+					pizza2 = new Mushroom(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Pineapple") {
+					pizza2 = new Pineapple(pizza2);
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Bell Pepper") {
+					pizza2 = new BellPepper(pizza2);
+				}
+				// topping 2
+				if ((String) pizzaTopping2b.getSelectedItem() == "Cheese") {
+					pizza2 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Pepperoni") {
+					pizza2 = new Pepperoni(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Ham") {
+					pizza2 = new Ham(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Jalapeno") {
+					pizza2 = new Jalapeno(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Sausage") {
+					pizza2 = new Sausage(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Mushroom") {
+					pizza2 = new Mushroom(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Pineapple") {
+					pizza2 = new Pineapple(pizza2);
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Bell Pepper") {
+					pizza2 = new BellPepper(pizza2);
+				}
+				// topping 3
+				if ((String) pizzaTopping2c.getSelectedItem() == "Cheese") {
+					pizza2 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Pepperoni") {
+					pizza2 = new Pepperoni(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Ham") {
+					pizza2 = new Ham(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Jalapeno") {
+					pizza2 = new Jalapeno(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Sausage") {
+					pizza2 = new Sausage(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Mushroom") {
+					pizza2 = new Mushroom(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Pineapple") {
+					pizza2 = new Pineapple(pizza2);
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Bell Pepper") {
+					pizza2 = new BellPepper(pizza2);
+				}
+				pizzas.add(pizza2);// adds the second pizza
+
+				// for third pizza
+				if ((String) pizzaTopping3a.getSelectedItem() == "Cheese") {
+					pizza3 = new Cheese(pizza2);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Pepperoni") {
+					pizza3 = new Pepperoni(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Ham") {
+					pizza3 = new Ham(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Jalapeno") {
+					pizza3 = new Jalapeno(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Sausage") {
+					pizza3 = new Sausage(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Mushroom") {
+					pizza3 = new Mushroom(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Pineapple") {
+					pizza3 = new Pineapple(pizza3);
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Bell Pepper") {
+					pizza3 = new BellPepper(pizza3);
+				}
+				// topping 2
+				if ((String) pizzaTopping3b.getSelectedItem() == "Cheese") {
+					pizza3 = new Cheese(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Pepperoni") {
+					pizza3 = new Pepperoni(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Ham") {
+					pizza3 = new Ham(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Jalapeno") {
+					pizza3 = new Jalapeno(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Sausage") {
+					pizza3 = new Sausage(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Mushroom") {
+					pizza3 = new Mushroom(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Pineapple") {
+					pizza3 = new Pineapple(pizza3);
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Bell Pepper") {
+					pizza3 = new BellPepper(pizza3);
+				}
+				// topping 3
+				if ((String) pizzaTopping3c.getSelectedItem() == "Cheese") {
+					pizza3 = new Cheese(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Pepperoni") {
+					pizza3 = new Pepperoni(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Ham") {
+					pizza3 = new Ham(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Jalapeno") {
+					pizza3 = new Jalapeno(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Sausage") {
+					pizza3 = new Sausage(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Mushroom") {
+					pizza3 = new Mushroom(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Pineapple") {
+					pizza3 = new Pineapple(pizza3);
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Bell Pepper") {
+					pizza3 = new BellPepper(pizza3);
+				}
+				pizzas.add(pizza3);// adds the third pizza
+
+				// Get the sodas
 				ArrayList<String> sodas = new ArrayList<String>();
-				String soda1 = (String)sodaFlavor1.getSelectedItem();
-				String soda2 = (String)sodaFlavor2.getSelectedItem();
-				String soda3 = (String)sodaFlavor3.getSelectedItem();
-				String soda4 = (String)sodaFlavor4.getSelectedItem();
-				String soda5 = (String)sodaFlavor5.getSelectedItem();
+				String soda1 = (String) sodaFlavor1.getSelectedItem();
+				String soda2 = (String) sodaFlavor2.getSelectedItem();
+				String soda3 = (String) sodaFlavor3.getSelectedItem();
+				String soda4 = (String) sodaFlavor4.getSelectedItem();
+				String soda5 = (String) sodaFlavor5.getSelectedItem();
 				sodas.add(soda1);
 				sodas.add(soda2);
 				sodas.add(soda3);
 				sodas.add(soda4);
 				sodas.add(soda5);
-				
-				
-				//ArrayList<Wings> wings = new ArrayList<Wings>();
+
+				// ArrayList<Wings> wings = new ArrayList<Wings>();
 				Wings wings1 = new BoneLess();
-				if((String)wingFlavor1.getSelectedItem() == "Mild Spicy") {
+				if ((String) wingFlavor1.getSelectedItem() == "Mild Spicy") {
 					wings1 = new MildSpicy(wings1);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Diablo") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Diablo") {
 					wings1 = new Diablo(wings1);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Lemon Pepper") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Lemon Pepper") {
 					wings1 = new LemonPepper(wings1);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "BBQ") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "BBQ") {
 					wings1 = new BBQ(wings1);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Sesame") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Sesame") {
 					wings1 = new Sesame(wings1);
 				}
-				
+
 				Wings wings2 = new BoneLess();
-				if((String)wingFlavor1.getSelectedItem() == "Mild Spicy") {
+				if ((String) wingFlavor1.getSelectedItem() == "Mild Spicy") {
 					wings2 = new MildSpicy(wings2);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Diablo") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Diablo") {
 					wings2 = new Diablo(wings2);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Lemon Pepper") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Lemon Pepper") {
 					wings2 = new LemonPepper(wings2);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "BBQ") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "BBQ") {
 					wings2 = new BBQ(wings2);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Sesame") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Sesame") {
 					wings2 = new Sesame(wings2);
 				}
-				//wings.add(wings1);
-				//wings.add(wings2);
-				
-				//GoldMealPlan(ArrayList<Pizza> p, ArrayList<String> s, Wings c)
+				// wings.add(wings1);
+				// wings.add(wings2);
+
+				// GoldMealPlan(ArrayList<Pizza> p, ArrayList<String> s, Wings c)
 				meal = new GoldMealPlan(pizzas, sodas, wings1);
 			}
-			//TODO FINISH PLATINUM MEAL PLAN
-			else if ((String)mealPlanType.getSelectedItem() == "Platinum") {
+			// TODO FINISH PLATINUM MEAL PLAN
+			else if ((String) mealPlanType.getSelectedItem() == "Platinum") {
 				ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
 				Pizza pizza1 = new PlainPizza();
 				Pizza pizza2 = new PlainPizza();
 				Pizza pizza3 = new PlainPizza();
 				Pizza pizza4 = new PlainPizza();
-				
-				if((String)pizzaTopping1a.getSelectedItem() == "Cheese") {
+
+				if ((String) pizzaTopping1a.getSelectedItem() == "Cheese") {
 					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Pepperoni") {
 					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Ham") {
 					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Jalapeno") {
 					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Sausage") {
 					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Mushroom") {
 					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Pineapple") {
 					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1a.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping1a.getSelectedItem() == "Bell Pepper") {
 					pizza1 = new BellPepper(pizza1);
 				}
-				//topping 2
-				if((String)pizzaTopping1b.getSelectedItem() == "Cheese") {
+				// topping 2
+				if ((String) pizzaTopping1b.getSelectedItem() == "Cheese") {
 					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Pepperoni") {
 					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Ham") {
 					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Jalapeno") {
 					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Sausage") {
 					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Mushroom") {
 					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Pineapple") {
 					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1b.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping1b.getSelectedItem() == "Bell Pepper") {
 					pizza1 = new BellPepper(pizza1);
 				}
-				//topping 3
-				if((String)pizzaTopping1c.getSelectedItem() == "Cheese") {
+				// topping 3
+				if ((String) pizzaTopping1c.getSelectedItem() == "Cheese") {
 					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Pepperoni") {
 					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Ham") {
 					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Jalapeno") {
 					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Sausage") {
 					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Mushroom") {
 					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Pineapple") {
 					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1c.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping1c.getSelectedItem() == "Bell Pepper") {
 					pizza1 = new BellPepper(pizza1);
 				}
-				//topping 4
-				if((String)pizzaTopping1d.getSelectedItem() == "Cheese") {
+				// topping 4
+				if ((String) pizzaTopping1d.getSelectedItem() == "Cheese") {
 					pizza1 = new Cheese(pizza1);
-				}
-				else if((String)pizzaTopping1d.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping1d.getSelectedItem() == "Pepperoni") {
 					pizza1 = new Pepperoni(pizza1);
-				}
-				else if((String)pizzaTopping1d.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping1d.getSelectedItem() == "Ham") {
 					pizza1 = new Ham(pizza1);
-				}
-				else if((String)pizzaTopping1d.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping1d.getSelectedItem() == "Jalapeno") {
 					pizza1 = new Jalapeno(pizza1);
-				}
-				else if((String)pizzaTopping1d.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping1d.getSelectedItem() == "Sausage") {
 					pizza1 = new Sausage(pizza1);
-				}
-				else if((String)pizzaTopping1d.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping1d.getSelectedItem() == "Mushroom") {
 					pizza1 = new Mushroom(pizza1);
-				}
-				else if((String)pizzaTopping1d.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping1d.getSelectedItem() == "Pineapple") {
 					pizza1 = new Pineapple(pizza1);
-				}
-				else if((String)pizzaTopping1d.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping1d.getSelectedItem() == "Bell Pepper") {
 					pizza1 = new BellPepper(pizza1);
 				}
-				pizzas.add(pizza1);//adds the first pizza
-				
-				//for second pizza
-				if((String)pizzaTopping2a.getSelectedItem() == "Cheese") {
+				pizzas.add(pizza1);// adds the first pizza
+
+				// for second pizza
+				if ((String) pizzaTopping2a.getSelectedItem() == "Cheese") {
 					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Pepperoni") {
 					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Ham") {
 					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Jalapeno") {
 					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Sausage") {
 					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Mushroom") {
 					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Pineapple") {
 					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2a.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping2a.getSelectedItem() == "Bell Pepper") {
 					pizza2 = new BellPepper(pizza2);
 				}
-				//topping 2
-				if((String)pizzaTopping2b.getSelectedItem() == "Cheese") {
+				// topping 2
+				if ((String) pizzaTopping2b.getSelectedItem() == "Cheese") {
 					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Pepperoni") {
 					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Ham") {
 					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Jalapeno") {
 					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Sausage") {
 					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Mushroom") {
 					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Pineapple") {
 					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2b.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping2b.getSelectedItem() == "Bell Pepper") {
 					pizza2 = new BellPepper(pizza2);
 				}
-				//topping 3
-				if((String)pizzaTopping2c.getSelectedItem() == "Cheese") {
+				// topping 3
+				if ((String) pizzaTopping2c.getSelectedItem() == "Cheese") {
 					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Pepperoni") {
 					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Ham") {
 					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Jalapeno") {
 					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Sausage") {
 					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Mushroom") {
 					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Pineapple") {
 					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2c.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping2c.getSelectedItem() == "Bell Pepper") {
 					pizza2 = new BellPepper(pizza2);
 				}
-				//topping 4
-				if((String)pizzaTopping2d.getSelectedItem() == "Cheese") {
+				// topping 4
+				if ((String) pizzaTopping2d.getSelectedItem() == "Cheese") {
 					pizza2 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping2d.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping2d.getSelectedItem() == "Pepperoni") {
 					pizza2 = new Pepperoni(pizza2);
-				}
-				else if((String)pizzaTopping2d.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping2d.getSelectedItem() == "Ham") {
 					pizza2 = new Ham(pizza2);
-				}
-				else if((String)pizzaTopping2d.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping2d.getSelectedItem() == "Jalapeno") {
 					pizza2 = new Jalapeno(pizza2);
-				}
-				else if((String)pizzaTopping2d.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping2d.getSelectedItem() == "Sausage") {
 					pizza2 = new Sausage(pizza2);
-				}
-				else if((String)pizzaTopping2d.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping2d.getSelectedItem() == "Mushroom") {
 					pizza2 = new Mushroom(pizza2);
-				}
-				else if((String)pizzaTopping2d.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping2d.getSelectedItem() == "Pineapple") {
 					pizza2 = new Pineapple(pizza2);
-				}
-				else if((String)pizzaTopping2d.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping2d.getSelectedItem() == "Bell Pepper") {
 					pizza2 = new BellPepper(pizza2);
 				}
-				pizzas.add(pizza2);//adds the second pizza
-				
-				//for third pizza
-				if((String)pizzaTopping3a.getSelectedItem() == "Cheese") {
+				pizzas.add(pizza2);// adds the second pizza
+
+				// for third pizza
+				if ((String) pizzaTopping3a.getSelectedItem() == "Cheese") {
 					pizza3 = new Cheese(pizza2);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Pepperoni") {
 					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Ham") {
 					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Jalapeno") {
 					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Sausage") {
 					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Mushroom") {
 					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Pineapple") {
 					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3a.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping3a.getSelectedItem() == "Bell Pepper") {
 					pizza3 = new BellPepper(pizza3);
 				}
-				//topping 2
-				if((String)pizzaTopping3b.getSelectedItem() == "Cheese") {
+				// topping 2
+				if ((String) pizzaTopping3b.getSelectedItem() == "Cheese") {
 					pizza3 = new Cheese(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Pepperoni") {
 					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Ham") {
 					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Jalapeno") {
 					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Sausage") {
 					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Mushroom") {
 					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Pineapple") {
 					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3b.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping3b.getSelectedItem() == "Bell Pepper") {
 					pizza3 = new BellPepper(pizza3);
 				}
-				//topping 3
-				if((String)pizzaTopping3c.getSelectedItem() == "Cheese") {
+				// topping 3
+				if ((String) pizzaTopping3c.getSelectedItem() == "Cheese") {
 					pizza3 = new Cheese(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Pepperoni") {
 					pizza3 = new Pepperoni(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Ham") {
 					pizza3 = new Ham(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Jalapeno") {
 					pizza3 = new Jalapeno(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Sausage") {
 					pizza3 = new Sausage(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Mushroom") {
 					pizza3 = new Mushroom(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Pineapple") {
 					pizza3 = new Pineapple(pizza3);
-				}
-				else if((String)pizzaTopping3c.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping3c.getSelectedItem() == "Bell Pepper") {
 					pizza3 = new BellPepper(pizza3);
 				}
-				//topping 4
-				if((String)pizzaTopping3d.getSelectedItem() == "Cheese") {
+				// topping 4
+				if ((String) pizzaTopping3d.getSelectedItem() == "Cheese") {
 					pizza4 = new Cheese(pizza4);
-				}
-				else if((String)pizzaTopping3d.getSelectedItem() == "Pepperoni") {
+				} else if ((String) pizzaTopping3d.getSelectedItem() == "Pepperoni") {
 					pizza4 = new Pepperoni(pizza4);
-				}
-				else if((String)pizzaTopping3d.getSelectedItem() == "Ham") {
+				} else if ((String) pizzaTopping3d.getSelectedItem() == "Ham") {
 					pizza4 = new Ham(pizza4);
-				}
-				else if((String)pizzaTopping3d.getSelectedItem() == "Jalapeno") {
+				} else if ((String) pizzaTopping3d.getSelectedItem() == "Jalapeno") {
 					pizza4 = new Jalapeno(pizza4);
-				}
-				else if((String)pizzaTopping3d.getSelectedItem() == "Sausage") {
+				} else if ((String) pizzaTopping3d.getSelectedItem() == "Sausage") {
 					pizza4 = new Sausage(pizza4);
-				}
-				else if((String)pizzaTopping3d.getSelectedItem() == "Mushroom") {
+				} else if ((String) pizzaTopping3d.getSelectedItem() == "Mushroom") {
 					pizza4 = new Mushroom(pizza4);
-				}
-				else if((String)pizzaTopping3d.getSelectedItem() == "Pineapple") {
+				} else if ((String) pizzaTopping3d.getSelectedItem() == "Pineapple") {
 					pizza4 = new Pineapple(pizza4);
-				}
-				else if((String)pizzaTopping3d.getSelectedItem() == "Bell Pepper") {
+				} else if ((String) pizzaTopping3d.getSelectedItem() == "Bell Pepper") {
 					pizza4 = new BellPepper(pizza4);
 				}
-				pizzas.add(pizza4);//adds the fourth pizza
+				pizzas.add(pizza4);// adds the fourth pizza
 
-				//Get the sodas
+				// Get the sodas
 				ArrayList<String> sodas = new ArrayList<String>();
-				String soda1 = (String)sodaFlavor1.getSelectedItem();
-				String soda2 = (String)sodaFlavor2.getSelectedItem();
-				String soda3 = (String)sodaFlavor3.getSelectedItem();
-				String soda4 = (String)sodaFlavor4.getSelectedItem();
-				String soda5 = (String)sodaFlavor5.getSelectedItem();
+				String soda1 = (String) sodaFlavor1.getSelectedItem();
+				String soda2 = (String) sodaFlavor2.getSelectedItem();
+				String soda3 = (String) sodaFlavor3.getSelectedItem();
+				String soda4 = (String) sodaFlavor4.getSelectedItem();
+				String soda5 = (String) sodaFlavor5.getSelectedItem();
 				sodas.add(soda1);
 				sodas.add(soda2);
 				sodas.add(soda3);
 				sodas.add(soda4);
 				sodas.add(soda5);
-				
-				
-				//ArrayList<Wings> wings = new ArrayList<Wings>();
+
+				// ArrayList<Wings> wings = new ArrayList<Wings>();
 				Wings wings1 = new BoneLess();
-				if((String)wingFlavor1.getSelectedItem() == "Mild Spicy") {
+				if ((String) wingFlavor1.getSelectedItem() == "Mild Spicy") {
 					wings1 = new MildSpicy(wings1);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Diablo") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Diablo") {
 					wings1 = new Diablo(wings1);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Lemon Pepper") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Lemon Pepper") {
 					wings1 = new LemonPepper(wings1);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "BBQ") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "BBQ") {
 					wings1 = new BBQ(wings1);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Sesame") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Sesame") {
 					wings1 = new Sesame(wings1);
 				}
-				
+
 				Wings wings2 = new BoneLess();
-				if((String)wingFlavor1.getSelectedItem() == "Mild Spicy") {
+				if ((String) wingFlavor1.getSelectedItem() == "Mild Spicy") {
 					wings2 = new MildSpicy(wings2);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Diablo") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Diablo") {
 					wings2 = new Diablo(wings2);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Lemon Pepper") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Lemon Pepper") {
 					wings2 = new LemonPepper(wings2);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "BBQ") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "BBQ") {
 					wings2 = new BBQ(wings2);
-				}
-				else if((String)wingFlavor1.getSelectedItem() == "Sesame") {
+				} else if ((String) wingFlavor1.getSelectedItem() == "Sesame") {
 					wings2 = new Sesame(wings2);
 				}
-				//wings.add(wings1);
-				//wings.add(wings2);
-				ArrayList<String> iceCreams= new ArrayList<String>();
-				String iceCream1 = (String)icecreamFlavor1.getSelectedItem();
-				String iceCream2 = (String)icecreamFlavor2.getSelectedItem();
+				// wings.add(wings1);
+				// wings.add(wings2);
+				ArrayList<String> iceCreams = new ArrayList<String>();
+				String iceCream1 = (String) icecreamFlavor1.getSelectedItem();
+				String iceCream2 = (String) icecreamFlavor2.getSelectedItem();
 				iceCreams.add(iceCream1);
 				iceCreams.add(iceCream2);
-				
-				//GoldMealPlan(ArrayList<Pizza> p, ArrayList<String> s, Wings c)
+
+				// GoldMealPlan(ArrayList<Pizza> p, ArrayList<String> s, Wings c)
 				meal = new PlatinumMealPlan(pizzas, sodas, wings1, iceCreams);
 			}
-		}	
+			int testingYear = Integer.parseInt(birthYear);
+			if (roomType == "Karaoke Lounge" && testingYear > 1998) {
+				AdultFrame a = new AdultFrame();
+				NewReservationFrame.this.dispose();
+				a.setVisible(true);
+			}
+			else {
+				if (calendar.isRoomAvailable(roomType, timeChosen) == false) {
+					Reservation newReservation = new Reservation();
+					DateAndTime selectedDT = new DateAndTime();
+					selectedDT.setDate(dateChosen);
+					selectedDT.setStart(startTimeChosen);
+					selectedDT.setEnd(endTimeChosen);
+					newReservation.setTime(selectedDT);
+					
+					waitlistFrame2 w = new waitlistFrame2(roomType, newGuest, selectedDT, "", 0,0, false, 0, calendar);
+					NewReservationFrame.this.dispose();
+					w.setVisible(true);
+				} else {
+					// create new reservation object
+					DateAndTime selectedDT = new DateAndTime();
+					selectedDT.setDate(dateChosen);
+					selectedDT.setStart(startTimeChosen);
+					selectedDT.setEnd(endTimeChosen);
+					calendar.addReservation(roomType, newGuest, selectedDT, (String) mealPlanType.getSelectedItem(), 0, 0, false, 0);
+					
+					ConfirmationFrame c = new ConfirmationFrame(calendar.calendar.get(calendar.calendar.size()-1));
+					NewReservationFrame.this.dispose();
+					c.setVisible(true);
+				}
+			}
+		}
 	}
 }
-
-    
