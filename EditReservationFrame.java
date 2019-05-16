@@ -163,30 +163,30 @@ public class EditReservationFrame extends JFrame {
 		guestTitle.setFont(new Font(Font.SERIF, Font.BOLD, 20));
 
 		name = new JLabel("Guest's Full Name: ");
-		nameTextField = new JTextField(30); //r.guestName
+		nameTextField = new JTextField(r.guest.getName());
 
 		phone = new JLabel("Phone Number: ");
-		phoneTextField = new JTextField(35); //r.phoneNumber
+		phoneTextField = new JTextField(r.guest.getPhone()); 
 
 		address = new JLabel("Full Address: ");
-		addressTextField = new JTextField(35); //r.address
+		addressTextField = new JTextField(r.guest.getAddress());
 
 		//need function to get guest date of birth and split it
 		bod = new JLabel("Date of Birth (Month, Date, Year): ");
 		String[] bodMonths = new String[] { "January", "February", "March", "April", "May", "June", "July", "August",
 				"September", "October", "November", "December" };
 		monthOptions = new JComboBox<String>(bodMonths);
-//		monthOptions.setSelectedIndex(Arrays.asList(bodMonths).indexOf(r.guestMonthBirthday));
+		monthOptions.setSelectedIndex(Arrays.asList(bodMonths).indexOf(r.guest.getBirthdayMonth()));
 
-		SpinnerModel spinnerModel = new SpinnerNumberModel(0, // change initial value of guest bday day
+		SpinnerModel spinnerModel = new SpinnerNumberModel(Integer.parseInt(r.guest.getBirthdayDay()), // change initial value of guest bday day
 				0, // min
 				31, // max
 				1); // step
 		dayOptions = new JSpinner(spinnerModel);
-		yearTextField = new JTextField(10); // r.guest
+		yearTextField = new JTextField(r.guest.getBirthdayYear());
 
 		email = new JLabel("Email: ");
-		emailTextField = new JTextField(35); // r.guestEmail
+		emailTextField = new JTextField(r.guest.getEmail()); // r.guestEmail
 
 		JLabel contactPhone = new JLabel("Guest contact method: Phone: ");
 		phoneCheckbox = new JCheckBox();
@@ -198,16 +198,16 @@ public class EditReservationFrame extends JFrame {
 		ccTitle.setFont(new Font(Font.SERIF, Font.BOLD, 20));
 
 		ccName = new JLabel("Full Name on Card: ");
-		payNameTextField = new JTextField(30); //r.guestPaymentName
+		payNameTextField = new JTextField(r.guest.getNameOnCreditCard()); //r.guestPaymentName
 
 		ccNumber = new JLabel("Card Number: ");
-		payNumberTextField = new JTextField(35); //r.guestCardNumber
+		payNumberTextField = new JTextField(r.guest.getCreditCard()); //r.guestCardNumber
 
 		ccSC = new JLabel("Security Number: ");
-		paySCTextField = new JTextField(10); //r.guestSecurityNumber
+		paySCTextField = new JTextField(r.guest.getSecurity()); //r.guestSecurityNumber
 
 		ccExpDate = new JLabel("Card Expiration Date 00/99 Format: ");
-		expDateTextField = new JTextField(10); //r.guestCardExpiration
+		expDateTextField = new JTextField(r.guest.getCardExperation()); //r.guestCardExpiration
 
 		ccLabel = new JLabel("Type of Card: ");
 		JLabel visa = new JLabel("Visa: ");
@@ -227,6 +227,7 @@ public class EditReservationFrame extends JFrame {
 		roomTypeOptions = new JComboBox<String>(roomTypeString);
 		roomTypeListener = new RoomTypeListener();
 		roomTypeOptions.addActionListener(roomTypeListener);
+		roomTypeOptions.setSelectedIndex(Arrays.asList(roomTypeString).indexOf(r.room.getType()));
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);

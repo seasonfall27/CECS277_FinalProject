@@ -49,9 +49,8 @@ public class EnterConfirmationFrame extends JFrame {
 	class SubmitButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent click) {
-			String confNumString = numberField.getText();
-			int confNum = Integer.parseInt(confNumString);	
-			Reservation foundRes = calendar.getReservationByID(confNum);
+			String confString = numberField.getText();
+			Reservation foundRes = calendar.getReservationByName(confString);
 			if (foundRes == null) {
 				JLabel noExist = new JLabel("Confirmation Number of Reservation does not exist.\n Please close the window.");
 				panel.remove(submitButton);
