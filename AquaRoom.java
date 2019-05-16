@@ -26,7 +26,6 @@ public class AquaRoom implements Room{
 	private static int ID = 0;
 	private int roomNumber;
 	
-	private static ArrayList<Guest> waitlist;
 	private ArrayList<Reservation> reservations;
 	
 	/*
@@ -42,7 +41,6 @@ public class AquaRoom implements Room{
 		this.partyDecorations = false;
 		this.ID ++;
 		this.roomNumber = ID;
-		waitlist = new ArrayList<Guest>();
 		reservations = new ArrayList<Reservation>();
 	}
 	
@@ -191,11 +189,6 @@ public class AquaRoom implements Room{
 		return this.reservations;
 	}
 	
-	@Override
-	public ArrayList<Guest> getWaitlist(){
-		return this.waitlist;
-	}
-	
 	/**
 	 * gets the fixed description of the Room
 	 * @return - String of Description of the room
@@ -287,10 +280,6 @@ public class AquaRoom implements Room{
 	@Override
 	public void addReservation(Reservation r) {
 		this.reservations.add(r);
-	}
-	@Override
-	public void addGuestToWaitlist(Guest g) {
-		this.waitlist.add(g);
 	}
 	/**
 	 * sets the number of hours the room will be rented

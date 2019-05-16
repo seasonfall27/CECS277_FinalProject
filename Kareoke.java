@@ -19,7 +19,6 @@ public class Kareoke implements Lounge {
 	private static int ID = 0;
 	private int roomNumber;
 	
-	private static ArrayList<Guest> waitlist;
 	private ArrayList<Reservation> reservations;
 	
 	public Kareoke() {
@@ -28,7 +27,6 @@ public class Kareoke implements Lounge {
 		this.cost = 0.0;
 		this.ID ++;
 		this.roomNumber = ID;
-		waitlist = new ArrayList<Guest>();
 		reservations = new ArrayList<Reservation>();
 	}
 	
@@ -71,12 +69,6 @@ public class Kareoke implements Lounge {
 		return description;
 	}
 	@Override
-	public ArrayList<Guest> getWaitlist(){
-		return this.waitlist;
-	}
-
-	
-	@Override
 	public int getCapacity() {
 		return this.capacity;
 	}
@@ -112,10 +104,6 @@ public class Kareoke implements Lounge {
 	@Override
 	public void addReservation(Reservation r) {
 		this.reservations.add(r);
-	}
-	@Override
-	public void addGuestToWaitlist(Guest g) {
-		this.waitlist.add(g);
 	}
 	@Override
 	public void setMealPlan(String meal) {

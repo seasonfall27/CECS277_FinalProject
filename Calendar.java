@@ -11,6 +11,12 @@ public class Calendar {
 	public static ArrayList<Room> billiards;
 	public static ArrayList<Room> kareoke;
 	
+	public static ArrayList<WaitlistedGuest> smallWaitlist;
+	public static ArrayList<WaitlistedGuest> mediumWaitlist;
+	public static ArrayList<WaitlistedGuest> aquaWaitlist;
+	public static ArrayList<WaitlistedGuest> kareokeWaitlist;
+	public static ArrayList<WaitlistedGuest> billiardsWaitlist;
+	
 	/**
 	 * Constructor for Calendar.  Will Create all Room objects necessary for the duration of the program
 	 */
@@ -23,6 +29,12 @@ public class Calendar {
 		aqua = new ArrayList<Room>();
 		billiards = new ArrayList<Room>();
 		kareoke = new ArrayList<Room>();
+		
+		smallWaitlist = new ArrayList<WaitlistedGuest>();
+		mediumWaitlist = new ArrayList<WaitlistedGuest>();
+		aquaWaitlist = new ArrayList<WaitlistedGuest>();
+		kareokeWaitlist = new ArrayList<WaitlistedGuest>();
+		billiardsWaitlist = new ArrayList<WaitlistedGuest>();
 		
 		for(int i=0; i<10; i++) {
 			small.add(RoomFactory.createRoom(RoomType.SMALL));
@@ -124,6 +136,11 @@ public class Calendar {
 					small.get(i).addReservation(r);         // Adds the reservation to the specific small room's reservation list
 				}
 			}
+			if(r==null) {
+				System.out.println("Added To Small Party Room Waitlist!\n");
+				WaitlistedGuest w = new WaitlistedGuest(guest, time, u);
+				smallWaitlist.add(w);
+			}
 			break;
 		case "Medium":
 			for(int i=0; i<medium.size(); i++) {
@@ -139,6 +156,11 @@ public class Calendar {
 					r = new Reservation(medium.get(i), guest, time, u);
 					medium.get(i).addReservation(r);
 				}
+			}
+			if(r==null) {
+				System.out.println("Added To Medium Party Room Waitlist!\n");
+				WaitlistedGuest w = new WaitlistedGuest(guest, time, u);
+				mediumWaitlist.add(w);
 			}
 			break;
 		case"Aqua":
@@ -156,6 +178,11 @@ public class Calendar {
 					aqua.get(i).addReservation(r);
 				}
 			}
+			if(r==null) {
+				System.out.println("Added To Aqua Room Waitlist!\n");
+				WaitlistedGuest w = new WaitlistedGuest(guest, time, u);
+				aquaWaitlist.add(w);
+			}
 			break;
 		case "Kareoke":
 			for(int i=0; i<kareoke.size(); i++) {
@@ -171,6 +198,11 @@ public class Calendar {
 					r = new Reservation(kareoke.get(i), guest, time, u);
 					kareoke.get(i).addReservation(r);
 				}
+			}
+			if(r==null) {
+				System.out.println("Added To Karoeke Lounge Waitlist!\n");
+				WaitlistedGuest w = new WaitlistedGuest(guest, time, u);
+				kareokeWaitlist.add(w);
 			}
 			break;
 		case "Billiards":
@@ -188,11 +220,18 @@ public class Calendar {
 					billiards.get(i).addReservation(r);
 				}
 			}
+			if(r==null) {
+				System.out.println("Added To Billiards Lounge Waitlist!\n");
+				WaitlistedGuest w = new WaitlistedGuest(guest, time, u);
+				billiardsWaitlist.add(w);
+			}
 			break;
 		default:
 			break;
 		}
-		calendar.add(r);  // adds the reservation to the calendar
+		if(r != null) {
+			calendar.add(r);  // adds the reservation to the calendar
+		}
 	}
 	/**
 	 * Calls a room by the enum type and the room number.  Will remove reservation and add room back to available rooms
@@ -201,40 +240,39 @@ public class Calendar {
 	 */
 	public void removeReservation(Reservation R) {
 		for(int i=0; i<calendar.size(); i++) {
-			if(calendar.get(i).getID() == R.getID()) {
+			if(calendar.get(i).getGuest().getName().equals(R.getGuest().getName())) {
 				calendar.remove(i);
-				String type = R.getRoom().getType();
-				if(type.equals("Small")) {
+				if(R.getRoom() instanceof SmallPartyRoom) {
 					for(int w=0; w<small.get(i).getReservations().size(); w++) {
-						if(small.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
+						if(small.get(i).getReservations().get(w).getGuest().getName().equals(R.getGuest().getName())) {
 							small.get(i).getReservations().remove(w);
 						}
 					}
 				}
-				if(type.equals("Medium")) {
+				if(R.getRoom() instanceof MediumPartyRoom) {
 					for(int w=0; w<medium.get(i).getReservations().size(); w++) {
-						if(medium.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
+						if(medium.get(i).getReservations().get(w).getGuest().getName().equals(R.getGuest().getName())) {
 							medium.get(i).getReservations().remove(w);
 						}
 					}
 				}
-				if(type.equals("Aqua")) {
+				if(R.getRoom() instanceof AquaRoom) {
 					for(int w=0; w<aqua.get(i).getReservations().size(); w++) {
-						if(aqua.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
+						if(aqua.get(i).getReservations().get(w).getGuest().getName().equals(R.getGuest().getName())) {
 							aqua.get(i).getReservations().remove(w);
 						}
 					}
 				}
-				if(type.equals("Kareoke")) {
+				if(R.getRoom() instanceof Kareoke) {
 					for(int w=0; w<kareoke.get(i).getReservations().size(); w++) {
-						if(kareoke.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
+						if(kareoke.get(i).getReservations().get(w).getGuest().getName().equals(R.getGuest().getName())) {
 							kareoke.get(i).getReservations().remove(w);
 						}
 					}
 				}
-				if(type.equals("Billiards")) {
+				if(R.getRoom() instanceof Billiards) {
 					for(int w=0; w<billiards.get(i).getReservations().size(); w++) {
-						if(billiards.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
+						if(billiards.get(i).getReservations().get(w).getGuest().getName().equals(R.getGuest().getName())) {
 							billiards.get(i).getReservations().remove(w);
 						}
 					}
@@ -275,6 +313,16 @@ public class Calendar {
 			}
 		}
 		return null;
+	}
+	
+	public Reservation getReservationByGuestFirstName(String name) {
+		Reservation r = null;
+		for(int i=0; i<calendar.size(); i++) {
+			if(calendar.get(i).getGuest().getName().equals(name)) {
+				r = calendar.get(i);
+			}
+		}
+		return r;
 	}
 	
 	public void checkIn(Reservation r) {

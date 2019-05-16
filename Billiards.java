@@ -22,7 +22,6 @@ public class Billiards implements Lounge {
 	private static int ID = 0;
 	private int roomNumber;
 	
-	private static ArrayList<Guest> waitlist;
 	private ArrayList<Reservation> reservations;
 	
 	public Billiards() {
@@ -31,7 +30,6 @@ public class Billiards implements Lounge {
 		this.cost = 0.0;
 		this.ID ++;
 		this.roomNumber = ID;
-		waitlist = new ArrayList<Guest>();
 		reservations = new ArrayList<Reservation>();
 	}
 	
@@ -71,10 +69,6 @@ public class Billiards implements Lounge {
 		return this.reservations;
 	}
 
-	@Override
-	public ArrayList<Guest> getWaitlist(){
-		return this.waitlist;
-	}
 	public static String getDescription() {
 		return description;
 	}
@@ -117,10 +111,6 @@ public class Billiards implements Lounge {
 	@Override
 	public void addReservation(Reservation r) {
 		this.reservations.add(r);
-	}
-	@Override
-	public void addGuestToWaitlist(Guest g) {
-		this.waitlist.add(g);
 	}
 	
 	@Override

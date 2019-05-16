@@ -1,6 +1,6 @@
 public class Guest {
 
-	String name = null;
+	String name = "";
 	String phoneNumber = null;
 	String birthdayMonth = null;
 	String birthdayDay = null;
