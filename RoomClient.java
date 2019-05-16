@@ -12,8 +12,33 @@ public class RoomClient {
 		// 6) boolean party decorations
 		// 7) towel rentals
 		
+		DateAndTime d = new DateAndTime("19/12/1999","12:00 AM", "18:00 PM");
+		DateAndTime b = new DateAndTime("19/12/2000","03:00 AM", "06:00 PM");
 		
-		for(int i=0; i<c.aqua.size(); i++) {
+		Guest g = new Guest();
+		
+		c.addReservation("Small", g, d, "Silver", 0, 0, false, 0);
+		c.addReservation("Small", g, b, "Silver", 2, 1, true, 0);
+		c.addReservation("Aqua", g, b, "Basic", 0, 0, false, 0);
+		if(c.isRoomAvailable("Aqua", b)) {
+			c.addReservation("Aqua", g, b, "Basic", 0, 0, false, 0);
+		}
+		
+		System.out.println(c.calendar.get(0).toString());
+		
+		System.out.println("\nCalendar:\n");
+		for(int i=0; i <c.calendar.size(); i++) {
+			System.out.println(c.calendar.get(i).toString());
+		}
+		System.out.println("\n\n\n");
+		
+		c.checkIn(c.calendar.get(0));
+		System.out.println(c.displayAllCheckIns());
+		
+		
+		
+		
+		/*for(int i=0; i<c.aqua.size(); i++) {
 			System.out.println(c.aqua.get(i).toString());
 		}
 		DateAndTime d = new DateAndTime("19/12/1999","12:00 AM", "18:00 PM");
@@ -25,12 +50,17 @@ public class RoomClient {
 		for(int i=0; i <c.small.get(0).getReservations().size(); i++) {
 			System.out.println(c.small.get(0).getReservations().get(i).toString());
 		}
+		
 		System.out.println("\nCalendar:\n");
 		for(int i=0; i <c.calendar.size(); i++) {
 			System.out.println(c.calendar.get(i).toString());
 		}
 		
 		System.out.println("hi");
+		
+		
+		
+		
 		
 		/*c.addReservation("Medium", new DateAndTime("19/12/1999","12:00 AM", "19:00 PM"), "Basic", 0, 0, false, 0);
 		

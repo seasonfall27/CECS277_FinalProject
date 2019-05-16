@@ -32,7 +32,7 @@ public interface Room {
 	
 	void addMealPlan(String meal);
 	
-	String getDescription();
+//	String getDescription();
 	
 	int getCapacity();
 	
