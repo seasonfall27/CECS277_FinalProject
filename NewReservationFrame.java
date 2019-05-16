@@ -1830,7 +1830,19 @@ public class NewReservationFrame extends JFrame {
 					// GoldMealPlan(ArrayList<Pizza> p, ArrayList<String> s, Wings c)
 					meal = new PlatinumMealPlan(pizzas, sodas, wings1, iceCreams);
 				}
+				
 			}
+			int towelRentalNum = Integer.parseInt(towelRentals.getText());
+			int partyFavorsNum = Integer.parseInt(partyFavors.getText());
+			boolean partyDecoValue = false;
+			if(partyDeco.isSelected()) {
+				partyDecoValue = true;
+			}
+			ActionListener themeListener = new ThemeListener();
+			partyDeco.addActionListener(themeListener);
+			String[] themeString = new String[] { "Hawaiian", "Sea Life", "Jungle", "Space", "Modern" };
+			themeOptions = new JComboBox<String>(themeString);
+			
 			int testingYear = Integer.parseInt(birthYear);
 			if (roomType == "Karaoke Lounge" && testingYear > 1998) {
 				AdultFrame a = new AdultFrame();
@@ -1845,7 +1857,7 @@ public class NewReservationFrame extends JFrame {
 					selectedDT.setEnd(endTimeChosen);
 					newReservation.setTime(selectedDT);
 
-					waitlistFrame2 w = new waitlistFrame2(roomType, newGuest, selectedDT, "", 0, 0, false, 0, calendar);
+					waitlistFrame2 w = new waitlistFrame2(roomType, newGuest, selectedDT, "", partyFavorsNum, 0, partyDecoValue, towelRentalNum, calendar);
 					NewReservationFrame.this.dispose();
 					w.setVisible(true);
 				} else {
@@ -1856,11 +1868,11 @@ public class NewReservationFrame extends JFrame {
 					selectedDT.setEnd(endTimeChosen);
 					if (upgradeMP.isSelected()) {
 						calendar.addReservation(roomType, newGuest, selectedDT, (String) mealPlanType.getSelectedItem(),
-								0, 0, false, 0);
+								partyFavorsNum, 0, partyDecoValue, towelRentalNum);
 					}
 					else {
-						calendar.addReservation(roomType, newGuest, selectedDT,"Basic",
-								0, 0, false, 0);
+						calendar.addReservation(roomType, newGuest, selectedDT, "Basic",
+								partyFavorsNum, 0, partyDecoValue, towelRentalNum);
 					}
 
 					ConfirmationFrame c = new ConfirmationFrame(calendar.calendar.get(calendar.calendar.size() - 1));
