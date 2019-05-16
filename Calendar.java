@@ -5,11 +5,11 @@ public class Calendar {
 	public ArrayList<Reservation> calendar;
 	public ArrayList<CheckIn> checkedIn;
 	
-	public ArrayList<Room> small;
-	public ArrayList<Room> medium;
-	public ArrayList<Room> aqua;
-	public ArrayList<Room> billiards;
-	public ArrayList<Room> kareoke;
+	public static ArrayList<Room> small;
+	public static ArrayList<Room> medium;
+	public static ArrayList<Room> aqua;
+	public static ArrayList<Room> billiards;
+	public static ArrayList<Room> kareoke;
 	
 	/**
 	 * Constructor for Calendar.  Will Create all Room objects necessary for the duration of the program
@@ -103,61 +103,96 @@ public class Calendar {
 	 * @param start - the start time wanting to be reserved
 	 * @param end - the end time of the time slot
 	 */
-	public void addReservation(String roomType, DateAndTime time /*, Customer customer*/, String meal, int partyFavors, int projectorHours, boolean partyDecorations, int towelRentals) {
+	public void addReservation(String roomType, Guest guest,DateAndTime time /*, Customer customer*/, String meal, int partyFavors, int projectorHours, boolean partyDecorations, int towelRentals) {
 		
 		Upgrades u = new Upgrades(meal, partyFavors, projectorHours, partyDecorations, towelRentals);
-		Reservation r = new Reservation(roomType, time, u);
-		calendar.add(r);
+		Reservation r = null;
 		
 		switch (roomType) {
 		case "Small":
 			for(int i=0; i<small.size(); i++) {
-				for(int j=0; j<small.get(i).getReservations().size(); i++) {
-					if(time.compareTo(small.get(i).getReservations().get(j).getTime()) < 0) {
-						small.get(i).addReservation(r);
+				if(small.get(i).getReservations().size() > 0) {
+					for(int j=0; j<small.get(i).getReservations().size(); j++) {
+						if(time.compareTo(small.get(i).getReservations().get(j).getTime()) < 0) {
+							r = new Reservation(small.get(i), guest, time, u);  // makes reservation object with info input
+							small.get(i).addReservation(r);         // Adds the reservation to the specific small room's reservation list
+						}
 					}
+				}
+				else {
+					r = new Reservation(small.get(i), guest, time, u);  // makes reservation object with info input
+					small.get(i).addReservation(r);         // Adds the reservation to the specific small room's reservation list
 				}
 			}
 			break;
 		case "Medium":
 			for(int i=0; i<medium.size(); i++) {
-				for(int j=0; j<medium.get(i).getReservations().size(); i++) {
-					if(time.compareTo(medium.get(i).getReservations().get(j).getTime()) < 0) {
-						medium.get(i).addReservation(r);
+				if(medium.get(i).getReservations().size() > 0) {
+					for(int j=0; j<medium.get(i).getReservations().size(); j++) {
+						if(time.compareTo(medium.get(i).getReservations().get(j).getTime()) < 0) {
+							r = new Reservation(medium.get(i), guest, time, u);
+							medium.get(i).addReservation(r);
+						}
 					}
+				}
+				else {
+					r = new Reservation(medium.get(i), guest, time, u);
+					medium.get(i).addReservation(r);
 				}
 			}
 			break;
 		case"Aqua":
 			for(int i=0; i<aqua.size(); i++) {
-				for(int j=0; j<aqua.get(i).getReservations().size(); i++) {
-					if(time.compareTo(aqua.get(i).getReservations().get(j).getTime()) < 0) {
-						aqua.get(i).addReservation(r);
+				if(aqua.get(i).getReservations().size() > 0) {
+					for(int j=0; j<aqua.get(i).getReservations().size(); j++) {
+						if(time.compareTo(aqua.get(i).getReservations().get(j).getTime()) < 0) {
+							r = new Reservation(aqua.get(i), guest, time, u);
+							aqua.get(i).addReservation(r);
+						}
 					}
+				}
+				else {
+					r = new Reservation(aqua.get(i), guest, time, u);
+					aqua.get(i).addReservation(r);
 				}
 			}
 			break;
 		case "Kareoke":
 			for(int i=0; i<kareoke.size(); i++) {
-				for(int j=0; j<kareoke.get(i).getReservations().size(); i++) {
-					if(time.compareTo(kareoke.get(i).getReservations().get(j).getTime()) < 0) {
-						kareoke.get(i).addReservation(r);
+				if(kareoke.get(i).getReservations().size() > 0) {
+					for(int j=0; j<kareoke.get(i).getReservations().size(); j++) {
+						if(time.compareTo(kareoke.get(i).getReservations().get(j).getTime()) < 0) {
+							r = new Reservation(kareoke.get(i), guest, time, u);
+							kareoke.get(i).addReservation(r);
+						}
 					}
+				}
+				else {
+					r = new Reservation(kareoke.get(i), guest, time, u);
+					kareoke.get(i).addReservation(r);
 				}
 			}
 			break;
 		case "Billiards":
 			for(int i=0; i<billiards.size(); i++) {
-				for(int j=0; j<billiards.get(i).getReservations().size(); i++) {
-					if(time.compareTo(billiards.get(i).getReservations().get(j).getTime()) < 0) {
-						billiards.get(i).addReservation(r);
+				if(billiards.get(i).getReservations().size() > 0) {
+					for(int j=0; j<billiards.get(i).getReservations().size(); j++) {
+						if(time.compareTo(billiards.get(i).getReservations().get(j).getTime()) < 0) {
+							r = new Reservation(billiards.get(i), guest, time, u);
+							billiards.get(i).addReservation(r);
+						}
 					}
+				}
+				else {
+					r = new Reservation(billiards.get(i), guest, time, u);
+					billiards.get(i).addReservation(r);
 				}
 			}
 			break;
 		default:
 			break;
 		}
+		calendar.add(r);  // adds the reservation to the calendar
 	}
 	/**
 	 * Calls a room by the enum type and the room number.  Will remove reservation and add room back to available rooms
@@ -168,7 +203,7 @@ public class Calendar {
 		for(int i=0; i<calendar.size(); i++) {
 			if(calendar.get(i).getID() == R.getID()) {
 				calendar.remove(i);
-				String type = R.getRoomType();
+				String type = R.getRoom().getType();
 				if(type.equals("Small")) {
 					for(int w=0; w<small.get(i).getReservations().size(); w++) {
 						if(small.get(i).getReservations().get(w).getTime().compareTo(R.getTime()) > 0) {
@@ -243,23 +278,23 @@ public class Calendar {
 	}
 	
 	public void checkIn(Reservation r) {
-		String type = r.getRoomType();
+		String type = r.getRoom().getType();
 		CheckIn c = null;
 		switch (type) {
 		case "Small":
-			c = new CheckIn(small.get(0), r.getTime(), r.getID(), r.upgrade);
+			c = new CheckIn(small.get(0), r.getGuest(), r.getTime(), r.getID());
 			break;
 		case "Medium":
-			c = new CheckIn(medium.get(0), r.getTime(), r.getID(), r.upgrade);
+			c = new CheckIn(medium.get(0), r.getGuest(), r.getTime(), r.getID());
 			break;
 		case "Aqua":
-			c = new CheckIn(aqua.get(0), r.getTime(), r.getID(), r.upgrade);
+			c = new CheckIn(aqua.get(0), r.getGuest(), r.getTime(), r.getID());
 			break;
 		case "Kareoke":
-			c = new CheckIn(kareoke.get(0), r.getTime(), r.getID(), r.upgrade);
+			c = new CheckIn(kareoke.get(0), r.getGuest(), r.getTime(), r.getID());
 			break;
 		case "Billiards":
-			c = new CheckIn(billiards.get(0), r.getTime(), r.getID(), r.upgrade);
+			c = new CheckIn(billiards.get(0), r.getGuest(), r.getTime(), r.getID());
 			break;
 		default:
 			break;

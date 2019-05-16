@@ -151,7 +151,7 @@ public class SmallPartyRoom implements PartyRoom {
 	
 	//~~~~~~ Getter Functions ~~~~~~~~~
 	
-	public static String getDescription() {
+	public static String getDescription1() {
 		return description;
 	}
 	@Override
@@ -162,7 +162,7 @@ public class SmallPartyRoom implements PartyRoom {
 	public ArrayList<Guest> getWaitlist(){
 		return this.waitlist;
 	}
-	@Override
+	
 	public static String getDescription() {
 		return description;
 	}

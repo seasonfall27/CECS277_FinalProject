@@ -2,17 +2,19 @@
 public class CheckIn {
 
 	private DateAndTime time;
+	private Guest guest;
 	private Room room;
 	private int ID;
 
-	public CheckIn(Room room, DateAndTime time, int ID, Upgrades upgrade) {
+	public CheckIn(Room room, Guest guest, DateAndTime time, int ID) {
 		this.time = time;
+		this.guest = guest;
 		this.room = room;
 		this.ID = ID;
-		this.room.rentRoom(time);
-		this.room.upgradeAll(upgrade);
 	}
-	
+	public void setGuest(Guest guest) {
+		this.guest = guest;
+	}
 	public void setTime (DateAndTime time) {
 		this.time = time;
 	}
@@ -21,6 +23,9 @@ public class CheckIn {
 	}
 	public void setID(int ID) {
 		this.ID = ID;
+	}
+	public Guest getGuest() {
+		return this.guest;
 	}
 	public DateAndTime getTime () {
 		return this.time;
@@ -33,6 +38,6 @@ public class CheckIn {
 	}
 	
 	public String toString() {
-		return "Check In #" + ID + "\n" + time.toString() + "\n" + room.toString();
+		return "Check In #" + ID + "\nTime:\n" + time.toString() + "\nGuest Info:\n"+ guest.toString() +"\nRoom:\n"+ room.toString();
 	}
 }
