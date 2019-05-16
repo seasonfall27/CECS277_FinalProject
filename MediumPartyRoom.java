@@ -24,7 +24,6 @@ public class MediumPartyRoom implements PartyRoom{
 	private int roomNumber;
 	
 	private ArrayList<Reservation> reservations;
-	private static ArrayList<Guest> waitlist;
 	/*
 	 * Empty Constructor for the Medium Party Room
 	 */
@@ -37,7 +36,6 @@ public class MediumPartyRoom implements PartyRoom{
 		this.partyDecorations = false;
 		this.ID ++;
 		this.roomNumber = ID;
-		waitlist = new ArrayList<Guest>();
 		reservations = new ArrayList<Reservation>();
 	}
 	
@@ -155,9 +153,6 @@ public class MediumPartyRoom implements PartyRoom{
 		return this.reservations;
 	}
 
-	public ArrayList<Guest> getWaitlist(){
-		return this.waitlist;
-	}
 	public static String getDescription() {
 		return description;
 	}
@@ -207,10 +202,6 @@ public class MediumPartyRoom implements PartyRoom{
 	@Override
 	public void addReservation(Reservation r) {
 		this.reservations.add(r);
-	}
-	@Override
-	public void addGuestToWaitlist(Guest g) {
-		this.waitlist.add(g);
 	}
 	
 	@Override

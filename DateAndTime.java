@@ -77,6 +77,84 @@ public class DateAndTime {
 		return totalValueDifference;
 	}
 	
+	public String getSetUpTime(double time) {
+		String s = start;
+		char h1 = s.charAt(0);
+		char h2 = s.charAt(1);
+		char m1 = s.charAt(3);
+		char m2 = s.charAt(4);
+		String hour = Character.toString(h1) + Character.toString(h2);
+		String minute = Character.toString(m1) + Character.toString(m2);
+		int nh = Integer.parseInt(hour);
+		int nm = Integer.parseInt(minute);
+		if(time==1) {
+			nh++;
+		}
+		if(time == 0.5) {
+			if(nm >= 30) {
+				nm -= 30;
+				nh++;
+			}
+			else {
+				nm += 30;
+			}
+		}
+		if(time < 0.5) {
+			if(nm >= 15) {
+				nm -= 15;
+				nh++;
+			}
+			else {
+				nm += 15;
+			}
+		}
+		
+		String startTime = nh + ":" + nm;
+		if(nm == 0) {
+			startTime += 0 + start.substring(5, 8);
+		}
+		return startTime;
+	}
+	
+	public String getCleanUpTime(double time) {
+		String s = end;
+		char h1 = s.charAt(0);
+		char h2 = s.charAt(1);
+		char m1 = s.charAt(3);
+		char m2 = s.charAt(4);
+		String hour = Character.toString(h1) + Character.toString(h2);
+		String minute = Character.toString(m1) + Character.toString(m2);
+		int nh = Integer.parseInt(hour);
+		int nm = Integer.parseInt(minute);
+		if(time==1) {
+			nh--;
+		}
+		if(time == 0.5) {
+			if(nm <= 30) {
+				nm += 30;
+				nh--;
+			}
+			else {
+				nm -= 30;
+			}
+		}
+		if(time < 0.5) {
+			if(nm <= 15) {
+				nm += 15;
+				nh--;
+			}
+			else {
+				nm -= 15;
+			}
+		}
+		
+		String endTime = nh + ":" + nm;
+		if(nm == 0) {
+			endTime += 0 + end.substring(5, 8);
+		}
+		return endTime;
+	}
+	
 	/**
 	 * Compares two DateAndTime objects.  If they are the same, greater than 1, else less than 1
 	 * @param dt - the Data and Time object being compared

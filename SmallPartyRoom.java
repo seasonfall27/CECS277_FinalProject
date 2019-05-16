@@ -23,7 +23,6 @@ public class SmallPartyRoom implements PartyRoom {
 	private int roomNumber;
 	
 	private ArrayList<Reservation> reservations;
-	private static ArrayList<Guest> waitlist;
 	
 	/*
 	 * Empty Constructor for the Small Party Room
@@ -37,7 +36,6 @@ public class SmallPartyRoom implements PartyRoom {
 		this.partyDecorations = false;
 		this.ID ++;
 		this.roomNumber = ID;
-		waitlist = new ArrayList<Guest>();
 		reservations = new ArrayList<Reservation>();
 	}
 	
@@ -96,7 +94,6 @@ public class SmallPartyRoom implements PartyRoom {
 		double timeDiff = time.getTimeVal();
 		this.cost += timeDiff*pricePerHour;
 		this.totalHours += timeDiff;
-		
 	}
 	
 	@Override
@@ -151,16 +148,16 @@ public class SmallPartyRoom implements PartyRoom {
 	
 	//~~~~~~ Getter Functions ~~~~~~~~~
 	
-	public static String getDescription() {
+	public static String getDescription1() {
 		return description;
 	}
 	@Override
 	public ArrayList<Reservation> getReservations(){
 		return this.reservations;
 	}
-	@Override
-	public ArrayList<Guest> getWaitlist(){
-		return this.waitlist;
+	
+	public static String getDescription() {
+		return description;
 	}
 	@Override
 	public int getCapacity() {
@@ -201,18 +198,13 @@ public class SmallPartyRoom implements PartyRoom {
 	@Override
 	public String getType() {
 		return "Small";
-	}
+	} 
 	
 	//~~~~~~ Setter Functions ~~~~~~~~~
 	
 	@Override
 	public void addReservation(Reservation r) {
 		this.reservations.add(r);
-	}
-	
-	@Override
-	public void addGuestToWaitlist(Guest g) {
-		this.waitlist.add(g);
 	}
 	
 	@Override

@@ -4,11 +4,7 @@ public interface Room {
 	
 	ArrayList<Reservation> getReservations();
 	
-	ArrayList<Guest> getWaitlist();
-	
 	void addReservation(Reservation r);
-	
-	void addGuestToWaitlist(Guest g);
 	
 	String toString();
 
@@ -91,12 +87,12 @@ public interface Room {
 	
 	// Wait list thing (DONEISH)
 	// Add broken cost (DONE???)
+	// Fix isRoomAvailable() (DONE)
 	
 	// Fix Reservation ID
 	// Fix Remove Reservation, its removing the wrong one
-	// Fix isRoomAvailable()
 	// Limit time by hours of operation and cleaning
-	
+	// Write 
 	
 	
 }

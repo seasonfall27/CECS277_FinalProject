@@ -16,15 +16,18 @@ public class RoomClient {
 		DateAndTime b = new DateAndTime("19/12/2000","03:00 AM", "06:00 PM");
 		
 		Guest g = new Guest();
+		Guest x = new Guest();
+		x.setName("Jimmy");
+		Guest y = new Guest();
+		y.setName("Lauren");
+		Guest z = new Guest();
+		z.setName("Samantha");
 		
-		c.addReservation("Small", g, d, "Silver", 0, 0, false, 0);
-		c.addReservation("Small", g, b, "Silver", 2, 1, true, 0);
+		c.addReservation("Small", x, d, "Silver", 0, 0, false, 0);
+		c.addReservation("Small", y, b, "Silver", 2, 1, true, 0);
+		c.addReservation("Aqua", z, b, "Basic", 0, 0, false, 0);
+		c.removeReservation(c.calendar.get(1));
 		c.addReservation("Aqua", g, b, "Basic", 0, 0, false, 0);
-		if(c.isRoomAvailable("Aqua", b)) {
-			c.addReservation("Aqua", g, b, "Basic", 0, 0, false, 0);
-		}
-		
-		System.out.println(c.calendar.get(0).toString());
 		
 		System.out.println("\nCalendar:\n");
 		for(int i=0; i <c.calendar.size(); i++) {
@@ -33,9 +36,19 @@ public class RoomClient {
 		System.out.println("\n\n\n");
 		
 		c.checkIn(c.calendar.get(0));
+		System.out.println("\nCheck Ins:\n");
 		System.out.println(c.displayAllCheckIns());
 		
 		
+		System.out.println("\n\nCalendar:\n");
+		for(int i=0; i <c.calendar.size(); i++) {
+			System.out.println(c.calendar.get(i).toString());
+		}
+		
+		System.out.println("\n\nAqua Wait List:\n");
+		for(int i=0; i <c.aquaWaitlist.size(); i++) {
+			System.out.println(c.aquaWaitlist.get(i).toString());
+		}
 		
 		
 		/*for(int i=0; i<c.aqua.size(); i++) {

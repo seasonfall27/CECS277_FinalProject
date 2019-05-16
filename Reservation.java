@@ -2,7 +2,6 @@
 public class Reservation {
 	Room room;
 	Guest guest;
-	//Meal Plan object integrated into rooms
 	DateAndTime time;
 	private static int id = 0;
 	private int ID;
@@ -60,11 +59,32 @@ public class Reservation {
 	 */
 	public String toString() {
 		String s = "Reservation #" + this.getID()+"\n";
-		s+= "Room: "+room.getType()+" Room\n";
-		s+= "Guest Info: \n" + guest.toStringGuestInfo() +"\nCard Info: \n";
-		s += guest.toStringCardInfo() + "\nTime: ";
-		s += time.toString();
-		s += "\n\n" + room.getMealPlan();
+		s+= "\tRoom: "+room.getType()+" Room\n";
+		s+= "\tGuest Info: \n" + guest.toStringGuestInfo() +"\n\tCard Info: \n";
+		s += guest.toStringCardInfo() + "\n\tMeal Plan: ";
+		s += "\n" + room.getMealPlan() +"\n\tReserved For Guest:\n";
+		s += time.toString() + "\n\tSet Up/ Clean Up Times:";
+		if(room instanceof SmallPartyRoom) {
+			s+="\nSet Up Time: " + time.getSetUpTime(0.5);
+			s+="\nClean Up Time: " + time.getCleanUpTime(0.5);
+		}
+		if(room instanceof MediumPartyRoom) {
+			s+="\nSet Up Time: " + time.getSetUpTime(1);
+			s+="\nClean Up Time: " + time.getCleanUpTime(1);
+		}
+		if(room instanceof AquaRoom) {
+			s+="\nSet Up Time: " + time.getSetUpTime(1);
+			s+="\nClean Up Time: " + time.getCleanUpTime(1);
+		}
+		if(room instanceof Kareoke) {
+			s+="\nSet Up Time: " + time.getSetUpTime(0.1);
+			s+="\nClean Up Time: " + time.getCleanUpTime(0.1);
+		}
+		if(room instanceof Billiards) {
+			s+="\nSet Up Time: " + time.getSetUpTime(0.1);
+			s+="\nClean Up Time: " + time.getCleanUpTime(0.1);
+		}
+		s+="\n";
 		return s;
 	}
 	

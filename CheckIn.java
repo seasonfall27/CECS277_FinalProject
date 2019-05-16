@@ -38,6 +38,12 @@ public class CheckIn {
 	}
 	
 	public String toString() {
-		return "Check In #" + ID + "\nTime:\n" + time.toString() + "\nGuest Info:\n"+ guest.toString() +"\nRoom:\n"+ room.toString();
+		String s = "Check In #" + ID + "\n";
+		s+= "Room: "+room.getType()+" Room\n";
+		s+= "Guest Info: " + guest.toStringGuestInfo() +"\nCard Info: ";
+		s += guest.toStringCardInfo() + "\nTime: ";
+		s += time.toString();
+		s += "\n" + room.getMealPlan() + "\n";
+		return s;
 	}
 }
