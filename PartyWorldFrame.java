@@ -58,15 +58,15 @@ public class PartyWorldFrame extends JFrame {
 		panelTitle.setFont(new Font(Font.SERIF, Font.BOLD, 30));
 
 		centerPanel.add(panelTitle);
-		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\smallroom.jpg",
+		addARoomDescription(centerPanel, "/pics/smallroom.jpg",
 				"Small Party Room", SmallPartyRoom.getDescription());
-		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\medroom.jpg",
+		addARoomDescription(centerPanel, "medroom.jpg",
 				"Medium Party Room", MediumPartyRoom.getDescription());
-		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\aquaworldroom.jpg", 
+		addARoomDescription(centerPanel, "aquaworldroom.jpg", 
 				"Aqua Room", AquaRoom.getDescription());
-		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\karaoke.jpg",
+		addARoomDescription(centerPanel, "karaoke.jpg",
 				"Karaoke Lounge", Kareoke.getDescription());
-		addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\billiards.jpg",
+		addARoomDescription(centerPanel, "billiards.jpg",
 				"Billiards Lounge", Billiards.getDescription());
 
 		scrollPane = new JScrollPane(centerPanel);
@@ -306,11 +306,11 @@ public class PartyWorldFrame extends JFrame {
 			if (item.getText().equals("All")) {
 				// remove all components in panel.
 				centerPanel.removeAll();
-				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\smallroom.jpg",
+				addARoomDescription(centerPanel, "smallroom.jpg",
 						"Small Party Room", SmallPartyRoom.getDescription());
-				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\medroom.jpg",
+				addARoomDescription(centerPanel, "medroom.jpg",
 						"Medium Party Room", MediumPartyRoom.getDescription());
-				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\aquaworldroom.jpg",
+				addARoomDescription(centerPanel, "aquaworldroom.jpg",
 						"Aqua Room", AquaRoom.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
@@ -319,7 +319,7 @@ public class PartyWorldFrame extends JFrame {
 			if (item.getText().equals("Small Party Rooms")) {
 				// remove all components in panel.
 				centerPanel.removeAll();
-				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\smallroom.jpg",
+				addARoomDescription(centerPanel, "smallroom.jpg",
 						"Small Party Room", SmallPartyRoom.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
@@ -328,7 +328,7 @@ public class PartyWorldFrame extends JFrame {
 			if (item.getText().equals("Medium Party Rooms")) {
 				// remove all components in panel.
 				centerPanel.removeAll();
-				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\medroom.jpg",
+				addARoomDescription(centerPanel, "medroom.jpg",
 						"Medium Party Room", MediumPartyRoom.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
@@ -337,7 +337,7 @@ public class PartyWorldFrame extends JFrame {
 			if (item.getText().equals("Aqua Room")) {
 				// remove all components in panel.
 				centerPanel.removeAll();
-				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\aquaworldroom.jpg",
+				addARoomDescription(centerPanel, "aquaworldroom.jpg",
 						"Aqua Room", AquaRoom.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
@@ -354,9 +354,9 @@ public class PartyWorldFrame extends JFrame {
 			if (item.getText().equals("All")) {
 				// remove all components in panel.
 				centerPanel.removeAll();
-				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\karaoke.jpg",
+				addARoomDescription(centerPanel, "karaoke.jpg",
 						"Karaoke Lounge", Kareoke.getDescription());
-				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\billiards.jpg",
+				addARoomDescription(centerPanel, "billiards.jpg",
 						"Billiards Lounge", Billiards.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
@@ -365,7 +365,7 @@ public class PartyWorldFrame extends JFrame {
 			if (item.getText().equals("Karaoke Lounges")) {
 				// remove all components in panel.
 				centerPanel.removeAll();
-				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\karaoke.jpg",
+				addARoomDescription(centerPanel, "karaoke.jpg",
 						"Karaoke Lounge", Kareoke.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();
@@ -374,7 +374,7 @@ public class PartyWorldFrame extends JFrame {
 			if (item.getText().equals("Billiards Lounges")) {
 				// remove all components in panel.
 				centerPanel.removeAll();
-				addARoomDescription(centerPanel, "C:\\Users\\steve\\Desktop\\277 Final Images\\billiards.jpg",
+				addARoomDescription(centerPanel, "billiards.jpg",
 						"Billiards Lounge", Billiards.getDescription());
 				// refresh the panel.
 				centerPanel.updateUI();

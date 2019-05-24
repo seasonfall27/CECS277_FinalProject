@@ -227,7 +227,7 @@ public class NewReservationFrame extends JFrame {
 		roomType = new JLabel("Room Details: ");
 		roomType.setFont(new Font(Font.SERIF, Font.BOLD, 20));
 		String[] roomTypeString = new String[] { "Aqua Room", "Small Party Room", "Medium Party Room",
-				"Karaoke Lounge", "Adults Billiards Lounge" };
+				"Karaoke Lounge", "Billiards Lounge" };
 		roomTypeOptions = new JComboBox<String>(roomTypeString);
 		roomTypeListener = new RoomTypeListener();
 		roomTypeOptions.addActionListener(roomTypeListener);
@@ -754,7 +754,7 @@ public class NewReservationFrame extends JFrame {
 				panel2.add(upgradeMPText);
 				panel2.add(upgradeMP);
 			}
-			if (roomChoice.equals("Adults Billiards Lounge")) {
+			if (roomChoice.equals("Billiards Lounge")) {
 				panel2.removeAll();
 				panel2.add(upgradeLabel);
 				panel2.add(upgradeMPText);
@@ -816,7 +816,7 @@ public class NewReservationFrame extends JFrame {
 				}
 				if (roomChoice.equals("Karaoke Lounge")) {
 				}
-				if (roomChoice.equals("Adults Billiards Lounge")) {
+				if (roomChoice.equals("Billiards Lounge")) {
 				}
 			}
 
@@ -1844,7 +1844,7 @@ public class NewReservationFrame extends JFrame {
 			themeOptions = new JComboBox<String>(themeString);
 
 			int testingYear = Integer.parseInt(birthYear);
-			if (roomType == "Karaoke Lounge" && testingYear > 1998) {
+			if (roomType == "Billiards Lounge" && testingYear > 1998) {
 				AdultFrame a = new AdultFrame();
 				NewReservationFrame.this.dispose();
 				a.setVisible(true);

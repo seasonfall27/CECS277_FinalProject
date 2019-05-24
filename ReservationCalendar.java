@@ -17,12 +17,16 @@ public class ReservationCalendar {
 	public static ArrayList<WaitlistedGuest> kareokeWaitlist;
 	public static ArrayList<WaitlistedGuest> billiardsWaitlist;
 	
+	public ArrayList<String> allReservations;
+	public ArrayList<String> checkedInReservations;
+	
 	/**
 	 * Constructor for Calendar.  Will Create all Room objects necessary for the duration of the program
 	 */
 	public ReservationCalendar() {
 		calendar = new ArrayList<Reservation>();
 		checkedIn = new ArrayList<CheckIn>();
+		allReservations = new ArrayList<String>();
 		
 		small = new ArrayList<Room>();
 		medium = new ArrayList<Room>();
@@ -232,7 +236,7 @@ public class ReservationCalendar {
 		if(r != null) {
 			calendar.add(r);  // adds the reservation to the calendar
 		}
-//		CheckInFrame.names.add(guest.getName());
+		allReservations.add(guest.getName());
 	}
 	/**
 	 * Calls a room by the enum type and the room number.  Will remove reservation and add room back to available rooms
@@ -330,19 +334,19 @@ public class ReservationCalendar {
 		String type = r.getRoom().getType();
 		CheckIn c = null;
 		switch (type) {
-		case "Small Party Room":
+		case "Small":
 			c = new CheckIn(small.get(0), r.getGuest(), r.getTime(), r.getID());
 			break;
-		case "Medium Party Room":
+		case "Medium":
 			c = new CheckIn(medium.get(0), r.getGuest(), r.getTime(), r.getID());
 			break;
-		case "Aqua Room":
+		case "Aqua":
 			c = new CheckIn(aqua.get(0), r.getGuest(), r.getTime(), r.getID());
 			break;
-		case "Karaoke Lounge":
+		case "Kareoke":
 			c = new CheckIn(kareoke.get(0), r.getGuest(), r.getTime(), r.getID());
 			break;
-		case "Billiards Lounge":
+		case "Billiards":
 			c = new CheckIn(billiards.get(0), r.getGuest(), r.getTime(), r.getID());
 			break;
 		default:

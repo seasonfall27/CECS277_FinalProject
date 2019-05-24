@@ -34,6 +34,7 @@ public class CheckOutFrame extends JFrame{
 	
 	public CheckOutFrame (ReservationCalendar calendar) {
 		this.calendar = calendar;
+		names = calendar.checkedInReservations;
 		createComponents ();
 		
 		this.setTitle("Guest List");
@@ -49,10 +50,9 @@ public class CheckOutFrame extends JFrame{
 	 * it can take in Guest objects if needed
 	 */
 	listModel = new DefaultListModel ();
-	names = new ArrayList <String> ();
-
-	for(String name: names)
-	{
+	for(int i=0; i<calendar.checkedIn.size(); i++){
+		String name = calendar.checkedIn.get(i).getGuest().getName();
+		System.out.println(name);
 		((DefaultListModel) listModel).addElement(name);
 	}
 	
@@ -97,12 +97,9 @@ public class CheckOutFrame extends JFrame{
 		public void actionPerformed (ActionEvent click)
 		{
 	        JOptionPane.showMessageDialog(null, "You Are Checked Out!","Message", JOptionPane.PLAIN_MESSAGE);
-	        /*
-	         * take out in the checked list 
-	         * saves the description of damage and cost 
-	         * opens a new final invoice
-	         */
-	        FinalInvoiceFrame f = new FinalInvoiceFrame(null);
+	        String name = (String) list.getSelectedValue();
+	        Reservation r = calendar.getReservationByGuestFirstName(name);
+	        FinalInvoiceFrame f = new FinalInvoiceFrame(r);
 			f.setVisible(true);
 
 		}

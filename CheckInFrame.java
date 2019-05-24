@@ -23,11 +23,13 @@ public class CheckInFrame extends JFrame{
 	protected JButton checkIn;
 	ReservationCalendar calendar;
 	public static ArrayList<String> names;
+	public static ArrayList<String> namesChecked;
 	
 	public CheckInFrame (ReservationCalendar calendar) {
 		this.calendar = calendar;
+		names = calendar.allReservations;
+		namesChecked = calendar.checkedInReservations;
 		createComponents ();
-		
 		this.setTitle("Guest List");
 		this.setSize(500, 350);
 		//hides the frame without terminating 
@@ -41,7 +43,6 @@ public class CheckInFrame extends JFrame{
 	 * it can take in Guest objects if needed
 	 */
 	listModel = new DefaultListModel ();
-	names = new ArrayList <String> ();
 	
 	for(String name: names)
 	{
@@ -91,6 +92,9 @@ public class CheckInFrame extends JFrame{
 		{
 	        JOptionPane.showMessageDialog(null, "You Are Checked In!","Message", JOptionPane.PLAIN_MESSAGE);
 	        String name = (String) list.getSelectedValue();
+	        Reservation r = calendar.getReservationByGuestFirstName(name);
+	        names.remove(name);
+	        calendar.checkIn(r);
 		}
 	}
 	class CancelButtonListener implements ActionListener 
